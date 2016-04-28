@@ -223,12 +223,14 @@ class FormField extends React.Component {
         let me = this;
         let specificCls = me.addSpecificClass();
         let mode = me.props.jsxmode || me.props.mode;
-
+        let style = {
+            width: (me.props.jsxflex / me.props.totalFlex * 100 + '%')
+        }
         return (
             <div className={classnames({
                 [specificCls]: true,
                 [me.props.className]: !!me.props.className
-            })} style={assign({}, me.props.style, {
+            })} style={assign({}, style, {
                 display: me.props.jsxshow ? "table" : "none"
             })}>
                 {me.renderLabel()}
@@ -249,7 +251,7 @@ class FormField extends React.Component {
 };
 
 FormField.propTypes = {
-    instantValidate: React.PropTypes.bool, // 是否立即校验
+    instantValidate: React.PropTypes.bool, 
     jsxshow: React.PropTypes.bool,
     jsxmode: React.PropTypes.string,
     jsxshowLabel: React.PropTypes.bool,
@@ -260,20 +262,21 @@ FormField.propTypes = {
     jsxlabel: React.PropTypes.string,
     jsxtips: React.PropTypes.string,
     jsxrules: React.PropTypes.oneOfType([React.PropTypes.object, React.PropTypes.array]),
+    totalFlex: React.PropTypes.number,
     standalone: React.PropTypes.bool,
     required: React.PropTypes.bool
 };
 
 FormField.defaultProps = {
-    jsxshow: true, // 是否显示该块
-    jsxshowLabel: true, // 是否展示 label
-    jsxprefixCls: "kuma-uxform-field", // 默认类名
-    jsxflex: 1, // 占 Form 的比例，类似于 css3 中的 flex-box
-    jsxname: "", // 表单字段
-    jsxplaceholder: "", // 在未选值之前的占位符
-    jsxlabel: "", // 左侧表单域标题
-    jsxtips: "", // 提醒
-    standalone: false, // 是否处于独立使用模式
+    jsxshow: true, 
+    jsxshowLabel: true, 
+    jsxprefixCls: "kuma-uxform-field", 
+    jsxflex: 1, 
+    jsxname: "", 
+    jsxplaceholder: "", 
+    jsxlabel: "", 
+    jsxtips: "", 
+    standalone: false, 
     mode: Constants.MODE.EDIT,
     required: false
 };

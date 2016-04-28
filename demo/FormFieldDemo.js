@@ -9,7 +9,8 @@
 let classnames = require('classnames');
 
 let FormField = require('../src');
-let Form = require('uxcore-form');
+let Form = require('uxcore-form/build/Form');
+let FormRow = require('uxcore-form-row');
 
 class Demo extends React.Component {
 
@@ -23,7 +24,10 @@ class Demo extends React.Component {
         return (
             <div>
                 <Form>
-                    <FormField jsxname="test1" jsxlabel="表单1" />
+                    <FormRow>
+                        <FormField jsxname="test1" jsxlabel="表单1" jsxflex={2}/>
+                        <FormField jsxname="test2" jsxlabel="表单2" />
+                    </FormRow>
                 </Form>
             </div>
         );
