@@ -51,14 +51,13 @@ class FormField extends React.Component {
         return this.props.jsxname;
     }
 
-    /*
-     * Fired when field value changes，update form's state and then trigger re-render.
-     * @param fromReset {boolean} if handleDataChange is invoked by form's resetValues,
-     * doValidate should not be invoked.
-     */
+    getValue() {
+        return this.formatValue(this.state.value);
+    }
 
-    handleDataChange(value, fromReset) {
+    setValue(value, fromReset, next) {
         let me = this;
+
         me.setState({
             value: value,
             formatValue: me.formatValue(value),
@@ -68,7 +67,21 @@ class FormField extends React.Component {
              * so set this state to tell the field that you need to reset by yourself.
              */
             fromReset: !!fromReset
-        }, () => {
+        }, function() {
+            if(next && typeof next === 'function') next();
+        });
+    }
+
+    /*
+     * Fired when field value changes，update form's state and then trigger re-render.
+     * @param fromReset {boolean} if handleDataChange is invoked by form's resetValues,
+     * doValidate should not be invoked.
+     */
+
+    handleDataChange(value, fromReset) {
+        let me = this;
+
+        me.setValue(value, fromReset, () => {
             let pass = true;
             // validateOnBlur only support InputFormField & TextAraeFormField now
             if (!fromReset && !me.props.standalone && !me.props.validateOnBlur) {
