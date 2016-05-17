@@ -68,7 +68,9 @@ class FormField extends React.Component {
              */
             fromReset: !!fromReset
         }, function() {
-            if(next && typeof next === 'function') next();
+            if (next && typeof next === 'function') {
+                next();
+            }
         });
     }
 
