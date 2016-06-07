@@ -47,6 +47,22 @@ class FormField extends React.Component {
         }
     }
 
+    getLabelNode() {
+        return this.refs.label;
+    }
+
+    getTipsNode() {
+        return this.refs.tips;
+    }
+
+    getRequiredNode() {
+        return this.refs.required;
+    }
+
+    getErrorNode() {
+        return this.refs.error;
+    }
+
     getName() {
         return this.props.jsxname;
     }
@@ -170,13 +186,13 @@ class FormField extends React.Component {
         if (me.props.standalone && me.props.message && me.props.message.type == "tip") {
             return <li className="kuma-uxform-tips">
                         <i className="kuma-icon kuma-icon-information"></i>
-                        {me.props.message.message}
+                        <span ref="tips">{me.props.message.message}</span>
                     </li>
         }
         if (!!this.props.jsxtips && !me.state.error) {
             return <li className="kuma-uxform-tips">
                         <i className="kuma-icon kuma-icon-information"></i>
-                        {this.props.jsxtips}
+                        <span ref="tips">{this.props.jsxtips}</span>
                     </li>
         }
     }
@@ -204,13 +220,13 @@ class FormField extends React.Component {
         if (me.props.standalone && me.props.message && me.props.message.type == "error") {
             return <li className="kuma-uxform-errormsg">
                         <i className="kuma-icon kuma-icon-error"></i>
-                        {me.props.message.message}
+                        <span ref="error">{me.props.message.message}</span>
                     </li>
         }
         if (!!me.state.error) {
             return  <li className="kuma-uxform-errormsg">
                         <i className="kuma-icon kuma-icon-error"></i>
-                        {me.state.errMsg}
+                        <span ref="error">{me.state.errMsg}</span>
                     </li>
         }
     }
@@ -224,8 +240,8 @@ class FormField extends React.Component {
                 "kuma-label": true,
                 "vertical-align": align
             })}>
-                        <span className="required">{(me.props.required && mode == Constants.MODE.EDIT) ? "* " : ""}</span>
-                        <span className="label-content" dangerouslySetInnerHTML={{__html: me.props.jsxlabel}} />
+                        <span className="required" ref="required">{(me.props.required && mode == Constants.MODE.EDIT) ? "* " : ""}</span>
+                        <span className="label-content" ref="label" dangerouslySetInnerHTML={{__html: me.props.jsxlabel}} />
                     </label>
         }
     }
