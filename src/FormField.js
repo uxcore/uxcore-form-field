@@ -15,6 +15,7 @@ class FormField extends React.Component {
             error: false,
             errMsg: ''
         };
+        
     }
 
     componentDidMount() {
