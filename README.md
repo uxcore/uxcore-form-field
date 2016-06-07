@@ -6,6 +6,7 @@ React Form Field
 
 [![NPM version][npm-image]][npm-url]
 [![build status][travis-image]][travis-url]
+[![Test Coverage][coveralls-image]][coveralls-url]
 [![Dependency Status][dep-image]][dep-url]
 [![devDependency Status][devdep-image]][devdep-url] 
 
@@ -13,6 +14,8 @@ React Form Field
 [npm-url]: http://npmjs.org/package/uxcore-form-field
 [travis-image]: https://img.shields.io/travis/uxcore/uxcore-form-field.svg?style=flat-square
 [travis-url]: https://travis-ci.org/uxcore/uxcore-form-field
+[coveralls-image]: https://img.shields.io/coveralls/uxcore/uxcore-form-field.svg?style=flat-square
+[coveralls-url]: https://coveralls.io/r/uxcore/uxcore-form-field?branch=master
 [dep-image]: http://img.shields.io/david/uxcore/uxcore-form-field.svg?style=flat-square
 [dep-url]: https://david-dm.org/uxcore/uxcore-form-field
 [devdep-image]: http://img.shields.io/david/dev/uxcore/uxcore-form-field.svg?style=flat-square
