@@ -32,7 +32,7 @@
     "jquery": "~1.12.4",
     "kuma-base": "1.x",
     "react": "15.x",
-    "react-addons-test-utils": "~15.1.0",
+    "react-addons-test-utils": "15.x",
     "react-dom": "15.x",
     "uxcore-form": "~1.4.4",
     "uxcore-form-row": "~0.1.3",
