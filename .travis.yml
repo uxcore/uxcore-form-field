@@ -2,12 +2,6 @@ language: node_js
 
 sudo: false
 
-addons:
-  sauce_connect:
-    username: "uxcore"
-    access_key:
-      secure: "TOjSDjo7feujCuwKQvivOsfgMUkhrA9FvUqdItcn5o3FIIW1X/UC5gr7c+GEo1tfUTCgzuri/0SuIRMTMpP5ZaHC9mMKMp/uxH9m8n7RWDSPyI5A0MIAN6DWCRgeCcaTbVizfuzPMqIpktSGhwQBWuU72okmwLJYhFMJTOfRiRAYJm9a/PNUXLy1OmpjtjKGooLNuUG2OYVj1njbCwx1PdXDMp4GXX/dppXQr4fZK7hO/PMW25iGAnexJAbLM0DR6Rde43Kj6BupQWxo+sKWBznauoYDV2OBv3oVn7SjaFtq0eGQS1SQPsYfiymsK5dWlL46yoLcmc67wLSrnjQQwxPBLMzbrqSS60JlfTSjmH39QZd1TRirduySHJlUVMKrbH2mrsiGwLHLrE/VsEk5+iqueb8AiU952Vfo5lqGOrCSDyofQIqExDZJeNwvEVKrDrjPBoyJp/2D0zPniM09BvrB6Dz4F2ybF4Q/IdVQeiE94xbKxMnUf9vP2QKV9ZISbkWk9Ix05Bw9qSzQVLHJCTXitSPB7cq77gvWN3kAKxVZRIM1RoVPNuYecDNT5+OsDDwciAuE50BqjJVxpPdwyF+tGjTucRvhGRsXZQ5egGWRF4ruRkS7pHOO2wUdlXtKQknBHwwnkNWhpxwPH5mp0b4kTqojz87ZAQ43LIvLJAI="
-
 notification:
   email:
     - wsj7552715@hotmail.com
