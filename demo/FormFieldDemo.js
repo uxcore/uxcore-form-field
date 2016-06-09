@@ -23,12 +23,13 @@ class Demo extends React.Component {
     render() {
         return (
             <div>
-                <Form>
+                {/*<Form>
                     <FormRow>
                         <FormField jsxname="test1" jsxlabel="表单1" jsxflex={2}/>
                         <FormField jsxname="test2" jsxlabel="表单2" />
                     </FormRow>
-                </Form>
+                </Form>*/}
+                <FormField standalone={true} jsxname="1" jsxlabel="test" message={{type: 'error', message: 'error test'}}/>
             </div>
         );
     }

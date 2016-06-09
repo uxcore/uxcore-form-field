@@ -13,7 +13,9 @@
     "coverage": "uxcore-tools run coverage",
     "pub": "uxcore-tools run pub",
     "dep": "uxcore-tools run dep",
-    "saucelabs": "uxcore-tools run saucelabs"
+    "saucelabs": "uxcore-tools run saucelabs",
+    "chrome": "uxcore-tools run chrome",
+    "browsers": "uxcore-tools run browsers"
   },
   "bugs": {
     "url": "http://github.com/uxcore/uxcore-form-field/issues"
@@ -21,9 +23,9 @@
   "keywords": [
     "react",
     "react-component",
+    "react-components",
     "uxcore-form-field",
-    "FormField",
-    ""
+    "FormField"
   ],
   "devDependencies": {
     "console-polyfill": "^0.2.2",

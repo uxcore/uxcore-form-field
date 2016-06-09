@@ -254,8 +254,9 @@ class FormField extends React.Component {
         let me = this;
         let specificCls = me.addSpecificClass();
         let mode = me.props.jsxmode || me.props.mode;
-        let style = {
-            width: (me.props.jsxflex / me.props.totalFlex * 100 + '%')
+        let style = {};
+        if (!me.props.standalone) {
+            style.width = (me.props.jsxflex / me.props.totalFlex * 100 + '%');
         }
         return (
             <div className={classnames({
@@ -307,7 +308,7 @@ FormField.defaultProps = {
     jsxplaceholder: "", 
     jsxlabel: "", 
     jsxtips: "", 
-    standalone: false, 
+    standalone: false,
     mode: Constants.MODE.EDIT,
     required: false
 };

@@ -172,34 +172,4 @@ describe('FormField', () => {
         }, 50);
 
     });
-
-    it('willReceiveProps', (done) => {
-       const Demo = React.createClass({
-            getInitialState() {
-                return {
-                    label: 'test1',
-                }
-            },
-            changeLabel() {
-                this.setState({
-                    label: 'test2',
-                })
-            },
-            render() {
-                return (
-                    <Form>
-                        <FormField ref="formfield" jsxname="test" jsxlabel={this.state.label} />
-                    </Form>
-                )
-            }
-        }); 
-        instance = ReactDOM.render(<Demo />, div);
-        const formFieldNode = instance.refs.formfield;
-        expect(formFieldNode.getLabelNode().innerHTML).to.be('test1');
-        instance.changeLabel();
-        setTimeout(() => {
-            expect(formFieldNode.getLabelNode().innerHTML).to.be('test2');
-            done();
-        }, 50)
-    });
 });
