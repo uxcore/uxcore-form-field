@@ -94,9 +94,11 @@ class FormField extends React.Component {
      * Fired when field value changes，update form's state and then trigger re-render.
      * @param fromReset {boolean} if handleDataChange is invoked by form's resetValues,
      * doValidate should not be invoked.
+     * arrow Function is for test pass in IE 9 
+     * see http://babeljs.io/blog/2015/06/07/react-on-es6-plus for details
      */
 
-    handleDataChange(value, fromReset) {
+    handleDataChange = (value, fromReset) => {
         let me = this;
 
         me.setValue(value, fromReset, () => {
