@@ -9,6 +9,7 @@ React Form Field
 [![Test Coverage][coveralls-image]][coveralls-url]
 [![Dependency Status][dep-image]][dep-url]
 [![devDependency Status][devdep-image]][devdep-url] 
+[![NPM downloads][downloads-image]][npm-url]
 
 [![Sauce Test Status][sauce-image]][sauce-url]
 
@@ -22,6 +23,7 @@ React Form Field
 [dep-url]: https://david-dm.org/uxcore/uxcore-form-field
 [devdep-image]: http://img.shields.io/david/dev/uxcore/uxcore-form-field.svg?style=flat-square
 [devdep-url]: https://david-dm.org/uxcore/uxcore-form-field#info=devDependencies
+[downloads-image]: https://img.shields.io/npm/dm/uxcore-form-field.svg
 [sauce-image]: https://saucelabs.com/browser-matrix/uxcore.svg
 [sauce-url]: https://saucelabs.com/u/uxcore
 
