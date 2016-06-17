@@ -12,7 +12,7 @@ class FormField extends React.Component {
         this.state = {
             value: props.value,
             formatValue: this.formatValue(props.value),
-            error: false,
+            error: false
             errMsg: ''
         };
     }
