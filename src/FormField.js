@@ -1,9 +1,9 @@
-let React = require('react');
-let ReactDOM = require('react-dom');
-let Constants = require("uxcore-const");
-let classnames = require("classnames");
-let assign = require("object-assign");
-let deepequal = require("deep-equal");
+const React = require('react');
+const ReactDOM = require('react-dom');
+const Constants = require("uxcore-const");
+const classnames = require("classnames");
+const assign = require("object-assign");
+const deepequal = require("deep-equal");
 
 class FormField extends React.Component {
 
@@ -32,7 +32,7 @@ class FormField extends React.Component {
     componentWillReceiveProps(nextProps) {
         let me = this;
         if (!me._isEqual(nextProps.value, me.props.value)) {
-            me.handleDataChange(nextProps.value, true);
+            me.handleDataChange(nextProps.value, true, true);
         }
     }
 
@@ -98,7 +98,7 @@ class FormField extends React.Component {
      * see http://babeljs.io/blog/2015/06/07/react-on-es6-plus for details
      */
 
-    handleDataChange = (value, fromReset) => {
+    handleDataChange = (value, fromReset, silence) => {
         let me = this;
 
         me.setValue(value, fromReset, () => {
@@ -110,7 +110,7 @@ class FormField extends React.Component {
             !!me.props.handleDataChange && me.props.handleDataChange(me, {
                 value: value,
                 pass: pass
-            });
+            }, silence);
         });
 
     }

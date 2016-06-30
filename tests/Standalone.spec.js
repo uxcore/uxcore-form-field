@@ -42,9 +42,12 @@ describe('Standalone', () => {
                     value: 'test2',
                 })
             },
+            handleChange(context, data, silence) {
+                expect(silence).to.be(true); 
+            },
             render() {
                 return (
-                    <FormField standalone={true} ref="formfield" jsxname="test" value={this.state.value} />
+                    <FormField standalone={true} ref="formfield" jsxname="test" value={this.state.value} handleDataChange={this.handleChange} />
                 )
             }
         }); 
