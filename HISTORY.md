@@ -1,5 +1,9 @@
 # history
 
+## 0.1.5
+
+* `CHANGED` add getProps() method
+
 ## 0.1.4
 
 * `CHANGED` add silence param in `handleDataChange` method

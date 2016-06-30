@@ -60,4 +60,32 @@ describe('Standalone', () => {
             done();
         }, 50)
     });
+
+    it('getProps', (done) => {
+        const Demo = React.createClass({
+            getInitialState() {
+                return {
+                    value: 'test1',
+                }
+            },
+            changeValue() {
+                this.setState({
+                    value: 'test2',
+                })
+            },
+            handleChange(context, data, silence) {
+                expect(silence).to.be(true); 
+            },
+            render() {
+                return (
+                    <FormField standalone={true} ref="formfield" jsxname="test" value={this.state.value} handleDataChange={this.handleChange} />
+                )
+            }
+        }); 
+        instance = ReactDOM.render(<Demo />, div);
+        const formFieldNode = instance.refs.formfield;
+
+        expect(formFieldNode.getProps().standalone).to.be(true);
+        done();
+    })
 })

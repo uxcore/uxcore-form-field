@@ -47,6 +47,10 @@ class FormField extends React.Component {
         }
     }
 
+    getProps() {
+        return this.props;
+    }
+
     getLabelNode() {
         return this.refs.label;
     }
