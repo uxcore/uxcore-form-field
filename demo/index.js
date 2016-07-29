@@ -6,5 +6,7 @@
  * All rights reserved.
  */
 
- var Demo = require('./FormFieldDemo');
- ReactDOM.render(<Demo/>, document.getElementById('UXCoreDemo'));
+ const Demo = require('./FormFieldDemo');
+ const ReactDOM = require('react-dom');
+ const React = require('react');
+ ReactDOM.render(<Demo />, document.getElementById('UXCoreDemo'));

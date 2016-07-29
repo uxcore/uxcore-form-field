@@ -1,5 +1,9 @@
 # history
 
+## 0.1.6
+
+* `NEW` support a new prop `labelMatchInputHeight` which can make the label match input height.
+
 ## 0.1.5
 
 * `CHANGED` add getProps() method
