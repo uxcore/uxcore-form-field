@@ -1,5 +1,9 @@
 # history
 
+## 0.1.8
+
+* `FIX` fix key warnings.
+
 ## 0.1.7
 
 * `FIX` selectFormField depends on the _isEqual method of FormField

@@ -35,6 +35,22 @@ describe('FormField', () => {
         done();
     });
 
+    it('Do not show label', (done) => {
+        const Demo = React.createClass({
+            render() {
+                return (
+                    <Form>
+                        <FormField ref="formfield" jsxname="test" jsxshowLabel={false} />
+                    </Form>
+                )
+            }
+        });
+        instance = ReactDOM.render(<Demo />, div);
+        const formFieldNode = instance.refs.formfield;
+        expect(formFieldNode.getLabelNode()).to.be(undefined);
+        done();
+    })
+
     it('tips', (done) => {
         const Demo = React.createClass({
             render() {
@@ -172,4 +188,20 @@ describe('FormField', () => {
         }, 50);
 
     });
+
+    it('labelMatchInputHeight', (done) => {
+        const Demo = React.createClass({
+            render() {
+                return (
+                    <Form>
+                        <FormField ref="formfield" jsxname="test" jsxlabel="test" labelMatchInputHeight />
+                    </Form>
+                )
+            }
+        });
+        instance = ReactDOM.render(<Demo />, div);
+        const formFieldNode = instance.refs.formfield;
+        expect($('.kuma-uxform-tip-box').length).not.to.be(0);
+        done();
+    })
 });

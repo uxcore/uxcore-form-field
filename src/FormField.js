@@ -253,6 +253,7 @@ class FormField extends React.Component {
     if (me.props.jsxshowLabel) {
       return (
         <label
+          key="label"
           className={classnames({
             'kuma-label': true,
             'vertical-align': align,
@@ -301,6 +302,7 @@ class FormField extends React.Component {
         </div>,
         <div
           key="tip"
+          className="kuma-uxform-tip-box"
           style={{
             display: 'table',
           }}
@@ -320,6 +322,7 @@ class FormField extends React.Component {
     return [
       me.renderLabel(),
       <ul
+        key="content"
         className={classnames({
           'kuma-uxform-field-content': true,
           'view-mode': mode === Constants.MODE.VIEW,
@@ -327,7 +330,7 @@ class FormField extends React.Component {
           'has-error': !!me.state.error,
         })}
       >
-        <li className="kuma-uxform-field-core">{me.renderField()}</li>
+        <li key="core" className="kuma-uxform-field-core">{me.renderField()}</li>
         {me.renderTips()}
         {me.renderErrorMsg()}
       </ul>,
