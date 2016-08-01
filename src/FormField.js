@@ -87,6 +87,13 @@ class FormField extends React.Component {
     });
   }
 
+  /**
+   * selectFormField depends on this method
+   */
+  _isEqual(a, b) {
+    return deepequal(a, b);
+  }
+
   /*
    * Fired when field value changes，update form's state and then trigger re-render.
    * @param fromReset {boolean} if handleDataChange is invoked by form's resetValues,

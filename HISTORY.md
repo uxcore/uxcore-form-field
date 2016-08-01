@@ -1,5 +1,9 @@
 # history
 
+## 0.1.7
+
+* `FIX` selectFormField depends on the _isEqual method of FormField
+
 ## 0.1.6
 
 * `NEW` support a new prop `labelMatchInputHeight` which can make the label match input height.
