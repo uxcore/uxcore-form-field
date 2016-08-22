@@ -122,7 +122,7 @@ class FormField extends React.Component {
    * if no rule, it means validate pass.
    */
 
-  doValidate(force) {
+  doValidate(force, always) {
     const me = this;
     let instant = true;
     if ('instantValidate' in me.props) {
@@ -135,7 +135,7 @@ class FormField extends React.Component {
     // eternalsky@2016.03.15
     if (force === true || (force !== false && instant)) {
       if (me.props.jsxrules) {
-        const error = me.isDirty();
+        const error = me.isDirty(always);
         me.setState({
           error: error.isDirty,
           errMsg: error.errMsg,
@@ -154,17 +154,17 @@ class FormField extends React.Component {
    * unless all rules pass
    */
 
-  isDirty() {
+  isDirty(always) {
     const me = this;
     const rules = me.props.jsxrules;
     let isDirty = false;
     let errMsg = '';
     if (typeof rules === 'object' && !Array.isArray(rules)) {
-      isDirty = !rules.validator(me.state.value);
+      isDirty = (always === undefined) ? !rules.validator(me.state.value) : !always;
       errMsg = rules.errMsg;
     } else if (Array.isArray(rules)) {
       for (let i = 0; i < rules.length; i++) {
-        isDirty = !rules[i].validator(me.state.value);
+        isDirty = (always === undefined) ? !rules[i].validator(me.state.value) : !always;
         if (isDirty) {
           errMsg = rules[i].errMsg;
           break;

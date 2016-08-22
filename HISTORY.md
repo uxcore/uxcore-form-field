@@ -1,5 +1,9 @@
 # history
 
+## 0.1.9
+
+* `CHANGED` doValidate support always params. (form [#114](https://github.com/uxcore/uxcore-form/issues/114))
+
 ## 0.1.8
 
 * `FIX` fix key warnings.

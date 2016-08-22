@@ -169,6 +169,35 @@ describe('FormField', () => {
         }, 50);
     });
 
+    it('when always is defined, doValidate should follow always', (done) => {
+        const Demo = React.createClass({
+            render() {
+                return (
+                    <Form>
+                        <FormField ref="formfield" jsxname="test" jsxrules={[
+                            {validator: function() {return true;}, errMsg: 'error test'},
+                            {validator: function() {return false;}, errMsg: 'error test2'},
+                        ]} instantValidate={false} />
+                        <FormField ref="formfield2" jsxname="test" jsxrules={[
+                            {validator: function() {return true;}, errMsg: 'error test'},
+                            {validator: function() {return false;}, errMsg: 'error test2'},
+                        ]} instantValidate={false} />
+                    </Form>
+                )
+            }
+        });
+        instance = ReactDOM.render(<Demo />, div);
+        const formFieldNode = instance.refs.formfield;
+        const formFieldNode2 = instance.refs.formfield2;
+        formFieldNode.doValidate(true, true);
+        formFieldNode2.doValidate(true, false);
+        setTimeout(() => {
+            expect(formFieldNode.getErrorNode()).to.be(undefined);
+            expect(formFieldNode2.getErrorNode().innerHTML).to.be('error test');
+            done();
+        }, 50);
+    });
+
     it('validate should return true when no jsxruls', (done) => {
         const Demo = React.createClass({
             render() {
