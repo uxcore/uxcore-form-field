@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import Form from 'uxcore-form/build/Form';
 import FormField from '../src';
 import $ from 'jquery';
+import Promise from 'lie';
 
 describe('FormField', () => {
   let div;
@@ -259,16 +260,31 @@ describe('FormField', () => {
                 reject('测试出错');
               }}
             />
+            <FormField
+              ref="formfield2"
+              jsxname="test2"
+              jsxrules={(value, resolve) => {
+                resolve();
+              }}
+            />
           </Form>
         );
       },
     });
     instance = ReactDOM.render(<Demo />, div);
     const formFieldNode = instance.refs.formfield;
-    formFieldNode.doValidate(undefined, undefined, true).then((success) => {
-      expect(success).to.be(false);
+    const formFieldNode2 = instance.refs.formfield2;
+    Promise.all([
+      formFieldNode.doValidate(undefined, undefined, true),
+      formFieldNode2.doValidate(undefined, undefined, true),
+    ]).then((result) => {
+      expect(result[0]).to.be(false);
+      expect(result[1]).to.be(true);
       expect(formFieldNode.getErrorNode().innerHTML).to.be('测试出错');
+      expect(formFieldNode2.getErrorNode()).to.be(undefined);
       done();
+    }).catch((err) => {
+      console.error(err.stack);
     });
   });
 

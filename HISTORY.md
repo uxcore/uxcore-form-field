@@ -1,5 +1,9 @@
 # history
 
+## 0.2.1
+
+* `FIXED` resolve will fail in async validation mode.
+
 ## 0.2.0
 
 * `CHANGED` remove `_isEqual` method

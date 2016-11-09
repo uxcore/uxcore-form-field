@@ -161,7 +161,7 @@ class FormField extends React.Component {
               resolve(false);
             }
           }).catch((err) => {
-            if (err & err.stack) {
+            if (typeof err === 'object' && err.stack) {
               console.error(err.stack);
             } else {
               me.setState({
