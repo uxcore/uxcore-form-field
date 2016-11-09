@@ -3,6 +3,7 @@ const Constants = require('uxcore-const');
 const classnames = require('classnames');
 const assign = require('object-assign');
 const deepequal = require('deep-equal');
+const Promise = require('lie');
 
 class FormField extends React.Component {
 
@@ -29,7 +30,7 @@ class FormField extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const me = this;
-    if (!me.isEqual(nextProps.value, me.props.value)) {
+    if (!deepequal(nextProps.value, me.props.value)) {
       me.handleDataChange(nextProps.value, true, true);
     }
   }
@@ -46,19 +47,19 @@ class FormField extends React.Component {
   }
 
   getLabelNode() {
-    return this.refs.label;
+    return this.label;
   }
 
   getTipsNode() {
-    return this.refs.tips;
+    return this.tips;
   }
 
   getRequiredNode() {
-    return this.refs.required;
+    return this.required;
   }
 
   getErrorNode() {
-    return this.refs.error;
+    return this.errorNode;
   }
 
   getName() {
@@ -74,7 +75,7 @@ class FormField extends React.Component {
     me.setState({
       value,
       formatValue: me.formatValue(value),
-      error: !!fromReset ? false : me.state.error,
+      error: fromReset ? false : me.state.error,
       /*
        * why set state fromReset? some field like editor cannot be reset in the common way
        * so set this state to tell the field that you need to reset by yourself.
@@ -87,12 +88,19 @@ class FormField extends React.Component {
     });
   }
 
+  saveRef(refName) {
+    const me = this;
+    return (c) => {
+      me[refName] = c;
+    };
+  }
+
   /**
    * selectFormField depends on this method
    */
-  _isEqual(a, b) {
-    return deepequal(a, b);
-  }
+  // _isEqual(a, b) {
+  //   return deepequal(a, b);
+  // }
 
   /*
    * Fired when field value changes，update form's state and then trigger re-render.
@@ -107,7 +115,7 @@ class FormField extends React.Component {
       if (!fromReset && !me.props.standalone && !me.props.validateOnBlur) {
         pass = me.doValidate();
       }
-      if (!!me.props.handleDataChange) {
+      if (me.props.handleDataChange) {
         me.props.handleDataChange(me, {
           value,
           pass,
@@ -122,7 +130,7 @@ class FormField extends React.Component {
    * if no rule, it means validate pass.
    */
 
-  doValidate(force, always) {
+  doValidate(force, always, async = false) {
     const me = this;
     let instant = true;
     if ('instantValidate' in me.props) {
@@ -135,12 +143,34 @@ class FormField extends React.Component {
     // eternalsky@2016.03.15
     if (force === true || (force !== false && instant)) {
       if (me.props.jsxrules) {
-        const error = me.isDirty(always);
-        me.setState({
-          error: error.isDirty,
-          errMsg: error.errMsg,
+        if (!async) {
+          const error = me.isDirty(always);
+          me.setState({
+            error: error.isDirty,
+            errMsg: error.errMsg,
+          });
+          return !error.isDirty;
+        }
+        return new Promise((resolve) => {
+          me.isDirty(always, async).then((errMsg) => {
+            if (typeof errMsg === 'string') {
+              me.setState({
+                error: true,
+                errMsg,
+              });
+              resolve(false);
+            }
+          }).catch((err) => {
+            if (err & err.stack) {
+              console.error(err.stack);
+            } else {
+              me.setState({
+                error: false,
+              });
+              resolve(true);
+            }
+          });
         });
-        return !error.isDirty;
       }
       return true;
     }
@@ -154,32 +184,41 @@ class FormField extends React.Component {
    * unless all rules pass
    */
 
-  isDirty(always) {
+  isDirty(always, async = false) {
     const me = this;
     const rules = me.props.jsxrules;
     let isDirty = false;
     let errMsg = '';
-    if (typeof rules === 'object' && !Array.isArray(rules)) {
-      isDirty = (always === undefined) ? !rules.validator(me.state.value) : !always;
-      errMsg = rules.errMsg;
-    } else if (Array.isArray(rules)) {
-      for (let i = 0; i < rules.length; i++) {
-        isDirty = (always === undefined) ? !rules[i].validator(me.state.value) : !always;
-        if (isDirty) {
-          errMsg = rules[i].errMsg;
-          break;
+    if (!async) {
+      if (typeof rules === 'object' && !Array.isArray(rules)) {
+        isDirty = (always === undefined) ? !rules.validator(me.state.value) : !always;
+        errMsg = rules.errMsg;
+      } else if (Array.isArray(rules)) {
+        for (let i = 0; i < rules.length; i++) {
+          isDirty = (always === undefined) ? !rules[i].validator(me.state.value) : !always;
+          if (isDirty) {
+            errMsg = rules[i].errMsg;
+            break;
+          }
         }
       }
+      return {
+        isDirty,
+        errMsg,
+      };
     }
-    return {
-      isDirty,
-      errMsg,
-    };
+    if (typeof rules !== 'function') {
+      console.error('Form Validate: In async validation mode,'
+        + ' jsxrules(rules) should be a function');
+      return {
+        isDirty: false,
+      };
+    }
+    return new Promise((resolve, reject) => {
+      rules(me.state.value, reject, resolve);
+    });
   }
 
-  isEqual(a, b) {
-    return deepequal(a, b);
-  }
 
   addSpecificClass() {
     return this.props.jsxprefixCls;
@@ -200,16 +239,16 @@ class FormField extends React.Component {
     if (me.props.standalone && me.props.message && me.props.message.type === 'tip') {
       return (
         <li className="kuma-uxform-tips">
-          <i className="kuma-icon kuma-icon-information"></i>
-          <span ref="tips">{me.props.message.message}</span>
+          <i className="kuma-icon kuma-icon-information" />
+          <span ref={me.saveRef('tips')}>{me.props.message.message}</span>
         </li>
       );
     }
     if (!!this.props.jsxtips && !me.state.error) {
       return (
         <li className="kuma-uxform-tips">
-          <i className="kuma-icon kuma-icon-information"></i>
-          <span ref="tips">{this.props.jsxtips}</span>
+          <i className="kuma-icon kuma-icon-information" />
+          <span ref={me.saveRef('tips')}>{this.props.jsxtips}</span>
         </li>
       );
     }
@@ -229,16 +268,16 @@ class FormField extends React.Component {
     if (me.props.standalone && me.props.message && me.props.message.type === 'error') {
       return (
         <li className="kuma-uxform-errormsg">
-          <i className="kuma-icon kuma-icon-error"></i>
-          <span ref="error">{me.props.message.message}</span>
+          <i className="kuma-icon kuma-icon-error" />
+          <span ref={me.saveRef('errorNode')}>{me.props.message.message}</span>
         </li>
       );
     }
-    if (!!me.state.error) {
+    if (me.state.error) {
       return (
         <li className="kuma-uxform-errormsg">
-          <i className="kuma-icon kuma-icon-error"></i>
-          <span ref="error">{me.state.errMsg}</span>
+          <i className="kuma-icon kuma-icon-error" />
+          <span ref={me.saveRef('errorNode')}>{me.state.errMsg}</span>
         </li>
       );
     }
@@ -260,12 +299,12 @@ class FormField extends React.Component {
             'label-match-input-height': me.props.labelMatchInputHeight,
           })}
         >
-          <span className="required" ref="required">
+          <span className="required" ref={me.saveRef('required')}>
             {(me.props.required && mode === Constants.MODE.EDIT) ? '* ' : ''}
           </span>
           <span
             className="label-content"
-            ref="label"
+            ref={me.saveRef('label')}
             dangerouslySetInnerHTML={{
               __html: me.props.jsxlabel,
             }}
@@ -311,7 +350,7 @@ class FormField extends React.Component {
             className={classnames({
               'kuma-label': true,
             })}
-          ></label> : null}
+          /> : null}
           <ul>
             {me.renderTips()}
             {me.renderErrorMsg()}
@@ -342,7 +381,7 @@ class FormField extends React.Component {
     const specificCls = me.addSpecificClass();
     const style = {};
     if (!me.props.standalone) {
-      style.width = `${me.props.jsxflex / me.props.totalFlex * 100}%`;
+      style.width = `${(me.props.jsxflex / me.props.totalFlex) * 100}%`;
     }
     return (
       <div
@@ -354,7 +393,7 @@ class FormField extends React.Component {
           display: me.props.jsxshow ? 'table' : 'none',
         })}
       >
-          {me.renderContent()}
+        {me.renderContent()}
       </div>
     );
   }
@@ -375,7 +414,11 @@ FormField.propTypes = {
   jsxplaceholder: React.PropTypes.string,
   jsxlabel: React.PropTypes.string,
   jsxtips: React.PropTypes.string,
-  jsxrules: React.PropTypes.oneOfType([React.PropTypes.object, React.PropTypes.array]),
+  jsxrules: React.PropTypes.oneOfType([
+    React.PropTypes.object,
+    React.PropTypes.array,
+    React.PropTypes.func,
+  ]),
   totalFlex: React.PropTypes.number,
   standalone: React.PropTypes.bool,
   required: React.PropTypes.bool,

@@ -1,5 +1,10 @@
 # history
 
+## 0.2.0
+
+* `CHANGED` remove `_isEqual` method
+* `NEW` support async validation
+
 ## 0.1.9
 
 * `CHANGED` doValidate support always params. (form [#114](https://github.com/uxcore/uxcore-form/issues/114))
