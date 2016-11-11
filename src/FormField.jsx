@@ -31,7 +31,7 @@ class FormField extends React.Component {
   componentWillReceiveProps(nextProps) {
     const me = this;
     if (!deepequal(nextProps.value, me.props.value)) {
-      me.handleDataChange(nextProps.value, true, true);
+      me.handleDataChange(nextProps.value, false, true);
     }
   }
 

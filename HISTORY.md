@@ -1,5 +1,9 @@
 # history
 
+## 0.2.2
+
+* `CHANGED` validation will be triggered if value is changed.
+
 ## 0.2.1
 
 * `FIXED` resolve will fail in async validation mode.
