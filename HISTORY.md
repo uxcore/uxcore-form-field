@@ -1,5 +1,9 @@
 # history
 
+## 0.2.3
+
+* `FIXED` handleDataChange logic bug in async validate mode.
+
 ## 0.2.2
 
 * `CHANGED` validation will be triggered if value is changed.

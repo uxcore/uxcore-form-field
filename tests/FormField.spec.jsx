@@ -1,12 +1,14 @@
 /* eslint-disable react/no-multi-comp */
 /* eslint-disable react/prefer-es6-class */
+/* eslint-disable react/no-string-refs */
+
 import expect from 'expect.js';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Form from 'uxcore-form/build/Form';
-import FormField from '../src';
 import $ from 'jquery';
-import Promise from 'lie';
+
+import FormField from '../src';
 
 describe('FormField', () => {
   let div;
@@ -252,7 +254,7 @@ describe('FormField', () => {
     const Demo = React.createClass({
       render() {
         return (
-          <Form>
+          <Form asyncValidate>
             <FormField
               ref="formfield"
               jsxname="test"
@@ -274,18 +276,13 @@ describe('FormField', () => {
     instance = ReactDOM.render(<Demo />, div);
     const formFieldNode = instance.refs.formfield;
     const formFieldNode2 = instance.refs.formfield2;
-    Promise.all([
-      formFieldNode.doValidate(undefined, undefined, true),
-      formFieldNode2.doValidate(undefined, undefined, true),
-    ]).then((result) => {
-      expect(result[0]).to.be(false);
-      expect(result[1]).to.be(true);
+    formFieldNode.handleDataChange('1');
+    formFieldNode2.handleDataChange('1');
+    setTimeout(() => {
       expect(formFieldNode.getErrorNode().innerHTML).to.be('测试出错');
       expect(formFieldNode2.getErrorNode()).to.be(undefined);
       done();
-    }).catch((err) => {
-      console.error(err.stack);
-    });
+    }, 50);
   });
 
   it('labelMatchInputHeight', (done) => {

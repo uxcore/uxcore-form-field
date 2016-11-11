@@ -5,6 +5,7 @@ const assign = require('object-assign');
 const deepequal = require('deep-equal');
 const Promise = require('lie');
 
+/* eslint-disable class-methods-use-this */
 class FormField extends React.Component {
 
   constructor(props) {
@@ -109,11 +110,15 @@ class FormField extends React.Component {
 
   handleDataChange(value, fromReset, silence) {
     const me = this;
+    const { asyncValidate } = me.props;
     me.setValue(value, fromReset, () => {
       let pass = true;
       // validateOnBlur only support InputFormField & TextAraeFormField now
       if (!fromReset && !me.props.standalone && !me.props.validateOnBlur) {
-        pass = me.doValidate();
+        const validatePass = me.doValidate();
+        if (!asyncValidate) {
+          pass = validatePass;
+        }
       }
       if (me.props.handleDataChange) {
         me.props.handleDataChange(me, {
@@ -130,8 +135,9 @@ class FormField extends React.Component {
    * if no rule, it means validate pass.
    */
 
-  doValidate(force, always, async = false) {
+  doValidate(force, always) {
     const me = this;
+    const async = me.props.asyncValidate || false;
     let instant = true;
     if ('instantValidate' in me.props) {
       instant = me.props.instantValidate;
