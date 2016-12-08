@@ -1,5 +1,9 @@
 # history
 
+## 0.2.4
+
+* `CHANGED` add new method `getFieldCore`
+
 ## 0.2.3
 
 * `FIXED` handleDataChange logic bug in async validate mode.

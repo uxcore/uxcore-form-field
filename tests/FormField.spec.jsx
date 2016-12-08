@@ -300,4 +300,20 @@ describe('FormField', () => {
     expect($('.kuma-uxform-tip-box').length).not.to.be(0);
     done();
   });
+
+  it('should get field core', (done) => {
+    const Demo = React.createClass({
+      render() {
+        return (
+          <Form>
+            <FormField ref="formfield" jsxname="test" />
+          </Form>
+        );
+      },
+    });
+    instance = ReactDOM.render(<Demo />, div);
+    const formFieldNode = instance.refs.formfield;
+    expect(formFieldNode.getFieldCore().className).to.be('kuma-uxform-field-core');
+    done();
+  });
 });

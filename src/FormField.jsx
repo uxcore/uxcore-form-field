@@ -63,6 +63,10 @@ class FormField extends React.Component {
     return this.errorNode;
   }
 
+  getFieldCore() {
+    return this.fieldCore;
+  }
+
   getName() {
     return this.props.jsxname;
   }
@@ -342,7 +346,10 @@ class FormField extends React.Component {
               'has-error': !!me.state.error,
             })}
           >
-            <li className="kuma-uxform-field-core">{me.renderField()}</li>
+            <li
+              ref={me.saveRef('fieldCore')}
+              className="kuma-uxform-field-core"
+            >{me.renderField()}</li>
           </ul>
         </div>,
         <div
@@ -375,7 +382,11 @@ class FormField extends React.Component {
           'has-error': !!me.state.error,
         })}
       >
-        <li key="core" className="kuma-uxform-field-core">{me.renderField()}</li>
+        <li
+          key="core"
+          ref={me.saveRef('fieldCore')}
+          className="kuma-uxform-field-core"
+        >{me.renderField()}</li>
         {me.renderTips()}
         {me.renderErrorMsg()}
       </ul>,
