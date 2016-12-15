@@ -231,7 +231,7 @@ describe('FormField', () => {
     }, 50);
   });
 
-  it('validate should return true when no jsxruls', (done) => {
+  it('validate should return true when no jsxrules', (done) => {
     const Demo = React.createClass({
       render() {
         return (

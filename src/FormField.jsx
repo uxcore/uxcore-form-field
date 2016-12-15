@@ -231,7 +231,7 @@ class FormField extends React.Component {
 
 
   addSpecificClass() {
-    return this.props.jsxprefixCls;
+    return '';
   }
 
   /*
@@ -403,7 +403,8 @@ class FormField extends React.Component {
     return (
       <div
         className={classnames({
-          [specificCls]: true,
+          [specificCls]: !!specificCls,
+          [me.props.jsxprefixCls]: true,
           [me.props.className]: !!me.props.className,
         })}
         style={assign({}, style, {

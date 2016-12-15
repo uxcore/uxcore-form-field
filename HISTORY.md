@@ -1,5 +1,9 @@
 # history
 
+## 0.2.5
+
+* `CHANGED` optimize `addSpecificClass` logic
+
 ## 0.2.4
 
 * `CHANGED` add new method `getFieldCore`

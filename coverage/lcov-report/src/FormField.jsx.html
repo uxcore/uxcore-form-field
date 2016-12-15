@@ -20,14 +20,14 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">94.18% </span>
+        <span class="strong">94.71% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>178/189</span>
+        <span class='fraction'>179/189</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">77.4% </span>
+        <span class="strong">78.08% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>113/146</span>
+        <span class='fraction'>114/146</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">97.5% </span>
@@ -548,13 +548,17 @@
 503
 504
 505
-506</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+506
+507
+508
+509
+510</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">64×</span>
+<span class="cline-any cline-yes">96×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">19×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -664,9 +668,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">72×</span>
-<span class="cline-any cline-yes">72×</span>
-<span class="cline-any cline-yes">144×</span>
+<span class="cline-any cline-yes">103×</span>
+<span class="cline-any cline-yes">103×</span>
+<span class="cline-any cline-yes">206×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -989,6 +993,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">32×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1059,7 +1067,7 @@ var _typeof = typeof Symbol === "function" &amp;&amp; <span class="branch-1 cbra
 &nbsp;
 function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i &lt; keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); <span class="missing-if-branch" title="if path not taken" >I</span>if (value &amp;&amp; value.configurable &amp;&amp; <span class="branch-2 cbranch-no" title="branch not covered" >obj[key] === undefined)</span> { <span class="cstat-no" title="statement not covered" >Object.defineProperty(obj, key, value); </span>} } return obj; }
 &nbsp;
-function _defineProperty(obj, key, value) { <span class="missing-if-branch" title="if path not taken" >I</span>if (key in obj) { <span class="cstat-no" title="statement not covered" >Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); </span>} else { obj[key] = value; } return obj; }
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 &nbsp;
 function _classCallCheck(instance, Constructor) { <span class="missing-if-branch" title="if path not taken" >I</span>if (!(instance instanceof Constructor)) { <span class="cstat-no" title="statement not covered" >throw new TypeError("Cannot call a class as a function"); </span>} }
 &nbsp;
@@ -1486,7 +1494,11 @@ var FormField = function (_React$Component) {
       },
       React.createElement(
         'li',
-        { key: 'core', className: 'kuma-uxform-field-core' },
+        {
+          key: 'core',
+          ref: me.saveRef('fieldCore'),
+          className: 'kuma-uxform-field-core'
+        },
         me.renderField()
       ),
       me.renderTips(),
@@ -1506,7 +1518,7 @@ var FormField = function (_React$Component) {
     return React.createElement(
       'div',
       {
-        className: classnames((_classnames = {}, _defineProperty(_classnames, specificCls, true), _defineProperty(_classnames, me.props.className, !!me.props.className), _classnames)),
+        className: classnames((_classnames = {}, _defineProperty(_classnames, specificCls, !!specificCls), _defineProperty(_classnames, me.props.jsxprefixCls, true), _defineProperty(_classnames, me.props.className, !!me.props.className), _classnames)),
         style: assign({}, style, {
           display: me.props.jsxshow ? 'table' : <span class="branch-1 cbranch-no" title="branch not covered" >'none'</span>
         })
@@ -1564,7 +1576,7 @@ module.exports = FormField;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Dec 08 2016 18:10:12 GMT+0800 (CST)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Dec 15 2016 19:30:11 GMT+0800 (CST)
 </div>
 </div>
 <script src="../prettify.js"></script>
