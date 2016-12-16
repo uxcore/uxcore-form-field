@@ -424,6 +424,7 @@ FormField.propTypes = {
   detachFormField: React.PropTypes.func,
   value: React.PropTypes.any,
   jsxshow: React.PropTypes.bool,
+  mode: React.PropTypes.string,
   jsxmode: React.PropTypes.string,
   jsxshowLabel: React.PropTypes.bool,
   jsxprefixCls: React.PropTypes.string,

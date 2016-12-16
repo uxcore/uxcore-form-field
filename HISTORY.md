@@ -1,5 +1,9 @@
 # history
 
+## 0.2.6
+
+* `NEW` add new API `createFormField`
+
 ## 0.2.5
 
 * `CHANGED` optimize `addSpecificClass` logic

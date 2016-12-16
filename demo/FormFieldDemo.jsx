@@ -11,6 +11,9 @@ const FormField = require('../src');
 const Form = require('uxcore-form/build/Form');
 const FormRow = require('uxcore-form-row');
 
+const { createFormField } = FormField;
+const CustomField = createFormField();
+
 class Demo extends React.Component {
 
   constructor(props) {
@@ -35,6 +38,7 @@ class Demo extends React.Component {
             />
             <FormField jsxname="test2" jsxlabel="表单2" />
           </FormRow>
+          <CustomField jsxname="custom" jsxlabel="custom" placeholder="111" />
         </Form>
         <FormField
           standalone
@@ -45,6 +49,7 @@ class Demo extends React.Component {
             message: 'error test',
           }}
         />
+
       </div>
     );
   }

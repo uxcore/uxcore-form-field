@@ -104,5 +104,4 @@ describe('Standalone', () => {
     expect(formFieldNode.getProps().standalone).to.be(true);
     done();
   });
-})
-;
+});

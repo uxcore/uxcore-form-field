@@ -1,6 +1,6 @@
 {
  "name": "uxcore-form-field",
- "version": "0.2.5",
+ "version": "0.2.6",
  "description": "uxcore-form-field component for uxcore.",
  "repository": "https://github.com/uxcore/uxcore-form-field.git",
  "author": "eternalsky",
@@ -32,12 +32,8 @@
  ],
  "devDependencies": {
   "console-polyfill": "^0.2.2",
+  "enzyme": "^2.6.0",
   "es5-shim": "^4.5.8",
-  "eslint": "^2.13.1",
-  "eslint-config-airbnb": "^9.0.1",
-  "eslint-plugin-import": "^1.12.0",
-  "eslint-plugin-jsx-a11y": "^1.5.5",
-  "eslint-plugin-react": "^5.2.2",
   "expect.js": "~0.3.1",
   "jquery": "^1.12.4",
   "kuma-base": "1.x",
