@@ -99,4 +99,27 @@ describe('create form field', () => {
     );
     expect(instance.find('.kuma-uxform-field-core').contains(<span className="view" />)).to.be(true);
   });
+
+  it('should not pass valuePropName/changePropName to the component', () => {
+    const Input = props =>
+      <input
+        className="kuma-input"
+        {...props}
+        value={props.text}
+        onChange={(e) => { props.onChange(e.target.value); }}
+      />;
+
+    Input.propTypes = {
+      text: React.PropTypes.string,
+      onChange: React.PropTypes.func,
+    };
+    const CustomField = createFormField({
+      valuePropName: 'text',
+      component: <Input />,
+    });
+    instance = mount(
+      <CustomField standalone text="1" />
+    );
+    expect(instance.find('Input').prop('text')).not.to.be(1);
+  });
 });

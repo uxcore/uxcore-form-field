@@ -35,9 +35,11 @@ const createFormField = (options = {}) => {
       const me = this;
       const mode = me.props.jsxmode || me.props.mode;
       const props = { ...me.props };
-      FormFieldPropKeys.forEach((key) => {
-        delete props[key];
-      });
+      FormFieldPropKeys
+        .concat([newOptions.valuePropName, newOptions.changePropName])
+        .forEach((key) => {
+          delete props[key];
+        });
 
       if (mode === Constants.MODE.VIEW) {
         return newOptions.renderView(me.state.value);
