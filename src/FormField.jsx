@@ -250,7 +250,7 @@ class FormField extends React.Component {
       return (
         <li className="kuma-uxform-tips">
           <i className="kuma-icon kuma-icon-information" />
-          <span ref={me.saveRef('tips')}>{me.props.message.message}</span>
+          <span ref={me.saveRef('tips')} className="kuma-uxform-message-content">{me.props.message.message}</span>
         </li>
       );
     }
@@ -258,7 +258,7 @@ class FormField extends React.Component {
       return (
         <li className="kuma-uxform-tips">
           <i className="kuma-icon kuma-icon-information" />
-          <span ref={me.saveRef('tips')}>{this.props.jsxtips}</span>
+          <span className="kuma-uxform-message-content" ref={me.saveRef('tips')}>{this.props.jsxtips}</span>
         </li>
       );
     }
@@ -279,7 +279,7 @@ class FormField extends React.Component {
       return (
         <li className="kuma-uxform-errormsg">
           <i className="kuma-icon kuma-icon-error" />
-          <span ref={me.saveRef('errorNode')}>{me.props.message.message}</span>
+          <span ref={me.saveRef('errorNode')} className="kuma-uxform-message-content">{me.props.message.message}</span>
         </li>
       );
     }
@@ -287,7 +287,7 @@ class FormField extends React.Component {
       return (
         <li className="kuma-uxform-errormsg">
           <i className="kuma-icon kuma-icon-error" />
-          <span ref={me.saveRef('errorNode')}>{me.state.errMsg}</span>
+          <span ref={me.saveRef('errorNode')} className="kuma-uxform-message-content">{me.state.errMsg}</span>
         </li>
       );
     }
@@ -449,6 +449,7 @@ FormField.defaultProps = {
   jsxshow: true,
   jsxshowLabel: true,
   jsxprefixCls: 'kuma-uxform-field',
+  formPrefixCls: 'kuma-uxform',
   jsxflex: 1,
   jsxname: '',
   jsxplaceholder: '',

@@ -1,5 +1,9 @@
 # history
 
+## 0.2.8
+
+* `CHANGED` add additional className for message content.
+
 ## 0.2.7
 
 * `CHANGED` createFormField will prevent `valuePropName` & `changePropName` passing to the component
