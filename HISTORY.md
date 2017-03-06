@@ -1,5 +1,9 @@
 # history
 
+## 0.2.9
+
+* `CHANGED` add more propTypes validation
+
 ## 0.2.8
 
 * `CHANGED` add additional className for message content.

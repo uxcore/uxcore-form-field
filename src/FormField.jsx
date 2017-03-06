@@ -421,7 +421,6 @@ FormField.propTypes = {
   instantValidate: React.PropTypes.bool,
   verticalAlign: React.PropTypes.bool,
   labelMatchInputHeight: React.PropTypes.bool,
-  detachFormField: React.PropTypes.func,
   value: React.PropTypes.any,
   jsxshow: React.PropTypes.bool,
   mode: React.PropTypes.string,
@@ -441,6 +440,12 @@ FormField.propTypes = {
   totalFlex: React.PropTypes.number,
   standalone: React.PropTypes.bool,
   required: React.PropTypes.bool,
+  attachFormField: React.PropTypes.func,
+  detachFormField: React.PropTypes.func,
+  getValues: React.PropTypes.func,
+  resetValues: React.PropTypes.func,
+  handleDataChange: React.PropTypes.func,
+  style: React.PropTypes.object,
 };
 
 FormField.defaultProps = {
