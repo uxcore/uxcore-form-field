@@ -329,6 +329,7 @@ class FormField extends React.Component {
     const me = this;
     const mode = me.props.jsxmode || me.props.mode;
     const align = me.props.verticalAlign || me.props.jsxVerticalAlign;
+    const { jsxshowLabel } = me.props;
     if (me.props.labelMatchInputHeight) {
       return [
         <div
@@ -359,7 +360,7 @@ class FormField extends React.Component {
             display: 'table',
           }}
         >
-          {!align ? <label
+          {(!align && jsxshowLabel) ? <label
             className={classnames({
               'kuma-label': true,
             })}

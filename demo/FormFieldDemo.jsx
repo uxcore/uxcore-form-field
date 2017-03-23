@@ -38,7 +38,7 @@ class Demo extends React.Component {
             />
             <FormField jsxname="test2" jsxlabel="表单2" />
           </FormRow>
-          <CustomField jsxname="custom" jsxlabel="custom" placeholder="111" />
+          <CustomField jsxname="custom" jsxlabel="custom" placeholder="111" jsxtips="提示" verticalAlign />
         </Form>
         <FormField
           standalone

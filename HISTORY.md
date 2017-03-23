@@ -1,5 +1,9 @@
 # history
 
+## 0.2.10 / 2017-03-23
+
+* `FIXED` label position bug if jsxshowLabel is false
+
 ## 0.2.9
 
 * `CHANGED` add more propTypes validation
