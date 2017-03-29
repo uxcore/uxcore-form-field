@@ -1,5 +1,10 @@
 # history
 
+## 0.2.11 / 2017-03-29
+
+* `FIXED` createFormField default renderView does not return value
+* `CHANGED` labelMatchInputHeight only work in edit mode
+
 ## 0.2.10 / 2017-03-23
 
 * `FIXED` label position bug if jsxshowLabel is false

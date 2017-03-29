@@ -306,7 +306,7 @@ class FormField extends React.Component {
           className={classnames({
             'kuma-label': true,
             'vertical-align': align,
-            'label-match-input-height': me.props.labelMatchInputHeight,
+            'label-match-input-height': (me.props.labelMatchInputHeight && mode === Constants.MODE.EDIT),
           })}
         >
           <span className="required" ref={me.saveRef('required')}>
@@ -330,7 +330,7 @@ class FormField extends React.Component {
     const mode = me.props.jsxmode || me.props.mode;
     const align = me.props.verticalAlign || me.props.jsxVerticalAlign;
     const { jsxshowLabel } = me.props;
-    if (me.props.labelMatchInputHeight) {
+    if (me.props.labelMatchInputHeight && mode === Constants.MODE.EDIT) {
       return [
         <div
           key="content"

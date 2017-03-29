@@ -25,7 +25,11 @@ class Demo extends React.Component {
   render() {
     return (
       <div>
-        <Form>
+        <Form
+          jsxvalues={{
+            custom: '111',
+          }}
+        >
           <FormRow>
             <FormField
               jsxname="test1"
@@ -39,8 +43,10 @@ class Demo extends React.Component {
             <FormField jsxname="test2" jsxlabel="表单2" />
           </FormRow>
           <CustomField
+            jsxmode="view"
             jsxname="custom"
-            jsxlabel="custom"
+            jsxlabel="字很多字很多字很多字很多字"
+            labelMatchInputHeight
             placeholder="111"
             jsxtips="提示"
           />

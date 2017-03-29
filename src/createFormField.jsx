@@ -23,7 +23,7 @@ const defaultOptions = {
   fieldName: 'CustomFormField',
   component: <Input />,
   processValue: value => value,
-  renderView: (value) => { JSON.stringify(value); },
+  renderView: value => (typeof value === 'object' ? JSON.stringify(value) : value),
 };
 
 const FormFieldPropKeys = Object.keys(FormField.propTypes);
