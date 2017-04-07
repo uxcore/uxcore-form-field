@@ -1,5 +1,9 @@
 # history
 
+## 0.2.12 / 2017-04-07
+
+* `FIXED` when labelMatchInputHeight is set, empty tips will take up place.
+
 ## 0.2.11 / 2017-03-29
 
 * `FIXED` createFormField default renderView does not return value

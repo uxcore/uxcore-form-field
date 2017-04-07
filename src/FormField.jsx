@@ -331,6 +331,8 @@ class FormField extends React.Component {
     const align = me.props.verticalAlign || me.props.jsxVerticalAlign;
     const { jsxshowLabel } = me.props;
     if (me.props.labelMatchInputHeight && mode === Constants.MODE.EDIT) {
+      const tips = me.renderTips();
+      const errorMsg = me.renderErrorMsg();
       return [
         <div
           key="content"
@@ -353,7 +355,7 @@ class FormField extends React.Component {
             >{me.renderField()}</li>
           </ul>
         </div>,
-        <div
+        (tips || errorMsg) ? <div
           key="tip"
           className="kuma-uxform-tip-box"
           style={{
@@ -369,7 +371,7 @@ class FormField extends React.Component {
             {me.renderTips()}
             {me.renderErrorMsg()}
           </ul>
-        </div>,
+        </div> : null,
       ];
     }
     return [

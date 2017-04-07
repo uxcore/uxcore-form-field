@@ -43,7 +43,6 @@ class Demo extends React.Component {
             <FormField jsxname="test2" jsxlabel="表单2" />
           </FormRow>
           <CustomField
-            jsxmode="view"
             jsxname="custom"
             jsxlabel="字很多字很多字很多字很多字"
             labelMatchInputHeight
