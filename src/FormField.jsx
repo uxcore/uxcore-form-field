@@ -399,6 +399,7 @@ class FormField extends React.Component {
   render() {
     const me = this;
     const specificCls = me.addSpecificClass();
+    const mode = me.props.jsxmode || me.props.mode;
     const style = {};
     if (!me.props.standalone) {
       style.width = `${(me.props.jsxflex / me.props.totalFlex) * 100}%`;
@@ -409,6 +410,7 @@ class FormField extends React.Component {
           [specificCls]: !!specificCls,
           [me.props.jsxprefixCls]: true,
           [me.props.className]: !!me.props.className,
+          [`${me.props.jsxprefixCls}__view`]: mode === Constants.MODE.VIEW,
         })}
         style={assign({}, style, {
           display: me.props.jsxshow ? 'table' : 'none',

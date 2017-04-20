@@ -1,5 +1,9 @@
 # history
 
+## 0.2.13 / 2017-04-20
+
+* `CHANEGD` add view className in root mode. 
+
 ## 0.2.12 / 2017-04-07
 
 * `FIXED` when labelMatchInputHeight is set, empty tips will take up place.
