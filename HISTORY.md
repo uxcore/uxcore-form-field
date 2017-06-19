@@ -1,5 +1,9 @@
 # history
 
+## 0.2.14 / 2017-06-19
+
+* `CHANGED` support `data-*` props
+
 ## 0.2.13 / 2017-04-20
 
 * `CHANEGD` add view className in root mode. 

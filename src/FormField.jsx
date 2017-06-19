@@ -242,6 +242,20 @@ class FormField extends React.Component {
     return value;
   }
 
+  getDataProps() {
+    const dataProps = {};
+    Object.keys(this.props).forEach((propName) => {
+      if (/^data\-/.test(propName)) {
+        dataProps[propName] = this.props[propName];
+      }
+    });
+    return dataProps;
+  }
+
+  getDom() {
+    return this.fieldRoot;
+  }
+
   renderTips() {
     const me = this;
     const mode = me.props.jsxmode || me.props.mode;
@@ -400,6 +414,7 @@ class FormField extends React.Component {
     const me = this;
     const specificCls = me.addSpecificClass();
     const mode = me.props.jsxmode || me.props.mode;
+    const dataProps = this.getDataProps();
     const style = {};
     if (!me.props.standalone) {
       style.width = `${(me.props.jsxflex / me.props.totalFlex) * 100}%`;
@@ -415,6 +430,8 @@ class FormField extends React.Component {
         style={assign({}, style, {
           display: me.props.jsxshow ? 'table' : 'none',
         })}
+        ref={(c) => { this.fieldRoot = c; }}
+        {...dataProps}
       >
         {me.renderContent()}
       </div>

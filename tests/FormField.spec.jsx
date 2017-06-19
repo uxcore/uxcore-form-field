@@ -290,7 +290,7 @@ describe('FormField', () => {
       render() {
         return (
           <Form>
-            <FormField ref="formfield" jsxname="test" jsxlabel="test" labelMatchInputHeight />
+            <FormField ref="formfield" jsxname="test" jsxlabel="test" jsxtips="1" labelMatchInputHeight />
           </Form>
         );
       },
@@ -314,6 +314,22 @@ describe('FormField', () => {
     instance = ReactDOM.render(<Demo />, div);
     const formFieldNode = instance.refs.formfield;
     expect(formFieldNode.getFieldCore().className).to.be('kuma-uxform-field-core');
+    done();
+  });
+
+  it('should pass data-* prop', (done) => {
+    const Demo = React.createClass({
+      render() {
+        return (
+          <Form>
+            <FormField ref="formfield" jsxname="test" data-spm="1" />
+          </Form>
+        );
+      },
+    });
+    instance = ReactDOM.render(<Demo />, div);
+    const formFieldNode = instance.refs.formfield;
+    expect(formFieldNode.getDom().getAttribute('data-spm')).to.be('1');
     done();
   });
 });

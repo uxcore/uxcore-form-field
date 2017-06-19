@@ -32,6 +32,7 @@ class Demo extends React.Component {
         >
           <FormRow>
             <FormField
+              data-spm="2"
               jsxname="test1"
               jsxlabel="表单1"
               jsxflex={2}
