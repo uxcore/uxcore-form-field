@@ -290,7 +290,10 @@ describe('FormField', () => {
       render() {
         return (
           <Form>
-            <FormField ref="formfield" jsxname="test" jsxlabel="test" jsxtips="1" labelMatchInputHeight />
+            <FormField
+              ref="formfield" jsxname="test"
+              jsxlabel="test" jsxtips="1" labelMatchInputHeight
+            />
           </Form>
         );
       },

@@ -32,7 +32,7 @@ class FormField extends React.Component {
   componentWillReceiveProps(nextProps) {
     const me = this;
     if (!deepequal(nextProps.value, me.props.value)) {
-      me.handleDataChange(nextProps.value, true, true);
+      me.handleDataChange(nextProps.value, true, true, true);
     }
   }
 
@@ -75,12 +75,12 @@ class FormField extends React.Component {
     return this.formatValue(this.state.value);
   }
 
-  setValue(value, fromReset, next) {
+  setValue(value, fromReset, fromPropsChange, next) {
     const me = this;
     me.setState({
       value,
       formatValue: me.formatValue(value),
-      error: fromReset ? false : me.state.error,
+      error: (fromReset && fromPropsChange === undefined) ? false : me.state.error,
       /*
        * why set state fromReset? some field like editor cannot be reset in the common way
        * so set this state to tell the field that you need to reset by yourself.
@@ -112,10 +112,10 @@ class FormField extends React.Component {
    * @param fromReset {boolean} if handleDataChange is invoked by form's resetValues,
    */
 
-  handleDataChange(value, fromReset, silence) {
+  handleDataChange(value, fromReset, silence, fromPropsChange) {
     const me = this;
     const { asyncValidate } = me.props;
-    me.setValue(value, fromReset, () => {
+    me.setValue(value, fromReset, fromPropsChange, () => {
       let pass = true;
       // validateOnBlur only support InputFormField & TextAraeFormField now
       if (!fromReset && !me.props.standalone && !me.props.validateOnBlur) {

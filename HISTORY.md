@@ -1,5 +1,9 @@
 # history
 
+## 0.2.16 / 2017-08-15
+
+* `CHANGED` instant validation fails to work due to fromRest logic.
+
 ## 0.2.15 / 2017-08-15
 
 * `CHANGED` do not validate when props.value is changed.
