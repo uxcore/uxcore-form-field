@@ -1,6 +1,6 @@
 # history
 
-## 0.2.16 / 2017-08-15
+## 0.2.17 / 2017-08-15
 
 * `CHANGED` instant validation fails to work due to fromRest logic.
 

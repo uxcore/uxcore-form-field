@@ -89,9 +89,15 @@ describe('FormField', () => {
 
   it('validate', (done) => {
     const Demo = React.createClass({
+      getInitialState() {
+        return {};
+      },
       render() {
         return (
-          <Form>
+          <Form
+            jsxonChange={(values, name) => { this.setState({ test: values[name] }); }}
+            jsxvalues={{ test: this.state.test }}
+          >
             <FormField
               ref="formfield"
               jsxname="test"
@@ -231,7 +237,7 @@ describe('FormField', () => {
     }, 50);
   });
 
-  it('validate should return true when no jsxrules', (done) => {
+  it('validation should return true when no jsxrules', (done) => {
     const Demo = React.createClass({
       render() {
         return (

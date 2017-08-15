@@ -332,8 +332,8 @@ BRDA:56,20,0,1
 BRDA:56,20,1,0
 BRDA:63,21,0,16
 BRDA:63,21,1,4
-BRDA:105,22,0,0
-BRDA:105,22,1,7
+BRDA:105,22,0,1
+BRDA:105,22,1,6
 BRDA:105,23,0,7
 BRDA:105,23,1,1
 BRDA:112,24,0,7
@@ -453,7 +453,7 @@ BRDA:477,78,1,12
 BRDA:485,79,0,40
 BRDA:485,79,1,0
 BRF:166
-BRH:133
+BRH:134
 end_of_record
 TN:
 SF:/Users/ens/pwd/uxcore/uxcore-form-field/src/createFormField.jsx

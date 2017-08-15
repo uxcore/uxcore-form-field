@@ -77,16 +77,19 @@ class FormField extends React.Component {
 
   setValue(value, fromReset, fromPropsChange, next) {
     const me = this;
-    me.setState({
+    const newState = {
       value,
       formatValue: me.formatValue(value),
-      error: (fromReset && fromPropsChange === undefined) ? false : me.state.error,
       /*
        * why set state fromReset? some field like editor cannot be reset in the common way
        * so set this state to tell the field that you need to reset by yourself.
        */
       fromReset: !!fromReset,
-    }, () => {
+    };
+    if (fromReset && fromPropsChange === undefined) {
+      newState.error = false;
+    }
+    me.setState(newState, () => {
       if (next && typeof next === 'function') {
         next();
       }
