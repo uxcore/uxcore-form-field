@@ -1,5 +1,9 @@
 # history
 
+## 0.2.15 / 2017-08-15
+
+* `CHANGED` do not validate when props.value is changed.
+
 ## 0.2.14 / 2017-06-19
 
 * `CHANGED` support `data-*` props
