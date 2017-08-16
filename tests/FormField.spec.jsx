@@ -117,6 +117,40 @@ describe('FormField', () => {
     }, 50);
   });
 
+  it('props.value change should not validate', (done) => {
+    const Demo = React.createClass({
+      getInitialState() {
+        return {};
+      },
+      setValue(value) {
+        this.setState({
+          test: value,
+        });
+      },
+      render() {
+        return (
+          <Form
+            jsxonChange={(values, name) => { this.setState({ test: values[name] }); }}
+            jsxvalues={{ test: this.state.test }}
+          >
+            <FormField
+              ref="formfield"
+              jsxname="test"
+              jsxrules={{ validator() { return false; }, errMsg: 'error test' }}
+            />
+          </Form>
+        );
+      },
+    });
+    instance = ReactDOM.render(<Demo />, div);
+    instance.setValue('1');
+    const formFieldNode = instance.refs.formfield;
+    setTimeout(() => {
+      expect(formFieldNode.getErrorNode()).to.be(undefined);
+      done();
+    }, 50);
+  });
+
   it('jsxrules should support array', (done) => {
     class Demo extends React.Component {
       render() {
