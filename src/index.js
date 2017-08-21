@@ -6,7 +6,10 @@
  * All rights reserved.
  */
 
-const FormField = require('./FormField');
-FormField.createFormField = require('./createFormField');
+import FormField from './FormField';
 
-module.exports = FormField;
+import createFormField from './createFormField';
+
+FormField.createFormField = createFormField;
+
+export default FormField;

@@ -1,9 +1,9 @@
-const React = require('react');
-const Constants = require('uxcore-const');
-const classnames = require('classnames');
-const assign = require('object-assign');
-const deepequal = require('deep-equal');
-const Promise = require('lie');
+import React from 'react';
+import Constants from 'uxcore-const';
+import classnames from 'classnames';
+import assign from 'object-assign';
+import deepequal from 'lodash/isEqual';
+import Promise from 'lie';
 
 /* eslint-disable class-methods-use-this */
 class FormField extends React.Component {
@@ -492,4 +492,4 @@ FormField.defaultProps = {
 
 FormField.displayName = 'FormField';
 
-module.exports = FormField;
+export default FormField;

@@ -1,5 +1,10 @@
 # history
 
+## 0.2.18 / 2017-08-21
+
+* `CHANGED` cjs module to es module
+* `CHANGED` replace `deep-equal` with `lodash/isEqual`
+
 ## 0.2.17 / 2017-08-15
 
 * `CHANGED` instant validation fails to work due to fromRest logic.

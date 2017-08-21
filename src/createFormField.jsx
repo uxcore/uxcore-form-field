@@ -1,8 +1,7 @@
-const React = require('react');
-const assign = require('object-assign');
-const Constants = require('uxcore-const');
-
-const FormField = require('./FormField');
+import React from 'react';
+import assign from 'object-assign';
+import Constants from 'uxcore-const';
+import FormField from './FormField';
 
 const Input = props =>
   <input
@@ -60,4 +59,4 @@ const createFormField = (options = {}) => {
   return CustomFormField;
 };
 
-module.exports = createFormField;
+export default createFormField;
