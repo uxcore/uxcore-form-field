@@ -315,7 +315,10 @@ class FormField extends React.Component {
     const me = this;
     const mode = me.props.jsxmode || me.props.mode;
     // jsxVerticalAlign is an internal varible.
-    const align = me.props.verticalAlign || me.props.jsxVerticalAlign;
+    let align = me.props.verticalAlign;
+    if (align === undefined) {
+      align = me.props.jsxVerticalAlign;
+    }
     if (me.props.jsxshowLabel) {
       return (
         <label
@@ -474,7 +477,6 @@ FormField.propTypes = {
 };
 
 FormField.defaultProps = {
-  verticalAlign: false,
   labelMatchInputHeight: false,
   jsxshow: true,
   jsxshowLabel: true,

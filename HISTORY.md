@@ -1,5 +1,9 @@
 # history
 
+## 0.2.19 / 2017-09-20
+
+* `FIXED` global verticalAlign will override single field's.
+
 ## 0.2.18 / 2017-08-21
 
 * `CHANGED` cjs module to es module
