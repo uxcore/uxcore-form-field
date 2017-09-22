@@ -430,11 +430,13 @@ class FormField extends React.Component {
     if (!me.props.standalone) {
       style.width = `${(me.props.jsxflex / me.props.totalFlex) * 100}%`;
     }
+    const size = this.getSize();
     return (
       <div
         className={classnames({
-          [specificCls]: !!specificCls,
           [me.props.jsxprefixCls]: true,
+          [specificCls]: !!specificCls,
+          [`${me.props.jsxprefixCls}-${size}`]: !!size,
           [me.props.className]: !!me.props.className,
           [`${me.props.jsxprefixCls}__view`]: mode === Constants.MODE.VIEW,
         })}
