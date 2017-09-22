@@ -43,6 +43,11 @@ class FormField extends React.Component {
     }
   }
 
+  getSize() {
+    const me = this;
+    return me.props.size || me.props.jsxsize;
+  }
+
   getProps() {
     return this.props;
   }

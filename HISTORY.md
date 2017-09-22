@@ -1,5 +1,9 @@
 # history
 
+## 0.2.20 / 2017-09-22
+
+* `CHANGED` add method `getSize`
+
 ## 0.2.19 / 2017-09-20
 
 * `FIXED` global verticalAlign will override single field's.
