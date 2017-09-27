@@ -30,6 +30,9 @@ const FormFieldPropKeys = Object.keys(FormField.propTypes);
 const createFormField = (options = {}) => {
   const newOptions = assign({}, defaultOptions, options);
   class CustomFormField extends FormField {
+    addSpecificClass() {
+      return newOptions.specificClass || '';
+    }
     renderField() {
       const me = this;
       const mode = me.props.jsxmode || me.props.mode;

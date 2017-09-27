@@ -1,5 +1,9 @@
 # history
 
+## 0.2.22 / 2017-09-27
+
+* `CHANGED` createFormField support new option `specificClass`
+
 ## 0.2.20 / 2017-09-22
 
 * `CHANGED` add method `getSize`
