@@ -1,19 +1,20 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import assign from 'object-assign';
 import Constants from 'uxcore-const';
 import FormField from './FormField';
 
 const Input = props =>
-  <input
+  (<input
     className="kuma-input"
     {...props}
     value={props.value}
     onChange={(e) => { props.onChange(e.target.value); }}
-  />;
+  />);
 
 Input.propTypes = {
-  value: React.PropTypes.string,
-  onChange: React.PropTypes.func,
+  value: PropTypes.string,
+  onChange: PropTypes.func,
 };
 
 const defaultOptions = {

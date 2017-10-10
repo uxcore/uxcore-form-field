@@ -22,7 +22,6 @@ node_modules
 _site
 sea-modules
 spm_modules
-coverage
 .cache
 .happypack
 dist
