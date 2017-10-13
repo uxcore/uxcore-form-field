@@ -1,5 +1,10 @@
 # history
 
+
+## 0.2.23 / 2017-10-13
+
+* `CHANGED` fit React@15
+
 ## 0.2.22 / 2017-09-27
 
 * `CHANGED` createFormField support new option `specificClass`
