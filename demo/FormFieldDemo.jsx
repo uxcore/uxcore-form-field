@@ -6,10 +6,11 @@
  * All rights reserved.
  */
 
-const React = require('react');
-const FormField = require('../src');
-const Form = require('uxcore-form/build/Form');
-const FormRow = require('uxcore-form-row');
+import React from 'react';
+
+import Form from 'uxcore-form/build/Form';
+import FormRow from 'uxcore-form-row';
+import FormField from '../src';
 
 const { createFormField } = FormField;
 const CustomField = createFormField();
@@ -66,4 +67,4 @@ class Demo extends React.Component {
   }
 }
 
-module.exports = Demo;
+export default Demo;

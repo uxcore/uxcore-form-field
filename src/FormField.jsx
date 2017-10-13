@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Constants from 'uxcore-const';
 import classnames from 'classnames';
 import assign from 'object-assign';
@@ -453,34 +454,34 @@ class FormField extends React.Component {
 }
 
 FormField.propTypes = {
-  instantValidate: React.PropTypes.bool,
-  verticalAlign: React.PropTypes.bool,
-  labelMatchInputHeight: React.PropTypes.bool,
-  value: React.PropTypes.any,
-  jsxshow: React.PropTypes.bool,
-  mode: React.PropTypes.string,
-  jsxmode: React.PropTypes.string,
-  jsxshowLabel: React.PropTypes.bool,
-  jsxprefixCls: React.PropTypes.string,
-  jsxflex: React.PropTypes.number,
-  jsxname: React.PropTypes.string.isRequired,
-  jsxplaceholder: React.PropTypes.string,
-  jsxlabel: React.PropTypes.string,
-  jsxtips: React.PropTypes.string,
-  jsxrules: React.PropTypes.oneOfType([
-    React.PropTypes.object,
-    React.PropTypes.array,
-    React.PropTypes.func,
+  instantValidate: PropTypes.bool,
+  verticalAlign: PropTypes.bool,
+  labelMatchInputHeight: PropTypes.bool,
+  value: PropTypes.any,
+  jsxshow: PropTypes.bool,
+  mode: PropTypes.string,
+  jsxmode: PropTypes.string,
+  jsxshowLabel: PropTypes.bool,
+  jsxprefixCls: PropTypes.string,
+  jsxflex: PropTypes.number,
+  jsxname: PropTypes.string.isRequired,
+  jsxplaceholder: PropTypes.string,
+  jsxlabel: PropTypes.string,
+  jsxtips: PropTypes.string,
+  jsxrules: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array,
+    PropTypes.func,
   ]),
-  totalFlex: React.PropTypes.number,
-  standalone: React.PropTypes.bool,
-  required: React.PropTypes.bool,
-  attachFormField: React.PropTypes.func,
-  detachFormField: React.PropTypes.func,
-  getValues: React.PropTypes.func,
-  resetValues: React.PropTypes.func,
-  handleDataChange: React.PropTypes.func,
-  style: React.PropTypes.object,
+  totalFlex: PropTypes.number,
+  standalone: PropTypes.bool,
+  required: PropTypes.bool,
+  attachFormField: PropTypes.func,
+  detachFormField: PropTypes.func,
+  getValues: PropTypes.func,
+  resetValues: PropTypes.func,
+  handleDataChange: PropTypes.func,
+  style: PropTypes.object,
 };
 
 FormField.defaultProps = {

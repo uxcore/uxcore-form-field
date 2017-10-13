@@ -6,8 +6,9 @@
  * All rights reserved.
  */
 
- const Demo = require('./FormFieldDemo');
- const ReactDOM = require('react-dom');
- const React = require('react');
 
- ReactDOM.render(<Demo />, document.getElementById('UXCoreDemo'));
+import ReactDOM from 'react-dom';
+import React from 'react';
+import Demo from './FormFieldDemo';
+
+ReactDOM.render(<Demo />, document.getElementById('UXCoreDemo'));

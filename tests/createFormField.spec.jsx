@@ -3,10 +3,13 @@
 
 import expect from 'expect.js';
 import React from 'react';
-import { mount } from 'enzyme';
+import Enzyme, { mount } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-15';
 import FormField from '../src';
 
 const { createFormField } = FormField;
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('create form field', () => {
   let instance;
@@ -54,7 +57,7 @@ describe('create form field', () => {
       <CustomField standalone value="1" />
     );
     setTimeout(() => {
-      expect(instance.find('.kuma-input').node.value).to.be('1');
+      expect(instance.find('.kuma-input').instance().value).to.be('1');
       done();
     }, 100);
   });
@@ -85,7 +88,7 @@ describe('create form field', () => {
       },
     });
     setTimeout(() => {
-      expect(instance.find('.kuma-input').node.value).to.be('2');
+      expect(instance.find('.kuma-input').instance().value).to.be('2');
       done();
     }, 100);
   });
