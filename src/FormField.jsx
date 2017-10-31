@@ -8,7 +8,6 @@ import Promise from 'lie';
 
 /* eslint-disable class-methods-use-this */
 class FormField extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -426,6 +425,7 @@ class FormField extends React.Component {
     const me = this;
     const specificCls = me.addSpecificClass();
     const mode = me.props.jsxmode || me.props.mode;
+    const align = me.props.verticalAlign || me.props.jsxVerticalAlign;
     const dataProps = this.getDataProps();
     const style = {};
     if (!me.props.standalone) {
@@ -439,6 +439,7 @@ class FormField extends React.Component {
           [specificCls]: !!specificCls,
           [`${me.props.jsxprefixCls}-${size}`]: !!size,
           [me.props.className]: !!me.props.className,
+          [`${me.props.jsxprefixCls}__layout-${align ? 'v' : 'h'}`]: true,
           [`${me.props.jsxprefixCls}__view`]: mode === Constants.MODE.VIEW,
         })}
         style={assign({}, style, {
