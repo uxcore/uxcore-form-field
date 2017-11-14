@@ -441,6 +441,8 @@ class FormField extends React.Component {
           [me.props.className]: !!me.props.className,
           [`${me.props.jsxprefixCls}__layout-${align ? 'v' : 'h'}`]: true,
           [`${me.props.jsxprefixCls}__view`]: mode === Constants.MODE.VIEW,
+          // all view mode in a formrow
+          [`${me.props.jsxprefixCls}__all-view`]: !!me.props.isAllViewMode,
         })}
         style={assign({}, style, {
           display: me.props.jsxshow ? 'table' : 'none',

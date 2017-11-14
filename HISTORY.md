@@ -1,6 +1,10 @@
 # history
 
 
+## 0.2.25 / 2017-11-14
+
+* `CHANGED` add new _prop `isAllViewMode`
+
 ## 0.2.24 / 2017-10-31
 
 * `CHANGED` add root className for different layout

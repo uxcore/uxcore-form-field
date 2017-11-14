@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">95.58% </span>
+        <span class="strong">95.71% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>216/226</span>
+        <span class='fraction'>223/233</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">79.41% </span>
+        <span class="strong">79.55% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>135/170</span>
+        <span class='fraction'>140/176</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">97.83% </span>
+        <span class="strong">97.87% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>45/46</span>
+        <span class='fraction'>46/47</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">97.94% </span>
+        <span class="strong">98.01% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>190/194</span>
+        <span class='fraction'>197/201</span>
       </div>
     </div>
   </div>
@@ -615,7 +615,18 @@
 570
 571
 572
-573</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -649,11 +660,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">168×</span>
+<span class="cline-any cline-yes">294×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">27×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -702,6 +717,11 @@
 <span class="cline-any cline-yes">21×</span>
 <span class="cline-any cline-yes">17×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">42×</span>
+<span class="cline-any cline-yes">42×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
@@ -895,7 +915,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">42×</span>
+<span class="cline-any cline-yes">35×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -911,7 +931,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">42×</span>
 <span class="cline-any cline-yes">42×</span>
-<span class="cline-any cline-yes">890×</span>
+<span class="cline-any cline-yes">980×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1120,8 +1140,10 @@
 <span class="cline-any cline-yes">42×</span>
 <span class="cline-any cline-yes">42×</span>
 <span class="cline-any cline-yes">42×</span>
+<span class="cline-any cline-yes">42×</span>
 <span class="cline-any cline-yes">30×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">42×</span>
 <span class="cline-any cline-yes">42×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1201,6 +1223,10 @@ var _react = require('react');
 &nbsp;
 var _react2 = _interopRequireDefault(_react);
 &nbsp;
+var _propTypes = require('prop-types');
+&nbsp;
+var _propTypes2 = _interopRequireDefault(_propTypes);
+&nbsp;
 var _uxcoreConst = require('uxcore-const');
 &nbsp;
 var _uxcoreConst2 = _interopRequireDefault(_uxcoreConst);
@@ -1274,6 +1300,11 @@ var FormField = function (_React$Component) {
     if (!me.props.standalone) {
       this.props.detachFormField(this);
     }
+  };
+&nbsp;
+  FormField.prototype.getSize = function getSize() {
+    var me = this;
+    return me.props.size || me.props.jsxsize;
   };
 &nbsp;
   FormField.prototype.getProps = function getProps() {
@@ -1689,15 +1720,17 @@ var FormField = function (_React$Component) {
     var me = this;
     var specificCls = me.addSpecificClass();
     var mode = me.props.jsxmode || me.props.mode;
+    var align = me.props.verticalAlign || me.props.jsxVerticalAlign;
     var dataProps = this.getDataProps();
     var style = {};
     if (!me.props.standalone) {
       style.width = me.props.jsxflex / me.props.totalFlex * 100 + '%';
     }
+    var size = this.getSize();
     return _react2['default'].createElement(
       'div',
       _extends({
-        className: (0, _classnames3['default'])((_classnames = {}, _defineProperty(_classnames, specificCls, !!specificCls), _defineProperty(_classnames, me.props.jsxprefixCls, true), _defineProperty(_classnames, me.props.className, !!me.props.className), _defineProperty(_classnames, me.props.jsxprefixCls + '__view', mode === _uxcoreConst2['default'].MODE.VIEW), _classnames)),
+        className: (0, _classnames3['default'])((_classnames = {}, _defineProperty(_classnames, me.props.jsxprefixCls, true), _defineProperty(_classnames, specificCls, !!specificCls), _defineProperty(_classnames, me.props.jsxprefixCls + '-' + size, !!size), _defineProperty(_classnames, me.props.className, !!me.props.className), _defineProperty(_classnames, me.props.jsxprefixCls + '__layout-' + (align ? <span class="branch-0 cbranch-no" title="branch not covered" >'v' </span>: 'h'), true), _defineProperty(_classnames, me.props.jsxprefixCls + '__view', mode === _uxcoreConst2['default'].MODE.VIEW), _defineProperty(_classnames, me.props.jsxprefixCls + '__all-view', !!me.props.isAllViewMode), _classnames)),
         style: (0, _objectAssign2['default'])({}, style, {
           display: me.props.jsxshow ? 'table' : <span class="branch-1 cbranch-no" title="branch not covered" >'none'</span>
         }),
@@ -1713,30 +1746,30 @@ var FormField = function (_React$Component) {
 }(_react2['default'].Component);
 &nbsp;
 FormField.propTypes = {
-  instantValidate: _react2['default'].PropTypes.bool,
-  verticalAlign: _react2['default'].PropTypes.bool,
-  labelMatchInputHeight: _react2['default'].PropTypes.bool,
-  value: _react2['default'].PropTypes.any,
-  jsxshow: _react2['default'].PropTypes.bool,
-  mode: _react2['default'].PropTypes.string,
-  jsxmode: _react2['default'].PropTypes.string,
-  jsxshowLabel: _react2['default'].PropTypes.bool,
-  jsxprefixCls: _react2['default'].PropTypes.string,
-  jsxflex: _react2['default'].PropTypes.number,
-  jsxname: _react2['default'].PropTypes.string.isRequired,
-  jsxplaceholder: _react2['default'].PropTypes.string,
-  jsxlabel: _react2['default'].PropTypes.string,
-  jsxtips: _react2['default'].PropTypes.string,
-  jsxrules: _react2['default'].PropTypes.oneOfType([_react2['default'].PropTypes.object, _react2['default'].PropTypes.array, _react2['default'].PropTypes.func]),
-  totalFlex: _react2['default'].PropTypes.number,
-  standalone: _react2['default'].PropTypes.bool,
-  required: _react2['default'].PropTypes.bool,
-  attachFormField: _react2['default'].PropTypes.func,
-  detachFormField: _react2['default'].PropTypes.func,
-  getValues: _react2['default'].PropTypes.func,
-  resetValues: _react2['default'].PropTypes.func,
-  handleDataChange: _react2['default'].PropTypes.func,
-  style: _react2['default'].PropTypes.object
+  instantValidate: _propTypes2['default'].bool,
+  verticalAlign: _propTypes2['default'].bool,
+  labelMatchInputHeight: _propTypes2['default'].bool,
+  value: _propTypes2['default'].any,
+  jsxshow: _propTypes2['default'].bool,
+  mode: _propTypes2['default'].string,
+  jsxmode: _propTypes2['default'].string,
+  jsxshowLabel: _propTypes2['default'].bool,
+  jsxprefixCls: _propTypes2['default'].string,
+  jsxflex: _propTypes2['default'].number,
+  jsxname: _propTypes2['default'].string.isRequired,
+  jsxplaceholder: _propTypes2['default'].string,
+  jsxlabel: _propTypes2['default'].string,
+  jsxtips: _propTypes2['default'].string,
+  jsxrules: _propTypes2['default'].oneOfType([_propTypes2['default'].object, _propTypes2['default'].array, _propTypes2['default'].func]),
+  totalFlex: _propTypes2['default'].number,
+  standalone: _propTypes2['default'].bool,
+  required: _propTypes2['default'].bool,
+  attachFormField: _propTypes2['default'].func,
+  detachFormField: _propTypes2['default'].func,
+  getValues: _propTypes2['default'].func,
+  resetValues: _propTypes2['default'].func,
+  handleDataChange: _propTypes2['default'].func,
+  style: _propTypes2['default'].object
 };
 &nbsp;
 FormField.defaultProps = {
@@ -1765,7 +1798,7 @@ module.exports = exports['default'];
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Sep 20 2017 15:48:21 GMT+0800 (CST)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Nov 14 2017 21:01:54 GMT+0800 (CST)
 </div>
 </div>
 <script src="../prettify.js"></script>
