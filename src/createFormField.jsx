@@ -31,9 +31,11 @@ const FormFieldPropKeys = Object.keys(FormField.propTypes);
 const createFormField = (options = {}) => {
   const newOptions = assign({}, defaultOptions, options);
   class CustomFormField extends FormField {
+    /* eslint-disable class-methods-use-this */
     addSpecificClass() {
       return newOptions.specificClass || '';
     }
+    /* eslint-enable class-methods-use-this */
     renderField() {
       const me = this;
       const mode = me.props.jsxmode || me.props.mode;

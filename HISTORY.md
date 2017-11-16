@@ -1,5 +1,8 @@
 # history
 
+## 0.2.26 / 2017-11-16
+
+* `CHANGED` remove icon in tips & error message
 
 ## 0.2.25 / 2017-11-14
 

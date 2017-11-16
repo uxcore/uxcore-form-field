@@ -271,7 +271,6 @@ class FormField extends React.Component {
     if (me.props.standalone && me.props.message && me.props.message.type === 'tip') {
       return (
         <li className="kuma-uxform-tips">
-          <i className="kuma-icon kuma-icon-information" />
           <span ref={me.saveRef('tips')} className="kuma-uxform-message-content">{me.props.message.message}</span>
         </li>
       );
@@ -279,7 +278,6 @@ class FormField extends React.Component {
     if (!!this.props.jsxtips && !me.state.error) {
       return (
         <li className="kuma-uxform-tips">
-          <i className="kuma-icon kuma-icon-information" />
           <span className="kuma-uxform-message-content" ref={me.saveRef('tips')}>{this.props.jsxtips}</span>
         </li>
       );
@@ -300,7 +298,6 @@ class FormField extends React.Component {
     if (me.props.standalone && me.props.message && me.props.message.type === 'error') {
       return (
         <li className="kuma-uxform-errormsg">
-          <i className="kuma-icon kuma-icon-error" />
           <span ref={me.saveRef('errorNode')} className="kuma-uxform-message-content">{me.props.message.message}</span>
         </li>
       );
@@ -308,7 +305,6 @@ class FormField extends React.Component {
     if (me.state.error) {
       return (
         <li className="kuma-uxform-errormsg">
-          <i className="kuma-icon kuma-icon-error" />
           <span ref={me.saveRef('errorNode')} className="kuma-uxform-message-content">{me.state.errMsg}</span>
         </li>
       );
