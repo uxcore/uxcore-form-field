@@ -16,7 +16,6 @@ const { createFormField } = FormField;
 const CustomField = createFormField();
 
 class Demo extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -33,6 +32,7 @@ class Demo extends React.Component {
         >
           <FormRow>
             <FormField
+              inputBoxMaxWidth="normal"
               data-spm="2"
               jsxname="test1"
               jsxlabel="表单1"
@@ -47,7 +47,6 @@ class Demo extends React.Component {
           <CustomField
             jsxname="custom"
             jsxlabel="字很多字很多字很多字很多字"
-            labelMatchInputHeight
             placeholder="111"
             jsxtips="提示"
           />

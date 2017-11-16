@@ -1,5 +1,9 @@
 # history
 
+## 0.2.27 / 2017-11-16
+
+* `CHANGED` add new prop `inputBoxMaxWidth`
+
 ## 0.2.26 / 2017-11-16
 
 * `CHANGED` remove icon in tips & error message
