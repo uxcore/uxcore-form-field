@@ -437,7 +437,7 @@ class FormField extends React.Component {
           [me.props.className]: !!me.props.className,
           [`${me.props.jsxprefixCls}__layout-${align ? 'v' : 'h'}`]: true,
           [`${me.props.jsxprefixCls}__view`]: mode === Constants.MODE.VIEW,
-          [`${me.props.jsxprefixCls}__input-box-${me.props.inputBoxMaxWidth}`]: ['normal', 'large'].indexOf(me.props.inputBoxMaxWidth) !== -1,
+          [`${me.props.jsxprefixCls}__input-box-${me.props.inputBoxMaxWidth}`]: ['middle', 'large'].indexOf(me.props.inputBoxMaxWidth) !== -1,
           // all view mode in a formrow
           [`${me.props.jsxprefixCls}__all-view`]: !!me.props.isAllViewMode,
         })}
@@ -482,7 +482,7 @@ FormField.propTypes = {
   resetValues: PropTypes.func,
   handleDataChange: PropTypes.func,
   style: PropTypes.object,
-  inputBoxMaxWidth: PropTypes.oneOf(['normal', 'large']),
+  inputBoxMaxWidth: PropTypes.oneOf(['middle', 'large']),
 };
 
 FormField.defaultProps = {
