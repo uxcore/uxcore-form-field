@@ -35,7 +35,7 @@ class Demo extends React.Component {
               inputBoxMaxWidth="normal"
               data-spm="2"
               jsxname="test1"
-              jsxlabel="表单1"
+              jsxlabel={<span>{'表单1'}</span>}
               jsxflex={2}
               jsxrules={{
                 validator: () => false,

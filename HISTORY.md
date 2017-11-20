@@ -1,5 +1,10 @@
 # history
 
+## 0.2.30 / 2017-11-20
+
+* `CHANGED` label support jsx
+* `NEW` new prop `labelWidth`
+
 ## 0.2.29 / 2017-11-20
 
 * `CHANGED` support `processValue` prop to filter the value change

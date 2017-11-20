@@ -36,7 +36,39 @@ describe('FormField', () => {
     });
     instance = ReactDOM.render(<Demo />, div);
     const formFieldNode = instance.refs.formfield;
-    expect(formFieldNode.getLabelNode().innerHTML).to.be('test');
+    expect(formFieldNode.getLabelContentNode().innerHTML).to.be('test');
+    done();
+  });
+
+  it('label support jsx', (done) => {
+    const Demo = createClass({
+      render() {
+        return (
+          <Form>
+            <FormField ref="formfield" jsxname="test" jsxlabel={<span>{'test' }</span>} />
+          </Form>
+        );
+      },
+    });
+    instance = ReactDOM.render(<Demo />, div);
+    const formFieldNode = instance.refs.formfield;
+    expect(formFieldNode.getLabelContentNode().innerHTML).to.be('<span>test</span>');
+    done();
+  });
+
+  it('label support user defined width', (done) => {
+    const Demo = createClass({
+      render() {
+        return (
+          <Form>
+            <FormField labelWidth="40px" ref="formfield" jsxname="test" jsxlabel="test" />
+          </Form>
+        );
+      },
+    });
+    instance = ReactDOM.render(<Demo />, div);
+    const formFieldNode = instance.refs.formfield;
+    expect(formFieldNode.getLabelNode().style.width).to.be('40px');
     done();
   });
 
@@ -52,7 +84,7 @@ describe('FormField', () => {
     });
     instance = ReactDOM.render(<Demo />, div);
     const formFieldNode = instance.refs.formfield;
-    expect(formFieldNode.getLabelNode()).to.be(undefined);
+    expect(formFieldNode.getLabelContentNode()).to.be(undefined);
     done();
   });
 

@@ -53,6 +53,10 @@ class FormField extends React.Component {
     return this.props;
   }
 
+  getLabelContentNode() {
+    return this.labelContent;
+  }
+
   getLabelNode() {
     return this.label;
   }
@@ -314,6 +318,26 @@ class FormField extends React.Component {
     return null;
   }
 
+  renderLabelContent() {
+    const me = this;
+    const contentProps = {
+      className: 'label-content',
+      ref: me.saveRef('labelContent'),
+    };
+    if (React.isValidElement(me.props.jsxlabel)) {
+      contentProps.children = me.props.jsxlabel;
+    } else {
+      contentProps.dangerouslySetInnerHTML = {
+        __html: me.props.jsxlabel,
+      };
+    }
+    return (
+      <span
+        {...contentProps}
+      />
+    );
+  }
+
   renderLabel() {
     const me = this;
     const mode = me.props.jsxmode || me.props.mode;
@@ -326,22 +350,20 @@ class FormField extends React.Component {
       return (
         <label
           key="label"
+          ref={this.saveRef('label')}
           className={classnames({
             'kuma-label': true,
             'vertical-align': align,
             'label-match-input-height': (me.props.labelMatchInputHeight && mode === Constants.MODE.EDIT),
           })}
+          style={{
+            width: me.props.labelWidth,
+          }}
         >
           <span className="required" ref={me.saveRef('required')}>
             {(me.props.required && mode === Constants.MODE.EDIT) ? '* ' : ''}
           </span>
-          <span
-            className="label-content"
-            ref={me.saveRef('label')}
-            dangerouslySetInnerHTML={{
-              __html: me.props.jsxlabel,
-            }}
-          />
+          {this.renderLabelContent()}
         </label>
       );
     }
@@ -485,6 +507,10 @@ FormField.propTypes = {
   handleDataChange: PropTypes.func,
   processValue: PropTypes.func,
   style: PropTypes.object,
+  labelWidth: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
   inputBoxMaxWidth: PropTypes.oneOf(['middle', 'large']),
 };
 
