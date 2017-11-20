@@ -1,5 +1,9 @@
 # history
 
+## 0.2.27 / 2017-11-20
+
+* `CHANGED` support `processValue` prop to filter the value change
+
 ## 0.2.27 / 2017-11-16
 
 * `CHANGED` add new prop `inputBoxMaxWidth`

@@ -5,6 +5,7 @@
 import expect from 'expect.js';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import createClass from 'create-react-class';
 import Form from 'uxcore-form/build/Form';
 import $ from 'jquery';
 
@@ -24,7 +25,7 @@ describe('FormField', () => {
   });
 
   it('label', (done) => {
-    const Demo = React.createClass({
+    const Demo = createClass({
       render() {
         return (
           <Form>
@@ -40,7 +41,7 @@ describe('FormField', () => {
   });
 
   it('Do not show label', (done) => {
-    const Demo = React.createClass({
+    const Demo = createClass({
       render() {
         return (
           <Form>
@@ -56,7 +57,7 @@ describe('FormField', () => {
   });
 
   it('tips', (done) => {
-    const Demo = React.createClass({
+    const Demo = createClass({
       render() {
         return (
           <Form>
@@ -72,7 +73,7 @@ describe('FormField', () => {
   });
 
   it('required', (done) => {
-    const Demo = React.createClass({
+    const Demo = createClass({
       render() {
         return (
           <Form>
@@ -87,8 +88,42 @@ describe('FormField', () => {
     done();
   });
 
+  it('processValue', (done) => {
+    const Demo = createClass({
+      getInitialState() {
+        return {};
+      },
+      setValue(value) {
+        this.setState({
+          test: value,
+        });
+      },
+      render() {
+        return (
+          <Form
+            jsxonChange={(values, name) => { this.setState({ test: values[name] }); }}
+            jsxvalues={{ test: this.state.test }}
+          >
+            <FormField
+              processValue={value => value.slice(1)}
+              ref="formfield"
+              jsxname="test"
+              jsxrules={{ validator() { return false; }, errMsg: 'error test' }}
+            />
+          </Form>
+        );
+      },
+    });
+    instance = ReactDOM.render(<Demo />, div);
+    instance.setValue('1111');
+    setTimeout(() => {
+      expect(instance.refs.formfield.state.value).to.be('111');
+      done();
+    }, 100);
+  });
+
   it('validate', (done) => {
-    const Demo = React.createClass({
+    const Demo = createClass({
       getInitialState() {
         return {};
       },
@@ -118,7 +153,7 @@ describe('FormField', () => {
   });
 
   it('props.value change should not validate', (done) => {
-    const Demo = React.createClass({
+    const Demo = createClass({
       getInitialState() {
         return {};
       },
@@ -179,7 +214,7 @@ describe('FormField', () => {
   });
 
   it('no instant validate', (done) => {
-    const Demo = React.createClass({
+    const Demo = createClass({
       render() {
         return (
           <Form>
@@ -206,7 +241,7 @@ describe('FormField', () => {
   });
 
   it('no instant validate but force validate', (done) => {
-    const Demo = React.createClass({
+    const Demo = createClass({
       render() {
         return (
           <Form>
@@ -233,7 +268,7 @@ describe('FormField', () => {
   });
 
   it('when always is defined, doValidate should follow always', (done) => {
-    const Demo = React.createClass({
+    const Demo = createClass({
       render() {
         return (
           <Form>
@@ -272,7 +307,7 @@ describe('FormField', () => {
   });
 
   it('validation should return true when no jsxrules', (done) => {
-    const Demo = React.createClass({
+    const Demo = createClass({
       render() {
         return (
           <Form>
@@ -291,7 +326,7 @@ describe('FormField', () => {
   });
 
   it('should be able to support async validation', (done) => {
-    const Demo = React.createClass({
+    const Demo = createClass({
       render() {
         return (
           <Form asyncValidate>
@@ -326,7 +361,7 @@ describe('FormField', () => {
   });
 
   it('labelMatchInputHeight', (done) => {
-    const Demo = React.createClass({
+    const Demo = createClass({
       render() {
         return (
           <Form>
@@ -345,7 +380,7 @@ describe('FormField', () => {
   });
 
   it('should get field core', (done) => {
-    const Demo = React.createClass({
+    const Demo = createClass({
       render() {
         return (
           <Form>
@@ -361,7 +396,7 @@ describe('FormField', () => {
   });
 
   it('should pass data-* prop', (done) => {
-    const Demo = React.createClass({
+    const Demo = createClass({
       render() {
         return (
           <Form>

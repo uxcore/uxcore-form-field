@@ -4,6 +4,7 @@ import Constants from 'uxcore-const';
 import classnames from 'classnames';
 import assign from 'object-assign';
 import deepequal from 'lodash/isEqual';
+import cloneDeep from 'lodash/cloneDeep';
 import Promise from 'lie';
 
 /* eslint-disable class-methods-use-this */
@@ -122,8 +123,9 @@ class FormField extends React.Component {
 
   handleDataChange(value, fromReset, silence, fromPropsChange) {
     const me = this;
-    const { asyncValidate } = me.props;
-    me.setValue(value, fromReset, fromPropsChange, () => {
+    const { asyncValidate, processValue } = me.props;
+    const newValue = typeof processValue === 'function' ? processValue(cloneDeep(value)) : value;
+    me.setValue(newValue, fromReset, fromPropsChange, () => {
       let pass = true;
       // validateOnBlur only support InputFormField & TextAraeFormField now
       if (!fromReset && !me.props.standalone && !me.props.validateOnBlur) {
@@ -134,7 +136,7 @@ class FormField extends React.Component {
       }
       if (me.props.handleDataChange) {
         me.props.handleDataChange(me, {
-          value,
+          newValue,
           pass,
         }, silence);
       }
@@ -481,6 +483,7 @@ FormField.propTypes = {
   getValues: PropTypes.func,
   resetValues: PropTypes.func,
   handleDataChange: PropTypes.func,
+  processValue: PropTypes.func,
   style: PropTypes.object,
   inputBoxMaxWidth: PropTypes.oneOf(['middle', 'large']),
 };
