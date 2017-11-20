@@ -1,62 +1,62 @@
 {
-  "name": "uxcore-form-field",
-  "version": "0.2.28",
-  "description": "uxcore-form-field component for uxcore.",
-  "repository": "https://github.com/uxcore/uxcore-form-field.git",
-  "author": "eternalsky",
-  "main": "build/index.js",
-  "scripts": {
-    "start": "uxcore-tools run start",
-    "server": "uxcore-tools run server",
-    "lint": "uxcore-tools run lint",
-    "build": "uxcore-tools run build",
-    "test": "uxcore-tools run test",
-    "coverage": "uxcore-tools run coverage",
-    "pub": "uxcore-tools run pub",
-    "dep": "uxcore-tools run dep",
-    "tnpm-dep": "uxcore-tools run tnpm-dep",
-    "chrome": "uxcore-tools run chrome",
-    "browsers": "uxcore-tools run browsers",
-    "saucelabs": "uxcore-tools run saucelabs",
-    "update": "uxcore-tools run update",
-    "tnpm-update": "uxcore-tools run tnpm-update"
-  },
-  "bugs": {
-    "url": "http://github.com/uxcore/uxcore-form-field/issues"
-  },
-  "keywords": [
-    "react",
-    "react-component",
-    "react-components",
-    "uxcore-form-field",
-    "FormField"
-  ],
-  "devDependencies": {
-    "console-polyfill": "^0.2.2",
-    "create-react-class": "^15.6.2",
-    "enzyme": "^3.0.0",
-    "enzyme-adapter-react-15": "^1.0.0",
-    "es5-shim": "^4.5.8",
-    "expect.js": "~0.3.1",
-    "jquery": "^1.12.4",
-    "kuma-base": "1.x",
-    "react": "15.x",
-    "react-addons-test-utils": "15.x",
-    "react-dom": "15.x",
-    "react-test-renderer": "15.x",
-    "uxcore-form": "*",
-    "uxcore-form-row": "*",
-    "uxcore-kuma": "*",
-    "uxcore-tools": "0.2.x"
-  },
-  "dependencies": {
-    "classnames": "^2.1.2",
-    "lie": "^3.1.0",
-    "lodash": "^4.17.4",
-    "object-assign": "~4.0.1",
-    "prop-types": "15.x",
-    "uxcore-const": "0.0.2"
-  },
-  "contributors": [],
-  "license": "MIT"
+ "name": "uxcore-form-field",
+ "version": "0.2.29",
+ "description": "uxcore-form-field component for uxcore.",
+ "repository": "https://github.com/uxcore/uxcore-form-field.git",
+ "author": "eternalsky",
+ "main": "build/index.js",
+ "scripts": {
+  "start": "uxcore-tools run start",
+  "server": "uxcore-tools run server",
+  "lint": "uxcore-tools run lint",
+  "build": "uxcore-tools run build",
+  "test": "uxcore-tools run test",
+  "coverage": "uxcore-tools run coverage",
+  "pub": "uxcore-tools run pub",
+  "dep": "uxcore-tools run dep",
+  "tnpm-dep": "uxcore-tools run tnpm-dep",
+  "chrome": "uxcore-tools run chrome",
+  "browsers": "uxcore-tools run browsers",
+  "saucelabs": "uxcore-tools run saucelabs",
+  "update": "uxcore-tools run update",
+  "tnpm-update": "uxcore-tools run tnpm-update"
+ },
+ "bugs": {
+  "url": "http://github.com/uxcore/uxcore-form-field/issues"
+ },
+ "keywords": [
+  "react",
+  "react-component",
+  "react-components",
+  "uxcore-form-field",
+  "FormField"
+ ],
+ "devDependencies": {
+  "console-polyfill": "^0.2.2",
+  "create-react-class": "^15.6.2",
+  "enzyme": "^3.0.0",
+  "enzyme-adapter-react-15": "^1.0.0",
+  "es5-shim": "^4.5.8",
+  "expect.js": "~0.3.1",
+  "jquery": "^1.12.4",
+  "kuma-base": "1.x",
+  "react": "15.x",
+  "react-addons-test-utils": "15.x",
+  "react-dom": "15.x",
+  "react-test-renderer": "15.x",
+  "uxcore-form": "*",
+  "uxcore-form-row": "*",
+  "uxcore-kuma": "*",
+  "uxcore-tools": "0.2.x"
+ },
+ "dependencies": {
+  "classnames": "^2.1.2",
+  "lie": "^3.1.0",
+  "lodash": "^4.17.4",
+  "object-assign": "~4.0.1",
+  "prop-types": "15.x",
+  "uxcore-const": "0.0.2"
+ },
+ "contributors": [],
+ "license": "MIT"
 }
