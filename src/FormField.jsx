@@ -140,7 +140,7 @@ class FormField extends React.Component {
       }
       if (me.props.handleDataChange) {
         me.props.handleDataChange(me, {
-          newValue,
+          value: newValue,
           pass,
         }, silence);
       }
