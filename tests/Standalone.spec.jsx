@@ -4,6 +4,7 @@
 import expect from 'expect.js';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import createClass from 'create-react-class';
 import FormField from '../src';
 
 describe('Standalone', () => {
@@ -35,7 +36,7 @@ describe('Standalone', () => {
   });
 
   it('willReceiveProps', (done) => {
-    const Demo = React.createClass({
+    const Demo = createClass({
       getInitialState() {
         return {
           value: 'test1',
@@ -71,8 +72,43 @@ describe('Standalone', () => {
     }, 50);
   });
 
+  it('handleDataChange should keep value format', (done) => {
+    const Demo = createClass({
+      getInitialState() {
+        return {
+          value: 'test1',
+        };
+      },
+      changeValue() {
+        this.setState({
+          value: 'test2',
+        });
+      },
+      handleChange(context, values, silence) {
+        expect(context).to.be(instance.refs.formfield);
+        expect(values).to.have.keys('value', 'pass');
+        expect(values.pass).to.be.a('boolean');
+        expect(silence).to.be.a('boolean');
+        done();
+      },
+      render() {
+        return (
+          <FormField
+            standalone
+            ref="formfield"
+            jsxname="test"
+            value={this.state.value}
+            handleDataChange={this.handleChange}
+          />
+        );
+      },
+    });
+    instance = ReactDOM.render(<Demo />, div);
+    instance.changeValue();
+  });
+
   it('getProps', (done) => {
-    const Demo = React.createClass({
+    const Demo = createClass({
       getInitialState() {
         return {
           value: 'test1',

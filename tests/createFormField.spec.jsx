@@ -40,7 +40,6 @@ describe('create form field', () => {
     const Input = props =>
       <input
         className="kuma-input"
-        {...props}
         value={props.text}
         onChange={(e) => { props.onChange(e.target.value); }}
       />;
@@ -66,7 +65,6 @@ describe('create form field', () => {
     const Input = props =>
       <input
         className="kuma-input"
-        {...props}
         value={props.value}
         onChange={(e) => { props.onSelect(e.target.value); }}
       />;
@@ -84,7 +82,7 @@ describe('create form field', () => {
     );
     instance.find('.kuma-input').simulate('change', {
       target: {
-        value: 2,
+        value: '2',
       },
     });
     setTimeout(() => {
@@ -107,7 +105,6 @@ describe('create form field', () => {
     const Input = props =>
       <input
         className="kuma-input"
-        {...props}
         value={props.text}
         onChange={(e) => { props.onChange(e.target.value); }}
       />;
