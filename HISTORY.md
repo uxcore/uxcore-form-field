@@ -1,5 +1,9 @@
 # history
 
+## 0.2.32 / 2017-12-13
+
+* `FIXED` message whose type is error fail to make field content error status
+
 ## 0.2.30 / 2017-11-20
 
 * `CHANGED` label support jsx

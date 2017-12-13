@@ -297,11 +297,16 @@ class FormField extends React.Component {
 
   renderField() {}
 
+  isMessageError() {
+    const { standalone, message } = this.props;
+    return standalone && message && message.type === 'error';
+  }
+
   renderErrorMsg() {
     const me = this;
     const mode = me.props.jsxmode || me.props.mode;
     if (mode !== Constants.MODE.EDIT) return null;
-    if (me.props.standalone && me.props.message && me.props.message.type === 'error') {
+    if (this.isMessageError()) {
       return (
         <li className="kuma-uxform-errormsg">
           <span ref={me.saveRef('errorNode')} className="kuma-uxform-message-content">{me.props.message.message}</span>
@@ -391,7 +396,7 @@ class FormField extends React.Component {
               'kuma-uxform-field-content': true,
               'view-mode': mode === Constants.MODE.VIEW,
               'edit-mode': mode === Constants.MODE.EDIT,
-              'has-error': !!me.state.error,
+              'has-error': !!me.state.error || this.isMessageError(),
             })}
           >
             <li
@@ -427,7 +432,7 @@ class FormField extends React.Component {
           'kuma-uxform-field-content': true,
           'view-mode': mode === Constants.MODE.VIEW,
           'edit-mode': mode === Constants.MODE.EDIT,
-          'has-error': !!me.state.error,
+          'has-error': !!me.state.error || this.isMessageError(),
         })}
       >
         <li

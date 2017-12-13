@@ -5,7 +5,11 @@ import expect from 'expect.js';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import createClass from 'create-react-class';
+import Enzyme, { mount } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-15';
 import FormField from '../src';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('Standalone', () => {
   let div;
@@ -28,10 +32,11 @@ describe('Standalone', () => {
   });
 
   it('error', (done) => {
-    instance = ReactDOM.render(
+    const wrapper = mount(
       <FormField standalone message={{ type: 'error', message: 'error test' }} />, div
     );
-    expect(instance.getErrorNode().innerHTML).to.be('error test');
+    expect(wrapper.instance().getErrorNode().innerHTML).to.be('error test');
+    expect(wrapper.find('.has-error').length).to.be(1);
     done();
   });
 
