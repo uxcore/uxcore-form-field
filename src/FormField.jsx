@@ -286,7 +286,7 @@ class FormField extends React.Component {
     const me = this;
     const gridLayout = me.props.gridLayout || me.props.jsxGridLayout;
     const align = me.props.verticalAlign || me.props.jsxVerticalAlign;
-    return !align && Array.isArray(gridLayout);
+    return !align && Array.isArray(gridLayout) && gridLayout.length > 0;
   }
 
   renderTips() {
