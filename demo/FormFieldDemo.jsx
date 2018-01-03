@@ -49,6 +49,9 @@ class Demo extends React.Component {
             jsxlabel="字很多字很多字很多字很多字"
             placeholder="111"
             jsxtips="提示"
+            // gridLayout={[8, 14]}
+            labelMatchInputHeight={false}
+            // verticalAlign
           />
         </Form>
         <FormField

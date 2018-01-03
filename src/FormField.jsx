@@ -44,6 +44,13 @@ class FormField extends React.Component {
     }
   }
 
+  getGridLayoutPercent(index) {
+    const me = this;
+    const gridLayout = me.props.gridLayout || me.props.jsxGridLayout;
+    const newGrid = [gridLayout[0] || 6, gridLayout[1] || 12];
+    return `${(newGrid[index] * 100) / 24}%`;
+  }
+
   getSize() {
     const me = this;
     return me.props.size || me.props.jsxsize;
@@ -106,11 +113,18 @@ class FormField extends React.Component {
     });
   }
 
-  saveRef(refName) {
-    const me = this;
-    return (c) => {
-      me[refName] = c;
-    };
+  getDataProps() {
+    const dataProps = {};
+    Object.keys(this.props).forEach((propName) => {
+      if (/^data-/.test(propName)) {
+        dataProps[propName] = this.props[propName];
+      }
+    });
+    return dataProps;
+  }
+
+  getDom() {
+    return this.fieldRoot;
   }
 
   /**
@@ -243,6 +257,11 @@ class FormField extends React.Component {
     });
   }
 
+  isMessageError() {
+    const { standalone, message } = this.props;
+    return standalone && message && message.type === 'error';
+  }
+
 
   addSpecificClass() {
     return '';
@@ -256,18 +275,18 @@ class FormField extends React.Component {
     return value;
   }
 
-  getDataProps() {
-    const dataProps = {};
-    Object.keys(this.props).forEach((propName) => {
-      if (/^data\-/.test(propName)) {
-        dataProps[propName] = this.props[propName];
-      }
-    });
-    return dataProps;
+  saveRef(refName) {
+    const me = this;
+    return (c) => {
+      me[refName] = c;
+    };
   }
 
-  getDom() {
-    return this.fieldRoot;
+  shouldLayoutAsGrid() {
+    const me = this;
+    const gridLayout = me.props.gridLayout || me.props.jsxGridLayout;
+    const align = me.props.verticalAlign || me.props.jsxVerticalAlign;
+    return !align && Array.isArray(gridLayout);
   }
 
   renderTips() {
@@ -296,11 +315,6 @@ class FormField extends React.Component {
    */
 
   renderField() {}
-
-  isMessageError() {
-    const { standalone, message } = this.props;
-    return standalone && message && message.type === 'error';
-  }
 
   renderErrorMsg() {
     const me = this;
@@ -351,6 +365,12 @@ class FormField extends React.Component {
     if (align === undefined) {
       align = me.props.jsxVerticalAlign;
     }
+    const style = {
+      width: me.props.labelWidth,
+    };
+    if (this.shouldLayoutAsGrid()) {
+      style.width = this.getGridLayoutPercent(0);
+    }
     if (me.props.jsxshowLabel) {
       return (
         <label
@@ -361,9 +381,7 @@ class FormField extends React.Component {
             'vertical-align': align,
             'label-match-input-height': (me.props.labelMatchInputHeight && mode === Constants.MODE.EDIT),
           })}
-          style={{
-            width: me.props.labelWidth,
-          }}
+          style={style}
         >
           <span className="required" ref={me.saveRef('required')}>
             {(me.props.required && mode === Constants.MODE.EDIT) ? '* ' : ''}
@@ -380,6 +398,9 @@ class FormField extends React.Component {
     const mode = me.props.jsxmode || me.props.mode;
     const align = me.props.verticalAlign || me.props.jsxVerticalAlign;
     const { jsxshowLabel } = me.props;
+    const fieldStyle = {
+      width: this.shouldLayoutAsGrid() ? this.getGridLayoutPercent(1) : undefined,
+    };
     if (me.props.labelMatchInputHeight && mode === Constants.MODE.EDIT) {
       const tips = me.renderTips();
       const errorMsg = me.renderErrorMsg();
@@ -398,6 +419,7 @@ class FormField extends React.Component {
               'edit-mode': mode === Constants.MODE.EDIT,
               'has-error': !!me.state.error || this.isMessageError(),
             })}
+            style={fieldStyle}
           >
             <li
               ref={me.saveRef('fieldCore')}
@@ -410,14 +432,20 @@ class FormField extends React.Component {
           className="kuma-uxform-tip-box"
           style={{
             display: 'table',
+            width: '100%',
           }}
         >
-          {(!align && jsxshowLabel) ? <label
-            className={classnames({
-              'kuma-label': true,
-            })}
-          /> : null}
-          <ul>
+          {(!align && jsxshowLabel) ? (
+            <label
+              className={classnames({
+                'kuma-label': true,
+              })}
+              style={{
+                width: this.shouldLayoutAsGrid() ? this.getGridLayoutPercent(0) : undefined,
+              }}
+            />
+          ) : null}
+          <ul style={fieldStyle}>
             {me.renderTips()}
             {me.renderErrorMsg()}
           </ul>
@@ -434,6 +462,7 @@ class FormField extends React.Component {
           'edit-mode': mode === Constants.MODE.EDIT,
           'has-error': !!me.state.error || this.isMessageError(),
         })}
+        style={fieldStyle}
       >
         <li
           key="core"
@@ -517,6 +546,8 @@ FormField.propTypes = {
     PropTypes.number,
   ]),
   inputBoxMaxWidth: PropTypes.oneOf(['middle', 'large']),
+  gridLayout: PropTypes.array,
+  message: PropTypes.object,
 };
 
 FormField.defaultProps = {

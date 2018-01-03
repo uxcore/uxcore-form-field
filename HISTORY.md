@@ -1,5 +1,9 @@
 # history
 
+## 0.2.33 / 2018-01-03
+
+* `NEW` support new prop `gridLayout`
+
 ## 0.2.32 / 2017-12-13
 
 * `FIXED` message whose type is error fail to make field content error status
