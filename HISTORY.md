@@ -1,5 +1,9 @@
 # history
 
+## 0.2.24 / 2018-03-12
+
+* `CHANGED` change grid percent to match the expected behaviour
+
 ## 0.2.33 / 2018-01-03
 
 * `NEW` support new prop `gridLayout`

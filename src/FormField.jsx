@@ -48,7 +48,7 @@ class FormField extends React.Component {
     const me = this;
     const gridLayout = me.props.gridLayout || me.props.jsxGridLayout;
     const newGrid = [gridLayout[0] || 6, gridLayout[1] || 12];
-    return `${(newGrid[index] * 100) / 24}%`;
+    return `${(newGrid[index] * 100) / (24 - (index === 1 ? newGrid[0] : 0))}%`;
   }
 
   getSize() {
