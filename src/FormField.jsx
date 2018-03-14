@@ -523,7 +523,6 @@ FormField.propTypes = {
   jsxprefixCls: PropTypes.string,
   jsxflex: PropTypes.number,
   jsxname: PropTypes.string.isRequired,
-  jsxplaceholder: PropTypes.string,
   jsxlabel: PropTypes.string,
   jsxtips: PropTypes.string,
   jsxrules: PropTypes.oneOfType([
@@ -558,7 +557,6 @@ FormField.defaultProps = {
   formPrefixCls: 'kuma-uxform',
   jsxflex: 1,
   jsxname: '',
-  jsxplaceholder: '',
   jsxlabel: '',
   jsxtips: '',
   standalone: false,

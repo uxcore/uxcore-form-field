@@ -1,5 +1,9 @@
 # history
 
+## 0.2.25 / 2018-03-14
+
+* `CHANGED` remove useless `jsxplaceholder` propType & defaultProps config
+
 ## 0.2.24 / 2018-03-12
 
 * `CHANGED` change grid percent to match the expected behaviour
