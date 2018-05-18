@@ -1,6 +1,6 @@
 {
  "name": "uxcore-form-field",
- "version": "0.2.36",
+ "version": "0.2.37",
  "description": "uxcore-form-field component for uxcore.",
  "repository": "https://github.com/uxcore/uxcore-form-field.git",
  "author": "eternalsky",
@@ -53,9 +53,9 @@
   "classnames": "^2.1.2",
   "lie": "^3.1.0",
   "lodash": "^4.17.4",
-  "object-assign": "~4.0.1",
+  "object-assign": "^4.0.1",
   "prop-types": "15.x",
-  "uxcore-const": "0.0.2"
+  "uxcore-const": "^1.0.0"
  },
  "contributors": [],
  "license": "MIT"
