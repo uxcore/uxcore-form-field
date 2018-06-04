@@ -534,7 +534,7 @@ FormField.propTypes = {
   jsxprefixCls: PropTypes.string,
   jsxflex: PropTypes.number,
   jsxname: PropTypes.string.isRequired,
-  jsxlabel: PropTypes.string,
+  jsxlabel: PropTypes.node,
   jsxtips: PropTypes.string,
   jsxrules: PropTypes.oneOfType([
     PropTypes.object,

@@ -3,6 +3,7 @@
 
 import expect from 'expect.js';
 import React from 'react';
+import PropTypes from 'prop-types';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-15';
 import FormField from '../src';
@@ -45,8 +46,8 @@ describe('create form field', () => {
       />;
 
     Input.propTypes = {
-      text: React.PropTypes.string,
-      onChange: React.PropTypes.func,
+      text: PropTypes.string,
+      onChange: PropTypes.func,
     };
     const CustomField = createFormField({
       valuePropName: 'text',
@@ -70,8 +71,8 @@ describe('create form field', () => {
       />;
 
     Input.propTypes = {
-      value: React.PropTypes.string,
-      onSelect: React.PropTypes.func,
+      value: PropTypes.string,
+      onSelect: PropTypes.func,
     };
     const CustomField = createFormField({
       changePropName: 'onSelect',
@@ -110,8 +111,8 @@ describe('create form field', () => {
       />;
 
     Input.propTypes = {
-      text: React.PropTypes.string,
-      onChange: React.PropTypes.func,
+      text: PropTypes.string,
+      onChange: PropTypes.func,
     };
     const CustomField = createFormField({
       valuePropName: 'text',
