@@ -51,6 +51,7 @@ class Demo extends React.Component {
             jsxtips="提示"
             gridLayout={[6, 12]}
             labelMatchInputHeight={false}
+            renderFieldAddon={() => <div>定制区域</div>}
             // verticalAlign
           />
         </Form>

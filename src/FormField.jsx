@@ -316,6 +316,11 @@ class FormField extends React.Component {
 
   renderField() {}
 
+  renderFieldAddon() {
+    const mode = this.props.jsxmode || this.props.mode;
+    return this.props.renderFieldAddon({ mode });
+  }
+
   renderErrorMsg() {
     const me = this;
     const mode = me.props.jsxmode || me.props.mode;
@@ -424,7 +429,10 @@ class FormField extends React.Component {
             <li
               ref={me.saveRef('fieldCore')}
               className="kuma-uxform-field-core"
-            >{me.renderField()}</li>
+            >
+              {me.renderField()}
+              {me.renderFieldAddon()}
+            </li>
           </ul>
         </div>,
         (tips || errorMsg) ? <div
@@ -468,7 +476,10 @@ class FormField extends React.Component {
           key="core"
           ref={me.saveRef('fieldCore')}
           className="kuma-uxform-field-core"
-        >{me.renderField()}</li>
+        >
+          {me.renderField()}
+          {me.renderFieldAddon()}
+        </li>
         {me.renderTips()}
         {me.renderErrorMsg()}
       </ul>,
@@ -547,6 +558,7 @@ FormField.propTypes = {
   inputBoxMaxWidth: PropTypes.oneOf(['middle', 'large']),
   gridLayout: PropTypes.array,
   message: PropTypes.object,
+  renderFieldAddon: PropTypes.func,
 };
 
 FormField.defaultProps = {
@@ -562,6 +574,7 @@ FormField.defaultProps = {
   standalone: false,
   mode: Constants.MODE.EDIT,
   required: false,
+  renderFieldAddon: () => {},
 };
 
 FormField.displayName = 'FormField';
