@@ -7,7 +7,6 @@ import FormField from './FormField';
 const Input = props =>
   (<input
     className="kuma-input"
-    {...props}
     value={props.value}
     onChange={(e) => { props.onChange(e.target.value); }}
   />);

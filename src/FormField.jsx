@@ -6,6 +6,7 @@ import assign from 'object-assign';
 import deepequal from 'lodash/isEqual';
 import cloneDeep from 'lodash/cloneDeep';
 import Promise from 'lie';
+import { polyfill } from 'react-lifecycles-compat';
 
 /* eslint-disable class-methods-use-this */
 class FormField extends React.Component {
@@ -94,6 +95,7 @@ class FormField extends React.Component {
 
   setValue(value, fromReset, fromPropsChange, next) {
     const me = this;
+    const { standalone, validateOnBlur, asyncValidate } = me.props;
     const newState = {
       value,
       formatValue: me.formatValue(value),
@@ -103,12 +105,20 @@ class FormField extends React.Component {
        */
       fromReset: !!fromReset,
     };
+    let pass = true;
+    // validateOnBlur only support InputFormField & TextAraeFormField now
+    if (!fromReset && !standalone && !validateOnBlur) {
+      const validatePass = me.doValidate();
+      if (!asyncValidate) {
+        pass = validatePass;
+      }
+    }
     if (fromReset && fromPropsChange === undefined) {
       newState.error = false;
     }
     me.setState(newState, () => {
       if (next && typeof next === 'function') {
-        next();
+        next(pass);
       }
     });
   }
@@ -141,19 +151,11 @@ class FormField extends React.Component {
 
   handleDataChange(value, fromReset, silence, fromPropsChange) {
     const me = this;
-    const { asyncValidate, processValue } = me.props;
+    const { processValue, handleDataChange } = me.props;
     const newValue = typeof processValue === 'function' ? processValue(cloneDeep(value)) : value;
-    me.setValue(newValue, fromReset, fromPropsChange, () => {
-      let pass = true;
-      // validateOnBlur only support InputFormField & TextAraeFormField now
-      if (!fromReset && !me.props.standalone && !me.props.validateOnBlur) {
-        const validatePass = me.doValidate();
-        if (!asyncValidate) {
-          pass = validatePass;
-        }
-      }
-      if (me.props.handleDataChange) {
-        me.props.handleDataChange(me, {
+    me.setValue(newValue, fromReset, fromPropsChange, (pass) => {
+      if (handleDataChange) {
+        handleDataChange(me, {
           value: newValue,
           pass,
         }, silence);
@@ -316,6 +318,11 @@ class FormField extends React.Component {
 
   renderField() {}
 
+  renderFieldAddon() {
+    const mode = this.props.jsxmode || this.props.mode;
+    return this.props.renderFieldAddon(mode);
+  }
+
   renderErrorMsg() {
     const me = this;
     const mode = me.props.jsxmode || me.props.mode;
@@ -424,7 +431,10 @@ class FormField extends React.Component {
             <li
               ref={me.saveRef('fieldCore')}
               className="kuma-uxform-field-core"
-            >{me.renderField()}</li>
+            >
+              {me.renderField()}
+              {me.renderFieldAddon()}
+            </li>
           </ul>
         </div>,
         (tips || errorMsg) ? <div
@@ -468,7 +478,10 @@ class FormField extends React.Component {
           key="core"
           ref={me.saveRef('fieldCore')}
           className="kuma-uxform-field-core"
-        >{me.renderField()}</li>
+        >
+          {me.renderField()}
+          {me.renderFieldAddon()}
+        </li>
         {me.renderTips()}
         {me.renderErrorMsg()}
       </ul>,
@@ -523,7 +536,7 @@ FormField.propTypes = {
   jsxprefixCls: PropTypes.string,
   jsxflex: PropTypes.number,
   jsxname: PropTypes.string.isRequired,
-  jsxlabel: PropTypes.string,
+  jsxlabel: PropTypes.node,
   jsxtips: PropTypes.string,
   jsxrules: PropTypes.oneOfType([
     PropTypes.object,
@@ -547,6 +560,7 @@ FormField.propTypes = {
   inputBoxMaxWidth: PropTypes.oneOf(['middle', 'large']),
   gridLayout: PropTypes.array,
   message: PropTypes.object,
+  renderFieldAddon: PropTypes.func,
 };
 
 FormField.defaultProps = {
@@ -562,8 +576,9 @@ FormField.defaultProps = {
   standalone: false,
   mode: Constants.MODE.EDIT,
   required: false,
+  renderFieldAddon: () => {},
 };
 
 FormField.displayName = 'FormField';
 
-export default FormField;
+export default polyfill(FormField);

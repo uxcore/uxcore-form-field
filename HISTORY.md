@@ -1,5 +1,10 @@
 # history
 
+
+## 0.2.38 / 2018-06-04
+
+* `CHANGED` support new prop `renderFieldAddon`
+
 ## 0.2.36 / 2018-03-14
 
 * `CHANGED` remove useless `jsxplaceholder` propType & defaultProps config

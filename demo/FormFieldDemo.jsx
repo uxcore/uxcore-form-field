@@ -10,6 +10,7 @@ import React from 'react';
 
 import Form from 'uxcore-form/build/Form';
 import FormRow from 'uxcore-form-row';
+import Button from 'uxcore-button';
 import FormField from '../src';
 
 const { createFormField } = FormField;
@@ -19,6 +20,9 @@ class Demo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      value: {
+        custom: '111',
+      },
     };
   }
 
@@ -26,13 +30,11 @@ class Demo extends React.Component {
     return (
       <div>
         <Form
-          jsxvalues={{
-            custom: '111',
-          }}
+          jsxvalues={this.state.value}
         >
           <FormRow>
             <FormField
-              inputBoxMaxWidth="normal"
+              inputBoxMaxWidth="middle"
               data-spm="2"
               jsxname="test1"
               jsxlabel={<span>{'表单1'}</span>}
@@ -49,8 +51,8 @@ class Demo extends React.Component {
             jsxlabel="字很多字很多字很多字很多字"
             placeholder="111"
             jsxtips="提示"
-            gridLayout={[6, 12]}
             labelMatchInputHeight={false}
+            renderFieldAddon={() => <div>表单域定制部分</div>}
             // verticalAlign
           />
         </Form>
@@ -63,7 +65,15 @@ class Demo extends React.Component {
             message: 'error test',
           }}
         />
-
+        <Button
+          onClick={() => {
+            this.setState({
+              value: {
+                custom: '111111',
+              },
+            });
+          }}
+        >改变表单的值</Button>
       </div>
     );
   }
