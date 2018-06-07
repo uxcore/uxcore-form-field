@@ -7,6 +7,7 @@ import FormField from './FormField';
 const Input = props =>
   (<input
     className="kuma-input"
+    placeholder={props.placeholder}
     value={props.value}
     onChange={(e) => { props.onChange(e.target.value); }}
   />);
@@ -14,6 +15,7 @@ const Input = props =>
 Input.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func,
+  placeholder: PropTypes.string,
 };
 
 const defaultOptions = {

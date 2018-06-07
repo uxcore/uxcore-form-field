@@ -137,7 +137,12 @@ describe('FormField', () => {
             jsxvalues={{ test: this.state.test }}
           >
             <FormField
-              processValue={value => value.slice(1)}
+              processValue={(value) => {
+                if (value) {
+                  return value.slice(1);
+                }
+                return value;
+              }}
               ref="formfield"
               jsxname="test"
               jsxrules={{ validator() { return false; }, errMsg: 'error test' }}

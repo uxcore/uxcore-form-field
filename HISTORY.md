@@ -1,5 +1,8 @@
 # history
 
+## 0.3.0 / 2018-06-07
+
+* `CHANEGD` support React@16
 
 ## 0.2.38 / 2018-06-04
 

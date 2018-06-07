@@ -10,13 +10,110 @@ import { polyfill } from 'react-lifecycles-compat';
 
 /* eslint-disable class-methods-use-this */
 class FormField extends React.Component {
+  static getDerivedStateFromProps = (nextProps, prevState) => {
+    const { processValue, value } = nextProps;
+    const newValue = typeof processValue === 'function' ? processValue(cloneDeep(value)) : value;
+    if (!deepequal(newValue, prevState.prevValue)) {
+      const newState = {
+        value: newValue,
+        formatValue: FormField.formatValue(value),
+        fromReset: true,
+        prevValue: value,
+      };
+      return newState;
+    }
+    return null;
+  };
+
+  static formatValue = value => value;
+
+  static getValidateStatus = ({ force, always, props, value }) => {
+    let instant = true;
+    const async = props.asyncValidate || false;
+    const defaultPassStatus = {
+      error: false,
+    };
+    if ('instantValidate' in props) {
+      instant = props.instantValidate;
+    } else {
+      instant = props.jsxinstant;
+    }
+    const rules = props.jsxrules;
+    // `force` has the top priority, `undefined` is not equal to `false`
+    // `instant` has the sceond priority here
+    // eternalsky@2016.03.15
+    if (force === true || (force !== false && instant)) {
+      if (rules) {
+        if (!async) {
+          const error = FormField.isDirty({ always, value, rules });
+          return {
+            error: error.isDirty,
+            errMsg: error.errMsg,
+          };
+        }
+        return new Promise((resolve) => {
+          FormField.isDirty({ always, async, rules, value }).then((errMsg) => {
+            if (typeof errMsg === 'string') {
+              resolve({
+                error: true,
+                errMsg,
+              });
+            }
+          }).catch((err) => {
+            if (typeof err === 'object' && err.stack) {
+              console.error(err.stack);
+            } else {
+              resolve(defaultPassStatus);
+            }
+          });
+        });
+      }
+      return defaultPassStatus;
+    }
+    return defaultPassStatus;
+  };
+
+  static isDirty = ({ always, async = false, value, rules = [] }) => {
+    let isDirty = false;
+    let errMsg = '';
+    if (!async) {
+      if (typeof rules === 'object' && !Array.isArray(rules)) {
+        isDirty = (always === undefined) ? !rules.validator(value) : !always;
+        errMsg = rules.errMsg;
+      } else if (Array.isArray(rules)) {
+        for (let i = 0; i < rules.length; i++) {
+          isDirty = (always === undefined) ? !rules[i].validator(value) : !always;
+          if (isDirty) {
+            errMsg = rules[i].errMsg;
+            break;
+          }
+        }
+      }
+      return {
+        isDirty,
+        errMsg,
+      };
+    }
+    if (typeof rules !== 'function') {
+      console.error('Form Validate: In async validation mode,'
+        + ' jsxrules(rules) should be a function');
+      return {
+        isDirty: false,
+      };
+    }
+    return new Promise((resolve, reject) => {
+      rules(value, reject, resolve);
+    });
+  }
+
   constructor(props) {
     super(props);
     this.state = {
       value: props.value,
-      formatValue: this.formatValue(props.value),
+      formatValue: FormField.formatValue(props.value),
       error: false,
       errMsg: '',
+      prevValue: props.value,
     };
   }
 
@@ -31,10 +128,19 @@ class FormField extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    const me = this;
-    if (!deepequal(nextProps.value, me.props.value)) {
-      me.handleDataChange(nextProps.value, true, true, true);
+  // componentWillReceiveProps(nextProps) {
+  //   const me = this;
+  //   if (!deepequal(nextProps.value, me.props.value)) {
+  //     me.handleDataChange(nextProps.value, true, true, true);
+  //   }
+  // }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.handleDataChange && !deepequal(prevState.value, this.state.value)) {
+      this.props.handleDataChange(this, {
+        value: this.state.value,
+        pass: !this.state.error,
+      }, true);
     }
   }
 
@@ -96,7 +202,7 @@ class FormField extends React.Component {
   setValue(value, fromReset, fromPropsChange, next) {
     const me = this;
     const { standalone, validateOnBlur, asyncValidate } = me.props;
-    const newState = {
+    let newState = {
       value,
       formatValue: me.formatValue(value),
       /*
@@ -108,9 +214,12 @@ class FormField extends React.Component {
     let pass = true;
     // validateOnBlur only support InputFormField & TextAraeFormField now
     if (!fromReset && !standalone && !validateOnBlur) {
-      const validatePass = me.doValidate();
       if (!asyncValidate) {
-        pass = validatePass;
+        const validatePass = me.getValidateStatus();
+        newState = { ...newState, ...validatePass };
+        pass = !validatePass.error;
+      } else {
+        me.doValidate();
       }
     }
     if (fromReset && fromPropsChange === undefined) {
@@ -137,12 +246,9 @@ class FormField extends React.Component {
     return this.fieldRoot;
   }
 
-  /**
-   * selectFormField depends on this method
-   */
-  // _isEqual(a, b) {
-  //   return deepequal(a, b);
-  // }
+  getValidateStatus(force, always) {
+    return FormField.getValidateStatus({ force, always, props: this.props });
+  }
 
   /*
    * Fired when field value changes，update form's state and then trigger re-render.
@@ -170,51 +276,17 @@ class FormField extends React.Component {
    */
 
   doValidate(force, always) {
-    const me = this;
-    const async = me.props.asyncValidate || false;
-    let instant = true;
-    if ('instantValidate' in me.props) {
-      instant = me.props.instantValidate;
-    } else {
-      instant = me.props.jsxinstant;
-    }
-    // `force` has the top priority, `undefined` is not equal to `false`
-    // `instant` has the sceond priority here
-    // eternalsky@2016.03.15
-    if (force === true || (force !== false && instant)) {
-      if (me.props.jsxrules) {
-        if (!async) {
-          const error = me.isDirty(always);
-          me.setState({
-            error: error.isDirty,
-            errMsg: error.errMsg,
-          });
-          return !error.isDirty;
-        }
-        return new Promise((resolve) => {
-          me.isDirty(always, async).then((errMsg) => {
-            if (typeof errMsg === 'string') {
-              me.setState({
-                error: true,
-                errMsg,
-              });
-              resolve(false);
-            }
-          }).catch((err) => {
-            if (typeof err === 'object' && err.stack) {
-              console.error(err.stack);
-            } else {
-              me.setState({
-                error: false,
-              });
-              resolve(true);
-            }
-          });
+    const status = this.getValidateStatus(force, always);
+    if (status.then) {
+      return new Promise((resolve) => {
+        status.then((stat) => {
+          this.setState(stat);
+          resolve(!status.error);
         });
-      }
-      return true;
+      });
     }
-    return true;
+    this.setState(status);
+    return !status.error;
   }
 
   /*
@@ -225,37 +297,11 @@ class FormField extends React.Component {
    */
 
   isDirty(always, async = false) {
-    const me = this;
-    const rules = me.props.jsxrules;
-    let isDirty = false;
-    let errMsg = '';
-    if (!async) {
-      if (typeof rules === 'object' && !Array.isArray(rules)) {
-        isDirty = (always === undefined) ? !rules.validator(me.state.value) : !always;
-        errMsg = rules.errMsg;
-      } else if (Array.isArray(rules)) {
-        for (let i = 0; i < rules.length; i++) {
-          isDirty = (always === undefined) ? !rules[i].validator(me.state.value) : !always;
-          if (isDirty) {
-            errMsg = rules[i].errMsg;
-            break;
-          }
-        }
-      }
-      return {
-        isDirty,
-        errMsg,
-      };
-    }
-    if (typeof rules !== 'function') {
-      console.error('Form Validate: In async validation mode,'
-        + ' jsxrules(rules) should be a function');
-      return {
-        isDirty: false,
-      };
-    }
-    return new Promise((resolve, reject) => {
-      rules(me.state.value, reject, resolve);
+    return FormField.isDirty({
+      always,
+      async,
+      value: this.state.value,
+      rules: this.props.jsxrules,
     });
   }
 
@@ -320,7 +366,7 @@ class FormField extends React.Component {
 
   renderFieldAddon() {
     const mode = this.props.jsxmode || this.props.mode;
-    return this.props.renderFieldAddon(mode);
+    return this.props.renderFieldAddon({ mode });
   }
 
   renderErrorMsg() {

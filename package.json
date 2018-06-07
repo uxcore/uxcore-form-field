@@ -1,6 +1,6 @@
 {
   "name": "uxcore-form-field",
-  "version": "0.2.37",
+  "version": "0.3.0",
   "description": "uxcore-form-field component for uxcore.",
   "repository": "https://github.com/uxcore/uxcore-form-field.git",
   "author": "eternalsky",
@@ -41,7 +41,6 @@
     "jquery": "^1.12.4",
     "kuma-base": "1.x",
     "react": "16.x",
-    "react-addons-test-utils": "16.x",
     "react-dom": "16.x",
     "react-test-renderer": "16.x",
     "uxcore-button": "^0.4.17",
