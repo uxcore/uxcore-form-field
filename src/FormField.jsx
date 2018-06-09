@@ -215,11 +215,11 @@ class FormField extends React.Component {
     // validateOnBlur only support InputFormField & TextAraeFormField now
     if (!fromReset && !standalone && !validateOnBlur) {
       if (!asyncValidate) {
-        const validatePass = me.getValidateStatus();
+        const validatePass = me.getValidateStatus({ value });
         newState = { ...newState, ...validatePass };
         pass = !validatePass.error;
       } else {
-        me.doValidate();
+        me.doValidate(undefined, undefined, value);
       }
     }
     if (fromReset && fromPropsChange === undefined) {
@@ -246,8 +246,8 @@ class FormField extends React.Component {
     return this.fieldRoot;
   }
 
-  getValidateStatus(force, always) {
-    return FormField.getValidateStatus({ force, always, props: this.props });
+  getValidateStatus({ force, always, value }) {
+    return FormField.getValidateStatus({ force, always, props: this.props, value });
   }
 
   /*
@@ -275,8 +275,8 @@ class FormField extends React.Component {
    * if no rule, it means validate pass.
    */
 
-  doValidate(force, always) {
-    const status = this.getValidateStatus(force, always);
+  doValidate(force, always, value = this.state.value) {
+    const status = this.getValidateStatus({ force, always, value });
     if (status.then) {
       return new Promise((resolve) => {
         status.then((stat) => {

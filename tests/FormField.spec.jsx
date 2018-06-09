@@ -159,7 +159,37 @@ describe('FormField', () => {
     }, 100);
   });
 
-  it('validate', (done) => {
+  it('validate pass', (done) => {
+    const Demo = createClass({
+      getInitialState() {
+        return {};
+      },
+      render() {
+        return (
+          <Form
+            jsxonChange={(values, name) => { this.setState({ test: values[name] }); }}
+            jsxvalues={{ test: this.state.test }}
+          >
+            <FormField
+              ref="formfield"
+              jsxname="test"
+              jsxrules={{ validator(value) { if (!value) { return false; } return true; }, errMsg: 'error test' }}
+            />
+          </Form>
+        );
+      },
+    });
+    instance = ReactDOM.render(<Demo />, div);
+    const formFieldNode = instance.refs.formfield;
+    expect(formFieldNode.getErrorNode()).to.be(undefined);
+    formFieldNode.handleDataChange('1');
+    setTimeout(() => {
+      expect(formFieldNode.getErrorNode()).to.be(undefined);
+      done();
+    }, 50);
+  });
+
+  it('validate not pass', (done) => {
     const Demo = createClass({
       getInitialState() {
         return {};
