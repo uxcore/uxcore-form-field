@@ -12,8 +12,8 @@ import { polyfill } from 'react-lifecycles-compat';
 class FormField extends React.Component {
   static getDerivedStateFromProps = (nextProps, prevState) => {
     const { processValue, value } = nextProps;
-    const newValue = typeof processValue === 'function' ? processValue(cloneDeep(value)) : value;
-    if (!deepequal(newValue, prevState.prevValue)) {
+    if (!deepequal(value, prevState.prevValue)) {
+      const newValue = typeof processValue === 'function' ? processValue(cloneDeep(value)) : value;
       const newState = {
         value: newValue,
         formatValue: FormField.formatValue(value),
