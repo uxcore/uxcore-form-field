@@ -6,6 +6,7 @@ import assign from 'object-assign';
 import deepequal from 'lodash/isEqual';
 import cloneDeep from 'lodash/cloneDeep';
 import Promise from 'lie';
+import { polyfill } from 'react-lifecycles-compat';
 
 /* eslint-disable class-methods-use-this */
 class FormField extends React.Component {
@@ -625,5 +626,7 @@ FormField.defaultProps = {
 };
 
 FormField.displayName = 'FormField';
+
+polyfill(FormField);
 
 export default FormField;
