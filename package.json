@@ -1,6 +1,6 @@
 {
   "name": "uxcore-form-field",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "uxcore-form-field component for uxcore.",
   "repository": "https://github.com/uxcore/uxcore-form-field.git",
   "author": "eternalsky",
@@ -47,7 +47,7 @@
     "uxcore-form": "*",
     "uxcore-form-row": "*",
     "uxcore-kuma": "*",
-    "uxcore-tools": "0.2.x"
+    "uxcore-tools": "^0.3.0"
   },
   "dependencies": {
     "classnames": "^2.1.2",
