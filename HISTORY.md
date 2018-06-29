@@ -1,5 +1,9 @@
 # history
 
+## 0.3.6 / 2018-06-29
+
+* `FIXED` async doValidate typo
+
 ## 0.3.0 / 2018-06-07
 
 * `CHANEGD` support React@16

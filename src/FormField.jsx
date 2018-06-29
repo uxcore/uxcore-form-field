@@ -281,7 +281,7 @@ class FormField extends React.Component {
       return new Promise((resolve) => {
         status.then((stat) => {
           this.setState(stat);
-          resolve(!status.error);
+          resolve(!stat.error);
         });
       });
     }
