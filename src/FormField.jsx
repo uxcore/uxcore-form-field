@@ -303,7 +303,11 @@ class FormField extends React.Component {
     if (!!this.props.jsxtips && !me.state.error) {
       return (
         <li className="kuma-uxform-tips">
-          <span className="kuma-uxform-message-content" ref={me.saveRef('tips')}>{this.props.jsxtips}</span>
+          <span
+            className="kuma-uxform-message-content"
+            ref={me.saveRef('tips')}
+            dangerouslySetInnerHTML={{ __html: this.props.jsxtips }}
+          />
         </li>
       );
     }
