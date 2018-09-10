@@ -4,18 +4,25 @@ import assign from 'object-assign';
 import Constants from 'uxcore-const';
 import FormField from './FormField';
 
-const Input = props =>
-  (<input
+const Input = ({ placeholder, value, onChange }) => (
+  <input
     className="kuma-input"
-    placeholder={props.placeholder}
-    value={props.value}
-    onChange={(e) => { props.onChange(e.target.value); }}
-  />);
+    placeholder={placeholder}
+    value={value}
+    onChange={(e) => { onChange(e.target.value); }}
+  />
+);
 
 Input.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
+};
+
+Input.defaultProps = {
+  value: '',
+  onChange: () => {},
+  placeholder: '',
 };
 
 const defaultOptions = {
@@ -36,6 +43,7 @@ const createFormField = (options = {}) => {
     addSpecificClass() {
       return newOptions.specificClass || '';
     }
+
     /* eslint-enable class-methods-use-this */
     renderField() {
       const me = this;
@@ -48,7 +56,7 @@ const createFormField = (options = {}) => {
         });
 
       if (mode === Constants.MODE.VIEW) {
-        return newOptions.renderView(me.state.value);
+        return newOptions.renderView(me.state.value, props);
       }
 
       return React.cloneElement(newOptions.component, {

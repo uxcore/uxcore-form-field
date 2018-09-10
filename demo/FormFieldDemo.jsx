@@ -11,6 +11,8 @@ import React from 'react';
 import Form from 'uxcore-form/build/Form';
 import FormRow from 'uxcore-form-row';
 import Button from 'uxcore-button';
+import Icon from 'uxcore-icon';
+import Tooltip from 'uxcore-tooltip';
 import FormField from '../src';
 
 const { createFormField } = FormField;
@@ -37,7 +39,14 @@ class Demo extends React.Component {
               inputBoxMaxWidth="middle"
               data-spm="2"
               jsxname="test1"
-              jsxlabel={<span>{'表单1'}</span>}
+              jsxlabel={(
+                <div>
+                  <span>
+                    表单1
+                  </span>
+                  <Icon name="tishi-full" style={{ color: '#3C99D8' }} />
+                </div>
+              )}
               jsxflex={2}
               jsxrules={{
                 validator: () => false,
@@ -48,12 +57,19 @@ class Demo extends React.Component {
           </FormRow>
           <CustomField
             jsxname="custom"
-            jsxlabel="字很多字很多字很多字很多字"
+            jsxlabel="标题很长标题很长标题很长标题很长标题很长"
             placeholder="111"
-            jsxtips="提示"
+            tipInLabel
+            jsxtips="提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提
+            示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示
+            文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字"
             labelMatchInputHeight={false}
-            renderFieldAddon={() => <div>表单域定制部分</div>}
-            // verticalAlign
+            renderFieldAddon={() => (
+              <div>
+                表单域定制部分
+              </div>
+            )}
+          // verticalAlign
           />
         </Form>
         <FormField
@@ -73,7 +89,10 @@ class Demo extends React.Component {
               },
             });
           }}
-        >改变表单的值</Button>
+        >
+          改变表单的值
+
+        </Button>
       </div>
     );
   }

@@ -1,5 +1,11 @@
 # history
 
+## 0.3.7 / 2018-09-10
+
+* `CHNAGED` fix eslint errors
+* `CHANGED` use prefixCls for every dom node
+* `NEW` support new prop `tipInLabel`
+
 ## 0.3.6 / 2018-06-29
 
 * `FIXED` async doValidate typo
