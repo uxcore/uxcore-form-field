@@ -434,7 +434,7 @@ class FormField extends React.Component {
     const me = this;
     const mode = me.props.jsxmode || me.props.mode;
     const {
-      jsxtips, message, standalone, tipInLabel, prefixCls
+      jsxtips, message, standalone, tipInLabel, jsxprefixCls,
     } = this.props;
     if (mode !== Constants.MODE.EDIT || !tipInLabel) return null;
     const tip = standalone ? message.message : jsxtips;
@@ -450,7 +450,7 @@ class FormField extends React.Component {
         >
           <Icon
             name="tishi-full"
-            className={`${prefixCls}-tip-icon`}
+            className={`${jsxprefixCls}-tip-icon`}
             style={{
               display: 'inline-block',
               verticalAlign: 'top',
@@ -510,7 +510,7 @@ class FormField extends React.Component {
     const me = this;
     const mode = me.props.jsxmode || me.props.mode;
     const align = me.props.verticalAlign || me.props.jsxVerticalAlign;
-    const { jsxshowLabel, prefixCls, formPrefixCls } = me.props;
+    const { jsxshowLabel, jsxprefixCls, formPrefixCls } = me.props;
     const fieldStyle = {
       width: this.shouldLayoutAsGrid() ? this.getGridLayoutPercent(1) : undefined,
     };
@@ -527,7 +527,7 @@ class FormField extends React.Component {
           {me.renderLabel()}
           <ul
             className={classnames({
-              [`${prefixCls}-content`]: true,
+              [`${jsxprefixCls}-content`]: true,
               'view-mode': mode === Constants.MODE.VIEW,
               'edit-mode': mode === Constants.MODE.EDIT,
               'has-error': !!me.state.error || this.isMessageError(),
@@ -536,7 +536,7 @@ class FormField extends React.Component {
           >
             <li
               ref={me.saveRef('fieldCore')}
-              className={`${prefixCls}-core`}
+              className={`${jsxprefixCls}-core`}
             >
               {me.renderField()}
               {me.renderFieldAddon()}
@@ -575,7 +575,7 @@ class FormField extends React.Component {
       <ul
         key="content"
         className={classnames({
-          [`${prefixCls}-content`]: true,
+          [`${jsxprefixCls}-content`]: true,
           'view-mode': mode === Constants.MODE.VIEW,
           'edit-mode': mode === Constants.MODE.EDIT,
           'has-error': !!me.state.error || this.isMessageError(),
@@ -585,7 +585,7 @@ class FormField extends React.Component {
         <li
           key="core"
           ref={me.saveRef('fieldCore')}
-          className={`${prefixCls}-core`}
+          className={`${jsxprefixCls}-core`}
         >
           {me.renderField()}
           {me.renderFieldAddon()}
@@ -610,15 +610,15 @@ class FormField extends React.Component {
     return (
       <div
         className={classnames({
-          [me.props.prefixCls]: true,
+          [me.props.jsxprefixCls]: true,
           [specificCls]: !!specificCls,
-          [`${me.props.prefixCls}-${size}`]: !!size,
+          [`${me.props.jsxprefixCls}-${size}`]: !!size,
           [me.props.className]: !!me.props.className,
-          [`${me.props.prefixCls}__layout-${align ? 'v' : 'h'}`]: true,
-          [`${me.props.prefixCls}__view`]: mode === Constants.MODE.VIEW,
-          [`${me.props.prefixCls}__input-box-${me.props.inputBoxMaxWidth}`]: ['middle', 'large'].indexOf(me.props.inputBoxMaxWidth) !== -1,
+          [`${me.props.jsxprefixCls}__layout-${align ? 'v' : 'h'}`]: true,
+          [`${me.props.jsxprefixCls}__view`]: mode === Constants.MODE.VIEW,
+          [`${me.props.jsxprefixCls}__input-box-${me.props.inputBoxMaxWidth}`]: ['middle', 'large'].indexOf(me.props.inputBoxMaxWidth) !== -1,
           // all view mode in a formrow
-          [`${me.props.prefixCls}__all-view`]: !!me.props.isAllViewMode,
+          [`${me.props.jsxprefixCls}__all-view`]: !!me.props.isAllViewMode,
         })}
         style={assign({}, style, {
           display: me.props.jsxshow ? 'table' : 'none',
@@ -641,7 +641,7 @@ FormField.propTypes = {
   mode: PropTypes.string,
   jsxmode: PropTypes.string,
   jsxshowLabel: PropTypes.bool,
-  prefixCls: PropTypes.string,
+  jsxprefixCls: PropTypes.string,
   jsxflex: PropTypes.number,
   jsxname: PropTypes.string.isRequired,
   jsxlabel: PropTypes.node,
@@ -677,7 +677,7 @@ FormField.defaultProps = {
   labelMatchInputHeight: false,
   jsxshow: true,
   jsxshowLabel: true,
-  prefixCls: 'kuma-uxform-field',
+  jsxprefixCls: 'kuma-uxform-field',
   formPrefixCls: 'kuma-uxform',
   jsxflex: 1,
   jsxlabel: '',
