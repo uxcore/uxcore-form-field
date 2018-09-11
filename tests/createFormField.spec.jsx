@@ -17,14 +17,14 @@ describe('create form field', () => {
   it('should work without passing options', () => {
     const CustomField = createFormField();
     instance = mount(
-      <CustomField standalone />
+      <CustomField standalone />,
     );
   });
 
   it('should pass right props to component', () => {
     const CustomField = createFormField();
     instance = mount(
-      <CustomField standalone placeholder="test_placeholder" />
+      <CustomField standalone placeholder="test_placeholder" />,
     );
     expect(instance.find('.kuma-input').prop('placeholder')).to.be('test_placeholder');
     expect(instance.find('.kuma-input').prop('standalone')).to.be(undefined);
@@ -38,23 +38,30 @@ describe('create form field', () => {
   });
 
   it('should be able to define valuePropName/component', (done) => {
-    const Input = props =>
+    const Input = ({ text, onChange }) => (
       <input
         className="kuma-input"
-        value={props.text}
-        onChange={(e) => { props.onChange(e.target.value); }}
-      />;
+        value={text}
+        onChange={(e) => { onChange(e.target.value); }}
+      />
+    );
 
     Input.propTypes = {
       text: PropTypes.string,
       onChange: PropTypes.func,
     };
+
+    Input.defaultProps = {
+      text: '',
+      onChange: () => {},
+    };
+
     const CustomField = createFormField({
       valuePropName: 'text',
       component: <Input />,
     });
     instance = mount(
-      <CustomField standalone value="1" />
+      <CustomField standalone value="1" />,
     );
     setTimeout(() => {
       expect(instance.find('.kuma-input').instance().value).to.be('1');
@@ -63,23 +70,30 @@ describe('create form field', () => {
   });
 
   it('should be able to define changePropName', (done) => {
-    const Input = props =>
+    const Input = ({ value, onSelect }) => (
       <input
         className="kuma-input"
-        value={props.value}
-        onChange={(e) => { props.onSelect(e.target.value); }}
-      />;
+        value={value}
+        onChange={(e) => { onSelect(e.target.value); }}
+      />
+    );
 
     Input.propTypes = {
       value: PropTypes.string,
       onSelect: PropTypes.func,
     };
+
+    Input.defaultProps = {
+      value: '',
+      onSelect: () => {},
+    };
+
     const CustomField = createFormField({
       changePropName: 'onSelect',
       component: <Input />,
     });
     instance = mount(
-      <CustomField standalone value="1" />
+      <CustomField standalone value="1" />,
     );
     instance.find('.kuma-input').simulate('change', {
       target: {
@@ -97,29 +111,36 @@ describe('create form field', () => {
       renderView: () => <span className="view" />,
     });
     instance = mount(
-      <CustomField standalone mode="view" />
+      <CustomField standalone mode="view" />,
     );
     expect(instance.find('.kuma-uxform-field-core').contains(<span className="view" />)).to.be(true);
   });
 
   it('should not pass valuePropName/changePropName to the component', () => {
-    const Input = props =>
+    const Input = ({ text, onChange }) => (
       <input
         className="kuma-input"
-        value={props.text}
-        onChange={(e) => { props.onChange(e.target.value); }}
-      />;
+        value={text}
+        onChange={(e) => { onChange(e.target.value); }}
+      />
+    );
 
     Input.propTypes = {
       text: PropTypes.string,
       onChange: PropTypes.func,
     };
+
+    Input.defaultProps = {
+      text: '',
+      onChange: () => {},
+    };
+
     const CustomField = createFormField({
       valuePropName: 'text',
       component: <Input />,
     });
     instance = mount(
-      <CustomField standalone text="1" />
+      <CustomField standalone text="1" />,
     );
     expect(instance.find('Input').prop('text')).not.to.be(1);
   });

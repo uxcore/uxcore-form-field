@@ -25,7 +25,7 @@ describe('Standalone', () => {
 
   it('message', (done) => {
     instance = ReactDOM.render(
-      <FormField standalone message={{ type: 'tip', message: 'tip test' }} />, div
+      <FormField standalone message={{ type: 'tip', message: 'tip test' }} />, div,
     );
     expect(instance.getTipsNode().innerHTML).to.be('tip test');
     done();
@@ -33,7 +33,7 @@ describe('Standalone', () => {
 
   it('error', (done) => {
     const wrapper = mount(
-      <FormField standalone message={{ type: 'error', message: 'error test' }} />, div
+      <FormField standalone message={{ type: 'error', message: 'error test' }} />, div,
     );
     expect(wrapper.instance().getErrorNode().innerHTML).to.be('error test');
     expect(wrapper.find('.has-error').length).to.be(1);
@@ -78,67 +78,77 @@ describe('Standalone', () => {
   });
 
   it('handleDataChange should keep value format', (done) => {
-    const Demo = createClass({
-      getInitialState() {
-        return {
+    class Demo extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = {
           value: 'test1',
         };
-      },
+      }
+
       changeValue() {
         this.setState({
           value: 'test2',
         });
-      },
+      }
+
       handleChange(context, values, silence) {
-        expect(context).to.be(instance.refs.formfield);
+        expect(context).to.be(this.formfield);
         expect(values).to.have.keys('value', 'pass');
         expect(values.pass).to.be.a('boolean');
-        expect(silence).to.be.a('boolean');
+        expect(silence).tßo.be.a('boolean');
         done();
-      },
+      }
+
       render() {
+        const { value } = this.state;
         return (
           <FormField
             standalone
-            ref="formfield"
+            ref={(c) => { this.formfield = c; }}
             jsxname="test"
-            value={this.state.value}
+            value={value}
             handleDataChange={this.handleChange}
           />
         );
-      },
-    });
+      }
+    }
     instance = ReactDOM.render(<Demo />, div);
     instance.changeValue();
   });
 
   it('getProps', (done) => {
-    const Demo = createClass({
-      getInitialState() {
-        return {
+    class Demo extends React.Component {
+      static handleChange(context, data, silence) {
+        expect(silence).to.be(true);
+      }
+
+      constructor(props) {
+        super(props);
+        this.state = {
           value: 'test1',
         };
-      },
+      }
+
       changeValue() {
         this.setState({
           value: 'test2',
         });
-      },
-      handleChange(context, data, silence) {
-        expect(silence).to.be(true);
-      },
+      }
+
+
       render() {
+        const { value } = this.state;
         return (
           <FormField
             standalone
-            ref="formfield"
             jsxname="test"
-            value={this.state.value}
-            handleDataChange={this.handleChange}
+            value={value}
+            handleDataChange={Demo.handleChange}
           />
         );
-      },
-    });
+      }
+    }
     instance = ReactDOM.render(<Demo />, div);
     const formFieldNode = instance.refs.formfield;
 

@@ -48,15 +48,15 @@ const createFormField = (options = {}) => {
     renderField() {
       const me = this;
       const mode = me.props.jsxmode || me.props.mode;
-      const props = { ...me.props };
+      const cloneProps = { ...me.props };
       FormFieldPropKeys
         .concat([newOptions.valuePropName, newOptions.changePropName])
         .forEach((key) => {
-          delete props[key];
+          delete cloneProps[key];
         });
 
       if (mode === Constants.MODE.VIEW) {
-        return newOptions.renderView(me.state.value, props);
+        return newOptions.renderView(me.state.value, cloneProps);
       }
 
       return React.cloneElement(newOptions.component, {
@@ -64,7 +64,7 @@ const createFormField = (options = {}) => {
         [newOptions.changePropName]: (...args) => {
           me.handleDataChange(newOptions.processValue(...args));
         },
-        ...props,
+        ...cloneProps,
       });
     }
   }

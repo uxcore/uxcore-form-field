@@ -97,7 +97,7 @@ class FormField extends React.Component {
     const defaultPassStatus = {
       error: false,
     };
-    if ('instantValidate' in props) {
+    if (props.instantValidate !== undefined) {
       instant = props.instantValidate;
     } else {
       instant = props.jsxinstant;

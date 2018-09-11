@@ -19,6 +19,7 @@
       {
         "allowForLoopAfterthoughts": true
       }
-    ]
+    ],
+    "react/no-unused-state": "off"
   }
 }

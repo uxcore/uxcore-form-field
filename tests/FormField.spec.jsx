@@ -45,7 +45,15 @@ describe('FormField', () => {
       render() {
         return (
           <Form>
-            <FormField ref="formfield" jsxname="test" jsxlabel={<span>{'test' }</span>} />
+            <FormField
+              ref="formfield"
+              jsxname="test"
+              jsxlabel={(
+                <span>
+test
+                </span>
+)}
+            />
           </Form>
         );
       },
@@ -121,20 +129,24 @@ describe('FormField', () => {
   });
 
   it('processValue', (done) => {
-    const Demo = createClass({
-      getInitialState() {
-        return {};
-      },
+    class Demo extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = {};
+      }
+
       setValue(value) {
         this.setState({
           test: value,
         });
-      },
+      }
+
       render() {
+        const { test } = this.state;
         return (
           <Form
             jsxonChange={(values, name) => { this.setState({ test: values[name] }); }}
-            jsxvalues={{ test: this.state.test }}
+            jsxvalues={{ test }}
           >
             <FormField
               processValue={(value) => {
@@ -149,8 +161,8 @@ describe('FormField', () => {
             />
           </Form>
         );
-      },
-    });
+      }
+    }
     instance = ReactDOM.render(<Demo />, div);
     instance.setValue('1111');
     setTimeout(() => {
@@ -160,15 +172,18 @@ describe('FormField', () => {
   });
 
   it('validate pass', (done) => {
-    const Demo = createClass({
-      getInitialState() {
-        return {};
-      },
+    class Demo extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = {};
+      }
+
       render() {
+        const { test } = this.state;
         return (
           <Form
             jsxonChange={(values, name) => { this.setState({ test: values[name] }); }}
-            jsxvalues={{ test: this.state.test }}
+            jsxvalues={{ test }}
           >
             <FormField
               ref="formfield"
@@ -177,8 +192,8 @@ describe('FormField', () => {
             />
           </Form>
         );
-      },
-    });
+      }
+    }
     instance = ReactDOM.render(<Demo />, div);
     const formFieldNode = instance.refs.formfield;
     expect(formFieldNode.getErrorNode()).to.be(undefined);
@@ -190,27 +205,30 @@ describe('FormField', () => {
   });
 
   it('validate not pass', (done) => {
-    const Demo = createClass({
-      getInitialState() {
-        return {};
-      },
+    class Demo extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = {};
+      }
+
       render() {
+        const { test } = this.state;
         return (
           <Form
             jsxonChange={(values, name) => { this.setState({ test: values[name] }); }}
-            jsxvalues={{ test: this.state.test }}
+            jsxvalues={{ test }}
           >
             <FormField
-              ref="formfield"
+              ref={(c) => { this.formfield = c; }}
               jsxname="test"
               jsxrules={{ validator() { return false; }, errMsg: 'error test' }}
             />
           </Form>
         );
-      },
-    });
+      }
+    }
     instance = ReactDOM.render(<Demo />, div);
-    const formFieldNode = instance.refs.formfield;
+    const formFieldNode = instance.formfield;
     expect(formFieldNode.getErrorNode()).to.be(undefined);
     formFieldNode.handleDataChange('1');
     setTimeout(() => {
@@ -220,20 +238,24 @@ describe('FormField', () => {
   });
 
   it('props.value change should not validate', (done) => {
-    const Demo = createClass({
-      getInitialState() {
-        return {};
-      },
+    class Demo extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = {};
+      }
+
       setValue(value) {
         this.setState({
           test: value,
         });
-      },
+      }
+
       render() {
+        const { test } = this.state;
         return (
           <Form
             jsxonChange={(values, name) => { this.setState({ test: values[name] }); }}
-            jsxvalues={{ test: this.state.test }}
+            jsxvalues={{ test }}
           >
             <FormField
               ref="formfield"
@@ -242,8 +264,8 @@ describe('FormField', () => {
             />
           </Form>
         );
-      },
-    });
+      }
+    }
     instance = ReactDOM.render(<Demo />, div);
     instance.setValue('1');
     const formFieldNode = instance.refs.formfield;
@@ -433,8 +455,11 @@ describe('FormField', () => {
         return (
           <Form>
             <FormField
-              ref="formfield" jsxname="test"
-              jsxlabel="test" jsxtips="1" labelMatchInputHeight
+              ref="formfield"
+              jsxname="test"
+              jsxlabel="test"
+              jsxtips="1"
+              labelMatchInputHeight
             />
           </Form>
         );

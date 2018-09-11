@@ -1,5 +1,10 @@
 # history
 
+## 0.3.8 / 2018-09-11
+
+* `CHANGED` remove jQuery dev dependency
+* `FIXED` validate bug if instantValidate is undefined
+
 ## 0.3.7 / 2018-09-10
 
 * `CHNAGED` fix eslint errors
