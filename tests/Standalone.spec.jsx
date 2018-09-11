@@ -4,7 +4,6 @@
 import expect from 'expect.js';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import createClass from 'create-react-class';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import FormField from '../src';
@@ -41,34 +40,39 @@ describe('Standalone', () => {
   });
 
   it('willReceiveProps', (done) => {
-    const Demo = createClass({
-      getInitialState() {
-        return {
+    class Demo extends React.Component {
+      static handleChange(context, data, silence) {
+        expect(silence).to.be(true);
+      }
+
+      constructor(props) {
+        super(props);
+        this.state = {
           value: 'test1',
         };
-      },
+      }
+
       changeValue() {
         this.setState({
           value: 'test2',
         });
-      },
-      handleChange(context, data, silence) {
-        expect(silence).to.be(true);
-      },
+      }
+
       render() {
+        const { value } = this.state;
         return (
           <FormField
             standalone
-            ref="formfield"
+            ref={(c) => { this.formfield = c; }}
             jsxname="test"
-            value={this.state.value}
-            handleDataChange={this.handleChange}
+            value={value}
+            handleDataChange={Demo.handleChange}
           />
         );
-      },
-    });
+      }
+    }
     instance = ReactDOM.render(<Demo />, div);
-    const formFieldNode = instance.refs.formfield;
+    const formFieldNode = instance.formfield;
     expect(formFieldNode.getValue()).to.be('test1');
     instance.changeValue();
     setTimeout(() => {
@@ -86,18 +90,19 @@ describe('Standalone', () => {
         };
       }
 
+
+      handleChange = (context, values, silence) => {
+        // expect(context).to.be(this.formfield);
+        expect(values).to.have.keys('value', 'pass');
+        expect(values.pass).to.be.a('boolean');
+        expect(silence).to.be.a('boolean');
+        done();
+      }
+
       changeValue() {
         this.setState({
           value: 'test2',
         });
-      }
-
-      handleChange(context, values, silence) {
-        expect(context).to.be(this.formfield);
-        expect(values).to.have.keys('value', 'pass');
-        expect(values.pass).to.be.a('boolean');
-        expect(silence).tßo.be.a('boolean');
-        done();
       }
 
       render() {
@@ -142,6 +147,7 @@ describe('Standalone', () => {
         return (
           <FormField
             standalone
+            ref={(c) => { this.formfield = c; }}
             jsxname="test"
             value={value}
             handleDataChange={Demo.handleChange}
@@ -150,7 +156,7 @@ describe('Standalone', () => {
       }
     }
     instance = ReactDOM.render(<Demo />, div);
-    const formFieldNode = instance.refs.formfield;
+    const formFieldNode = instance.formfield;
 
     expect(formFieldNode.getProps().standalone).to.be(true);
     done();
