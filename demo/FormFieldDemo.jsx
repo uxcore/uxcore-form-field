@@ -10,6 +10,9 @@ import React from 'react';
 
 import Form from 'uxcore-form/build/Form';
 import FormRow from 'uxcore-form-row';
+import Button from 'uxcore-button';
+import Icon from 'uxcore-icon';
+import Tooltip from 'uxcore-tooltip';
 import FormField from '../src';
 
 const { createFormField } = FormField;
@@ -19,6 +22,9 @@ class Demo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      value: {
+        custom: '111',
+      },
     };
   }
 
@@ -26,16 +32,21 @@ class Demo extends React.Component {
     return (
       <div>
         <Form
-          jsxvalues={{
-            custom: '111',
-          }}
+          jsxvalues={this.state.value}
         >
           <FormRow>
             <FormField
-              inputBoxMaxWidth="normal"
+              inputBoxMaxWidth="middle"
               data-spm="2"
               jsxname="test1"
-              jsxlabel={<span>{'表单1'}</span>}
+              jsxlabel={(
+                <div>
+                  <span>
+                    表单1
+                  </span>
+                  <Icon name="tishi-full" style={{ color: '#3C99D8' }} />
+                </div>
+              )}
               jsxflex={2}
               jsxrules={{
                 validator: () => false,
@@ -46,13 +57,19 @@ class Demo extends React.Component {
           </FormRow>
           <CustomField
             jsxname="custom"
-            jsxlabel="字很多字很多字很多字很多字"
+            jsxlabel="标题很长标题很长标题很长标题很长标题很长"
             placeholder="111"
-            jsxtips="提示"
-            gridLayout={[6, 12]}
+            tipInLabel
+            jsxtips="提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提
+            示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示
+            文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字"
             labelMatchInputHeight={false}
-            renderFieldAddon={() => <div>定制区域</div>}
-            // verticalAlign
+            renderFieldAddon={() => (
+              <div>
+                表单域定制部分
+              </div>
+            )}
+          // verticalAlign
           />
         </Form>
         <FormField
@@ -64,7 +81,18 @@ class Demo extends React.Component {
             message: 'error test',
           }}
         />
+        <Button
+          onClick={() => {
+            this.setState({
+              value: {
+                custom: '111111',
+              },
+            });
+          }}
+        >
+          改变表单的值
 
+        </Button>
       </div>
     );
   }

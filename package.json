@@ -1,6 +1,6 @@
 {
   "name": "uxcore-form-field",
-  "version": "0.2.38",
+  "version": "0.3.8",
   "description": "uxcore-form-field component for uxcore.",
   "repository": "https://github.com/uxcore/uxcore-form-field.git",
   "author": "eternalsky",
@@ -32,22 +32,22 @@
     "FormField"
   ],
   "devDependencies": {
+    "babel-polyfill": "6.x",
     "console-polyfill": "^0.2.2",
     "create-react-class": "^15.6.2",
     "enzyme": "^3.0.0",
-    "enzyme-adapter-react-15": "^1.0.0",
-    "es5-shim": "^4.5.8",
+    "enzyme-adapter-react-16": "1.x",
     "expect.js": "~0.3.1",
     "jquery": "^1.12.4",
     "kuma-base": "1.x",
-    "react": "15.x",
-    "react-addons-test-utils": "15.x",
-    "react-dom": "15.x",
-    "react-test-renderer": "15.x",
+    "react": "16.x",
+    "react-dom": "16.x",
+    "react-test-renderer": "16.x",
+    "uxcore-button": "^0.4.17",
     "uxcore-form": "*",
     "uxcore-form-row": "*",
     "uxcore-kuma": "*",
-    "uxcore-tools": "0.2.x"
+    "uxcore-tools": "^0.3.0"
   },
   "dependencies": {
     "classnames": "^2.1.2",
@@ -55,7 +55,10 @@
     "lodash": "^4.17.4",
     "object-assign": "^4.0.1",
     "prop-types": "15.x",
-    "uxcore-const": "^1.0.0"
+    "react-lifecycles-compat": "^3.0.4",
+    "uxcore-const": "^1.0.0",
+    "uxcore-icon": "^0.1.22",
+    "uxcore-tooltip": "^0.4.11"
   },
   "contributors": [],
   "license": "MIT"

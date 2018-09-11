@@ -1,5 +1,19 @@
 # history
 
+## 0.3.7 / 2018-09-10
+
+* `CHNAGED` fix eslint errors
+* `CHANGED` use prefixCls for every dom node
+* `NEW` support new prop `tipInLabel`
+
+## 0.3.6 / 2018-06-29
+
+* `FIXED` async doValidate typo
+
+## 0.3.0 / 2018-06-07
+
+* `CHANEGD` support React@16
+
 ## 0.2.38 / 2018-06-04
 
 * `CHANGED` support new prop `renderFieldAddon`

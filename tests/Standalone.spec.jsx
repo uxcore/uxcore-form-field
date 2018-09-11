@@ -6,7 +6,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import createClass from 'create-react-class';
 import Enzyme, { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-15';
+import Adapter from 'enzyme-adapter-react-16';
 import FormField from '../src';
 
 Enzyme.configure({ adapter: new Adapter() });

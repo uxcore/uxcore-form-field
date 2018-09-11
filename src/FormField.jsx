@@ -6,16 +6,57 @@ import assign from 'object-assign';
 import deepequal from 'lodash/isEqual';
 import cloneDeep from 'lodash/cloneDeep';
 import Promise from 'lie';
+import { polyfill } from 'react-lifecycles-compat';
+import Tooltip from 'uxcore-tooltip';
+import Icon from 'uxcore-icon';
 
 /* eslint-disable class-methods-use-this */
 class FormField extends React.Component {
+  static formatValue = value => value;
+
+  static isDirty = ({
+    always, async = false, value, rules = [],
+  }) => {
+    let isDirty = false;
+    let errMsg = '';
+    if (!async) {
+      if (typeof rules === 'object' && !Array.isArray(rules)) {
+        isDirty = (always === undefined) ? !rules.validator(value) : !always;
+        ({ errMsg } = rules);
+      } else if (Array.isArray(rules)) {
+        for (let i = 0; i < rules.length; i++) {
+          isDirty = (always === undefined) ? !rules[i].validator(value) : !always;
+          if (isDirty) {
+            ({ errMsg } = rules[i]);
+            break;
+          }
+        }
+      }
+      return {
+        isDirty,
+        errMsg,
+      };
+    }
+    if (typeof rules !== 'function') {
+      console.error('Form Validate: In async validation mode,'
+        + ' jsxrules(rules) should be a function');
+      return {
+        isDirty: false,
+      };
+    }
+    return new Promise((resolve, reject) => {
+      rules(value, reject, resolve);
+    });
+  }
+
   constructor(props) {
     super(props);
     this.state = {
       value: props.value,
-      formatValue: this.formatValue(props.value),
+      formatValue: FormField.formatValue(props.value),
       error: false,
       errMsg: '',
+      prevValue: props.value,
     };
   }
 
@@ -30,19 +71,88 @@ class FormField extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    const me = this;
-    if (!deepequal(nextProps.value, me.props.value)) {
-      me.handleDataChange(nextProps.value, true, true, true);
+  componentDidUpdate(prevProps, prevState) {
+    const { handleDataChange } = this.props;
+    const { value, error } = this.state;
+    if (handleDataChange && !deepequal(prevState.value, value)) {
+      handleDataChange(this, {
+        value,
+        pass: !error,
+      }, true);
     }
   }
 
   componentWillUnmount() {
-    const me = this;
-    if (!me.props.standalone) {
-      this.props.detachFormField(this);
+    const { standalone, detachFormField } = this.props;
+    if (!standalone) {
+      detachFormField(this);
     }
   }
+
+  static getValidateStatus = ({
+    force, always, props, value,
+  }) => {
+    let instant = true;
+    const async = props.asyncValidate || false;
+    const defaultPassStatus = {
+      error: false,
+    };
+    if ('instantValidate' in props) {
+      instant = props.instantValidate;
+    } else {
+      instant = props.jsxinstant;
+    }
+    const rules = props.jsxrules;
+    // `force` has the top priority, `undefined` is not equal to `false`
+    // `instant` has the sceond priority here
+    // eternalsky@2016.03.15
+    if (force === true || (force !== false && instant)) {
+      if (rules) {
+        if (!async) {
+          const error = FormField.isDirty({ always, value, rules });
+          return {
+            error: error.isDirty,
+            errMsg: error.errMsg,
+          };
+        }
+        return new Promise((resolve) => {
+          FormField.isDirty({
+            always, async, rules, value,
+          }).then((errMsg) => {
+            if (typeof errMsg === 'string') {
+              resolve({
+                error: true,
+                errMsg,
+              });
+            }
+          }).catch((err) => {
+            if (typeof err === 'object' && err.stack) {
+              console.error(err.stack);
+            } else {
+              resolve(defaultPassStatus);
+            }
+          });
+        });
+      }
+      return defaultPassStatus;
+    }
+    return defaultPassStatus;
+  };
+
+  static getDerivedStateFromProps = (nextProps, prevState) => {
+    const { processValue, value } = nextProps;
+    if (!deepequal(value, prevState.prevValue)) {
+      const newValue = typeof processValue === 'function' ? processValue(cloneDeep(value)) : value;
+      const newState = {
+        value: newValue,
+        formatValue: FormField.formatValue(value),
+        fromReset: true,
+        prevValue: value,
+      };
+      return newState;
+    }
+    return null;
+  };
 
   getGridLayoutPercent(index) {
     const me = this;
@@ -85,16 +195,19 @@ class FormField extends React.Component {
   }
 
   getName() {
-    return this.props.jsxname;
+    const { jsxname } = this.props;
+    return jsxname;
   }
 
   getValue() {
-    return this.formatValue(this.state.value);
+    const { value } = this.state;
+    return this.formatValue(value);
   }
 
   setValue(value, fromReset, fromPropsChange, next) {
     const me = this;
-    const newState = {
+    const { standalone, validateOnBlur, asyncValidate } = me.props;
+    let newState = {
       value,
       formatValue: me.formatValue(value),
       /*
@@ -103,12 +216,23 @@ class FormField extends React.Component {
        */
       fromReset: !!fromReset,
     };
+    let pass = true;
+    // validateOnBlur only support InputFormField & TextAraeFormField now
+    if (!fromReset && !standalone && !validateOnBlur) {
+      if (!asyncValidate) {
+        const validatePass = me.getValidateStatus({ value });
+        newState = { ...newState, ...validatePass };
+        pass = !validatePass.error;
+      } else {
+        me.doValidate(undefined, undefined, value);
+      }
+    }
     if (fromReset && fromPropsChange === undefined) {
       newState.error = false;
     }
     me.setState(newState, () => {
       if (next && typeof next === 'function') {
-        next();
+        next(pass);
       }
     });
   }
@@ -127,12 +251,11 @@ class FormField extends React.Component {
     return this.fieldRoot;
   }
 
-  /**
-   * selectFormField depends on this method
-   */
-  // _isEqual(a, b) {
-  //   return deepequal(a, b);
-  // }
+  getValidateStatus({ force, always, value }) {
+    return FormField.getValidateStatus({
+      force, always, props: this.props, value,
+    });
+  }
 
   /*
    * Fired when field value changes，update form's state and then trigger re-render.
@@ -141,19 +264,11 @@ class FormField extends React.Component {
 
   handleDataChange(value, fromReset, silence, fromPropsChange) {
     const me = this;
-    const { asyncValidate, processValue } = me.props;
+    const { processValue, handleDataChange } = me.props;
     const newValue = typeof processValue === 'function' ? processValue(cloneDeep(value)) : value;
-    me.setValue(newValue, fromReset, fromPropsChange, () => {
-      let pass = true;
-      // validateOnBlur only support InputFormField & TextAraeFormField now
-      if (!fromReset && !me.props.standalone && !me.props.validateOnBlur) {
-        const validatePass = me.doValidate();
-        if (!asyncValidate) {
-          pass = validatePass;
-        }
-      }
-      if (me.props.handleDataChange) {
-        me.props.handleDataChange(me, {
+    me.setValue(newValue, fromReset, fromPropsChange, (pass) => {
+      if (handleDataChange) {
+        handleDataChange(me, {
           value: newValue,
           pass,
         }, silence);
@@ -167,52 +282,18 @@ class FormField extends React.Component {
    * if no rule, it means validate pass.
    */
 
-  doValidate(force, always) {
-    const me = this;
-    const async = me.props.asyncValidate || false;
-    let instant = true;
-    if ('instantValidate' in me.props) {
-      instant = me.props.instantValidate;
-    } else {
-      instant = me.props.jsxinstant;
-    }
-    // `force` has the top priority, `undefined` is not equal to `false`
-    // `instant` has the sceond priority here
-    // eternalsky@2016.03.15
-    if (force === true || (force !== false && instant)) {
-      if (me.props.jsxrules) {
-        if (!async) {
-          const error = me.isDirty(always);
-          me.setState({
-            error: error.isDirty,
-            errMsg: error.errMsg,
-          });
-          return !error.isDirty;
-        }
-        return new Promise((resolve) => {
-          me.isDirty(always, async).then((errMsg) => {
-            if (typeof errMsg === 'string') {
-              me.setState({
-                error: true,
-                errMsg,
-              });
-              resolve(false);
-            }
-          }).catch((err) => {
-            if (typeof err === 'object' && err.stack) {
-              console.error(err.stack);
-            } else {
-              me.setState({
-                error: false,
-              });
-              resolve(true);
-            }
-          });
+  doValidate(force, always, value = this.state.value) {
+    const status = this.getValidateStatus({ force, always, value });
+    if (status.then) {
+      return new Promise((resolve) => {
+        status.then((stat) => {
+          this.setState(stat);
+          resolve(!stat.error);
         });
-      }
-      return true;
+      });
     }
-    return true;
+    this.setState(status);
+    return !status.error;
   }
 
   /*
@@ -223,37 +304,13 @@ class FormField extends React.Component {
    */
 
   isDirty(always, async = false) {
-    const me = this;
-    const rules = me.props.jsxrules;
-    let isDirty = false;
-    let errMsg = '';
-    if (!async) {
-      if (typeof rules === 'object' && !Array.isArray(rules)) {
-        isDirty = (always === undefined) ? !rules.validator(me.state.value) : !always;
-        errMsg = rules.errMsg;
-      } else if (Array.isArray(rules)) {
-        for (let i = 0; i < rules.length; i++) {
-          isDirty = (always === undefined) ? !rules[i].validator(me.state.value) : !always;
-          if (isDirty) {
-            errMsg = rules[i].errMsg;
-            break;
-          }
-        }
-      }
-      return {
-        isDirty,
-        errMsg,
-      };
-    }
-    if (typeof rules !== 'function') {
-      console.error('Form Validate: In async validation mode,'
-        + ' jsxrules(rules) should be a function');
-      return {
-        isDirty: false,
-      };
-    }
-    return new Promise((resolve, reject) => {
-      rules(me.state.value, reject, resolve);
+    const { value } = this.state;
+    const { jsxrules } = this.props;
+    return FormField.isDirty({
+      always,
+      async,
+      value,
+      rules: jsxrules,
     });
   }
 
@@ -292,18 +349,23 @@ class FormField extends React.Component {
   renderTips() {
     const me = this;
     const mode = me.props.jsxmode || me.props.mode;
-    if (mode !== Constants.MODE.EDIT) return null;
+    const { jsxtips, formPrefixCls, tipInLabel } = this.props;
+    if (mode !== Constants.MODE.EDIT || tipInLabel) return null;
     if (me.props.standalone && me.props.message && me.props.message.type === 'tip') {
       return (
-        <li className="kuma-uxform-tips">
-          <span ref={me.saveRef('tips')} className="kuma-uxform-message-content">{me.props.message.message}</span>
+        <li className={`${formPrefixCls}-tips`}>
+          <span ref={me.saveRef('tips')} className={`${formPrefixCls}-message-content`}>
+            {me.props.message.message}
+          </span>
         </li>
       );
     }
-    if (!!this.props.jsxtips && !me.state.error) {
+    if (!!jsxtips && !me.state.error) {
       return (
-        <li className="kuma-uxform-tips">
-          <span className="kuma-uxform-message-content" ref={me.saveRef('tips')}>{this.props.jsxtips}</span>
+        <li className={`${formPrefixCls}-tips`}>
+          <span className={`${formPrefixCls}-message-content`} ref={me.saveRef('tips')}>
+            {jsxtips}
+          </span>
         </li>
       );
     }
@@ -314,28 +376,34 @@ class FormField extends React.Component {
    * You should rewrite this method, when you are developing a new type of form field.
    */
 
-  renderField() {}
+  renderField() { }
 
   renderFieldAddon() {
-    const mode = this.props.jsxmode || this.props.mode;
-    return this.props.renderFieldAddon({ mode });
+    const { jsxmode, mode, renderFieldAddon } = this.props;
+    const trueMode = jsxmode || mode;
+    return renderFieldAddon({ mode: trueMode });
   }
 
   renderErrorMsg() {
     const me = this;
+    const { formPrefixCls } = this.props;
     const mode = me.props.jsxmode || me.props.mode;
     if (mode !== Constants.MODE.EDIT) return null;
     if (this.isMessageError()) {
       return (
-        <li className="kuma-uxform-errormsg">
-          <span ref={me.saveRef('errorNode')} className="kuma-uxform-message-content">{me.props.message.message}</span>
+        <li className={`${formPrefixCls}-errormsg`}>
+          <span ref={me.saveRef('errorNode')} className={`${formPrefixCls}-message-content`}>
+            {me.props.message.message}
+          </span>
         </li>
       );
     }
     if (me.state.error) {
       return (
-        <li className="kuma-uxform-errormsg">
-          <span ref={me.saveRef('errorNode')} className="kuma-uxform-message-content">{me.state.errMsg}</span>
+        <li className={`${formPrefixCls}-errormsg`}>
+          <span ref={me.saveRef('errorNode')} className={`${formPrefixCls}-message-content`}>
+            {me.state.errMsg}
+          </span>
         </li>
       );
     }
@@ -360,6 +428,39 @@ class FormField extends React.Component {
         {...contentProps}
       />
     );
+  }
+
+  renderTipInLabel() {
+    const me = this;
+    const mode = me.props.jsxmode || me.props.mode;
+    const {
+      jsxtips, message, standalone, tipInLabel, jsxprefixCls,
+    } = this.props;
+    if (mode !== Constants.MODE.EDIT || !tipInLabel) return null;
+    const tip = standalone ? message.message : jsxtips;
+    if (tip) {
+      return (
+        <Tooltip
+          overlay={(
+            <div style={{ maxWidth: 400 }}>
+              {tip}
+            </div>
+          )}
+          placement="topLeft"
+        >
+          <Icon
+            name="tishi-full"
+            className={`${jsxprefixCls}-tip-icon`}
+            style={{
+              display: 'inline-block',
+              verticalAlign: 'top',
+              marginLeft: 4,
+            }}
+          />
+        </Tooltip>
+      );
+    }
+    return null;
   }
 
   renderLabel() {
@@ -388,10 +489,17 @@ class FormField extends React.Component {
           })}
           style={style}
         >
-          <span className="required" ref={me.saveRef('required')}>
-            {(me.props.required && mode === Constants.MODE.EDIT) ? '* ' : ''}
+          <span style={{
+            display: me.props.tipInLabel ? 'inline-block' : 'inline',
+            maxWidth: 'calc(100% - 20px)',
+          }}
+          >
+            <span className="required" ref={me.saveRef('required')}>
+              {(me.props.required && mode === Constants.MODE.EDIT) ? '* ' : ''}
+            </span>
+            {this.renderLabelContent()}
           </span>
-          {this.renderLabelContent()}
+          {this.renderTipInLabel()}
         </label>
       );
     }
@@ -402,7 +510,7 @@ class FormField extends React.Component {
     const me = this;
     const mode = me.props.jsxmode || me.props.mode;
     const align = me.props.verticalAlign || me.props.jsxVerticalAlign;
-    const { jsxshowLabel } = me.props;
+    const { jsxshowLabel, jsxprefixCls, formPrefixCls } = me.props;
     const fieldStyle = {
       width: this.shouldLayoutAsGrid() ? this.getGridLayoutPercent(1) : undefined,
     };
@@ -419,7 +527,7 @@ class FormField extends React.Component {
           {me.renderLabel()}
           <ul
             className={classnames({
-              'kuma-uxform-field-content': true,
+              [`${jsxprefixCls}-content`]: true,
               'view-mode': mode === Constants.MODE.VIEW,
               'edit-mode': mode === Constants.MODE.EDIT,
               'has-error': !!me.state.error || this.isMessageError(),
@@ -428,36 +536,38 @@ class FormField extends React.Component {
           >
             <li
               ref={me.saveRef('fieldCore')}
-              className="kuma-uxform-field-core"
+              className={`${jsxprefixCls}-core`}
             >
               {me.renderField()}
               {me.renderFieldAddon()}
             </li>
           </ul>
         </div>,
-        (tips || errorMsg) ? <div
-          key="tip"
-          className="kuma-uxform-tip-box"
-          style={{
-            display: 'table',
-            width: '100%',
-          }}
-        >
-          {(!align && jsxshowLabel) ? (
-            <label
-              className={classnames({
-                'kuma-label': true,
-              })}
-              style={{
-                width: this.shouldLayoutAsGrid() ? this.getGridLayoutPercent(0) : undefined,
-              }}
-            />
-          ) : null}
-          <ul style={fieldStyle}>
-            {me.renderTips()}
-            {me.renderErrorMsg()}
-          </ul>
-        </div> : null,
+        (tips || errorMsg) ? (
+          <div
+            key="tip"
+            className={`${formPrefixCls}-tip-box`}
+            style={{
+              display: 'table',
+              width: '100%',
+            }}
+          >
+            {(!align && jsxshowLabel) ? (
+              <label
+                className={classnames({
+                  'kuma-label': true,
+                })}
+                style={{
+                  width: this.shouldLayoutAsGrid() ? this.getGridLayoutPercent(0) : undefined,
+                }}
+              />
+            ) : null}
+            <ul style={fieldStyle}>
+              {me.renderTips()}
+              {me.renderErrorMsg()}
+            </ul>
+          </div>
+        ) : null,
       ];
     }
     return [
@@ -465,7 +575,7 @@ class FormField extends React.Component {
       <ul
         key="content"
         className={classnames({
-          'kuma-uxform-field-content': true,
+          [`${jsxprefixCls}-content`]: true,
           'view-mode': mode === Constants.MODE.VIEW,
           'edit-mode': mode === Constants.MODE.EDIT,
           'has-error': !!me.state.error || this.isMessageError(),
@@ -475,7 +585,7 @@ class FormField extends React.Component {
         <li
           key="core"
           ref={me.saveRef('fieldCore')}
-          className="kuma-uxform-field-core"
+          className={`${jsxprefixCls}-core`}
         >
           {me.renderField()}
           {me.renderFieldAddon()}
@@ -534,7 +644,7 @@ FormField.propTypes = {
   jsxprefixCls: PropTypes.string,
   jsxflex: PropTypes.number,
   jsxname: PropTypes.string.isRequired,
-  jsxlabel: PropTypes.string,
+  jsxlabel: PropTypes.node,
   jsxtips: PropTypes.string,
   jsxrules: PropTypes.oneOfType([
     PropTypes.object,
@@ -559,6 +669,8 @@ FormField.propTypes = {
   gridLayout: PropTypes.array,
   message: PropTypes.object,
   renderFieldAddon: PropTypes.func,
+  formPrefixCls: PropTypes.string,
+  tipInLabel: PropTypes.bool,
 };
 
 FormField.defaultProps = {
@@ -568,15 +680,34 @@ FormField.defaultProps = {
   jsxprefixCls: 'kuma-uxform-field',
   formPrefixCls: 'kuma-uxform',
   jsxflex: 1,
-  jsxname: '',
   jsxlabel: '',
   jsxtips: '',
   standalone: false,
   mode: Constants.MODE.EDIT,
   required: false,
-  renderFieldAddon: () => {},
+  renderFieldAddon: () => { },
+  attachFormField: undefined,
+  detachFormField: undefined,
+  getValues: undefined,
+  resetValues: undefined,
+  handleDataChange: undefined,
+  processValue: undefined,
+  style: {},
+  labelWidth: undefined,
+  inputBoxMaxWidth: undefined,
+  gridLayout: undefined,
+  message: undefined,
+  instantValidate: undefined,
+  verticalAlign: undefined,
+  value: undefined,
+  jsxmode: undefined,
+  jsxrules: undefined,
+  totalFlex: undefined,
+  tipInLabel: false,
 };
 
 FormField.displayName = 'FormField';
+
+polyfill(FormField);
 
 export default FormField;
