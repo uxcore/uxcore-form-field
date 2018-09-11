@@ -1,5 +1,9 @@
 # history
 
+## 0.3.10 / 2018-09-11
+
+* `CHANGED` support js style export
+
 ## 0.3.8 / 2018-09-11
 
 * `CHANGED` remove jQuery dev dependency
