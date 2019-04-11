@@ -119,12 +119,10 @@ class FormField extends React.Component {
           FormField.isDirty({
             always, async, rules, value,
           }).then((errMsg) => {
-            if (typeof errMsg === 'string') {
-              resolve({
-                error: true,
-                errMsg,
-              });
-            }
+            resolve({
+              error: true,
+              errMsg,
+            });
           }).catch((err) => {
             if (typeof err === 'object' && err.stack) {
               console.error(err.stack);
