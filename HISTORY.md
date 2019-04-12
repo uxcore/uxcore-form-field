@@ -1,5 +1,10 @@
 # history
 
+## 0.3.11 / 2019-04-12
+
+* `CHANGED` remove errMsg type check
+* `FIXED` remove jquery method in test case
+
 ## 0.3.10 / 2018-09-11
 
 * `CHANGED` support js style export
@@ -103,7 +108,7 @@
 
 ## 0.2.13 / 2017-04-20
 
-* `CHANEGD` add view className in root mode. 
+* `CHANEGD` add view className in root mode.
 
 ## 0.2.12 / 2017-04-07
 
@@ -190,4 +195,4 @@
 
 ## 0.1.2
 
-`CHANGED` add `totalFlex` prop 
+`CHANGED` add `totalFlex` prop
