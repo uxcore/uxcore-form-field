@@ -7,7 +7,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import createClass from 'create-react-class';
 import Form from 'uxcore-form/build/Form';
-import $ from 'jquery';
 
 import FormField from '../src';
 
@@ -467,7 +466,7 @@ test
     });
     instance = ReactDOM.render(<Demo />, div);
     // className kuma-uxform-tip-box only appear in labelMatchInputHeight mode.
-    expect($('.kuma-uxform-tip-box').length).not.to.be(0);
+    expect(document.querySelectorAll('.kuma-uxform-tip-box').length).not.to.be(0);
     done();
   });
 
