@@ -60,10 +60,17 @@ class Demo extends React.Component {
             jsxlabel="标题很长标题很长标题很长标题很长标题很长"
             placeholder="111"
             tipInLabel
+            required
             jsxtips="提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提
             示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示
             文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字"
             labelMatchInputHeight={false}
+            jsxrules={[{
+              validator: function (value) {
+                return value
+              },
+              errMsg: '123123'
+            }]}
             renderFieldAddon={() => (
               <div>
                 表单域定制部分

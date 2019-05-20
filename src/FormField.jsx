@@ -9,6 +9,7 @@ import Promise from 'lie';
 import { polyfill } from 'react-lifecycles-compat';
 import Tooltip from 'uxcore-tooltip';
 import Icon from 'uxcore-icon';
+import Validator from 'uxcore-validator'
 
 /* eslint-disable class-methods-use-this */
 class FormField extends React.Component {
@@ -88,6 +89,31 @@ class FormField extends React.Component {
       detachFormField(this);
     }
   }
+  static getRules(props) {
+    const { jsxrules, required, requiredErrMsg, asyncValidate } = props;
+    if (asyncValidate || !required) {
+      return jsxrules
+    }
+    const emptyCheck = {
+      validator: Validator.isNotEmpty,
+      errMsg: requiredErrMsg || '必填字段'
+    }
+    if (!jsxrules) {
+      return emptyCheck
+    } else {
+      if (jsxrules.length && jsxrules.splice) {
+        return [
+          ...jsxrules,
+          emptyCheck
+        ]
+      } else if (typeof jsxrules === 'object') {
+        return [
+          jsxrules,
+          emptyCheck
+        ]
+      }
+    }
+  }
 
   static getValidateStatus = ({
     force, always, props, value,
@@ -102,7 +128,7 @@ class FormField extends React.Component {
     } else {
       instant = props.jsxinstant;
     }
-    const rules = props.jsxrules;
+    const rules = FormField.getRules(props);
     // `force` has the top priority, `undefined` is not equal to `false`
     // `instant` has the sceond priority here
     // eternalsky@2016.03.15
@@ -303,12 +329,11 @@ class FormField extends React.Component {
 
   isDirty(always, async = false) {
     const { value } = this.state;
-    const { jsxrules } = this.props;
     return FormField.isDirty({
       always,
       async,
       value,
-      rules: jsxrules,
+      rules: FormField.getRules(this.props),
     });
   }
 
@@ -669,6 +694,7 @@ FormField.propTypes = {
   renderFieldAddon: PropTypes.func,
   formPrefixCls: PropTypes.string,
   tipInLabel: PropTypes.bool,
+  requiredErrMsg: PropTypes.string,
 };
 
 FormField.defaultProps = {
@@ -702,6 +728,7 @@ FormField.defaultProps = {
   jsxrules: undefined,
   totalFlex: undefined,
   tipInLabel: false,
+  requiredErrMsg: '',
 };
 
 FormField.displayName = 'FormField';
