@@ -1,4 +1,6 @@
 # history
+## 0.3.13 / 2019-06-06
+* `FIXED` when required is set, jsxrules will auto add not empty rule
 
 ## 0.3.12 / 2019-05-20
 * `FIXED` when required is set, jsxrules will auto add not empty rule
