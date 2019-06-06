@@ -95,7 +95,7 @@ class FormField extends React.Component {
       return jsxrules
     }
     const emptyCheck = {
-      validator: Validator.isNotEmpty,
+      validator: Validator.isNotEmptyIncludeFalse,
       errMsg: requiredErrMsg || '必填字段'
     }
     if (!jsxrules) {
