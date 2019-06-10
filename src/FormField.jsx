@@ -101,16 +101,18 @@ class FormField extends React.Component {
     if (!jsxrules) {
       return emptyCheck
     } else {
-      if (jsxrules.length && jsxrules.splice) {
+      if (Array.isArray(jsxrules)) {
         return [
           ...jsxrules,
           emptyCheck
         ]
-      } else if (typeof jsxrules === 'object') {
-        return [
-          jsxrules,
-          emptyCheck
-        ]
+      } else {
+        if (typeof jsxrules === 'object' && jsxrules.validator) {
+          return [
+            jsxrules,
+            emptyCheck
+          ]
+        }
       }
     }
   }
