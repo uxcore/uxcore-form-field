@@ -47,6 +47,7 @@ class Demo extends React.Component {
                   <Icon name="tishi-full" style={{ color: '#3C99D8' }} />
                 </div>
               )}
+              required
               jsxflex={2}
               jsxrules={{
                 validator: () => false,
@@ -61,16 +62,11 @@ class Demo extends React.Component {
             placeholder="111"
             tipInLabel
             required
+            requiredErrMsg={123123}
             jsxtips="提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提
             示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示
             文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字"
             labelMatchInputHeight={false}
-            jsxrules={[{
-              validator: function (value) {
-                return value
-              },
-              errMsg: '123123'
-            }]}
             renderFieldAddon={() => (
               <div>
                 表单域定制部分

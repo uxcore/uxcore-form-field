@@ -1,4 +1,12 @@
 # history
+
+## 0.3.16 / 2019-06-12
+* `FIXED` when required && requiredErrMsg is set, jsxrules will auto add not empty rule
+* `NEW` add new prop requiredErrMsg for required prop
+
+## 0.3.15 / 2019-06-12
+* `CHANGED` revert to 0.3.11
+
 ## 0.3.14 / 2019-06-10
 * `FIXED` when required is set, jsxrules will auto add not empty rule
 

@@ -90,8 +90,8 @@ class FormField extends React.Component {
     }
   }
   static getRules(props) {
-    const { jsxrules, required, requiredErrMsg, asyncValidate } = props;
-    if (asyncValidate || !required) {
+    const { asyncValidate, jsxrules, required, requiredErrMsg } = props;
+    if (asyncValidate || !required || !requiredErrMsg ) {
       return jsxrules
     }
     const emptyCheck = {
@@ -331,11 +331,12 @@ class FormField extends React.Component {
 
   isDirty(always, async = false) {
     const { value } = this.state;
+    const { jsxrules } = this.props;
     return FormField.isDirty({
       always,
       async,
       value,
-      rules: FormField.getRules(this.props),
+      rules: jsxrules,
     });
   }
 
