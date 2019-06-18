@@ -1,4 +1,7 @@
 # history
+## 0.2.39 / 2019-06-18
+
+* `CHANGED` add new prop `showTipAlways`
 
 ## 0.2.38 / 2018-06-04
 
@@ -80,7 +83,7 @@
 
 ## 0.2.13 / 2017-04-20
 
-* `CHANEGD` add view className in root mode. 
+* `CHANEGD` add view className in root mode.
 
 ## 0.2.12 / 2017-04-07
 
@@ -167,4 +170,4 @@
 
 ## 0.1.2
 
-`CHANGED` add `totalFlex` prop 
+`CHANGED` add `totalFlex` prop
