@@ -49,6 +49,8 @@ class Demo extends React.Component {
             jsxlabel="字很多字很多字很多字很多字"
             placeholder="111"
             jsxtips="提示"
+            showTipAlways
+            jsxmode={'view'}
             gridLayout={[6, 12]}
             labelMatchInputHeight={false}
             renderFieldAddon={() => <div>定制区域</div>}

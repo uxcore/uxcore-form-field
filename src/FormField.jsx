@@ -292,7 +292,7 @@ class FormField extends React.Component {
   renderTips() {
     const me = this;
     const mode = me.props.jsxmode || me.props.mode;
-    if (mode !== Constants.MODE.EDIT) return null;
+    if (mode !== Constants.MODE.EDIT && !me.props.showTipAlways) return null;
     if (me.props.standalone && me.props.message && me.props.message.type === 'tip') {
       return (
         <li className="kuma-uxform-tips">
@@ -559,6 +559,7 @@ FormField.propTypes = {
   gridLayout: PropTypes.array,
   message: PropTypes.object,
   renderFieldAddon: PropTypes.func,
+  showTipAlways: PropTypes.bool
 };
 
 FormField.defaultProps = {
@@ -575,6 +576,7 @@ FormField.defaultProps = {
   mode: Constants.MODE.EDIT,
   required: false,
   renderFieldAddon: () => {},
+  showTipAlways: false
 };
 
 FormField.displayName = 'FormField';
