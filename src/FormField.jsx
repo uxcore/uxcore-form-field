@@ -375,8 +375,8 @@ class FormField extends React.Component {
   renderTips() {
     const me = this;
     const mode = me.props.jsxmode || me.props.mode;
-    const { jsxtips, formPrefixCls, tipInLabel } = this.props;
-    if (mode !== Constants.MODE.EDIT || tipInLabel) return null;
+    const { jsxtips, formPrefixCls, tipInLabel, showTipAlways } = this.props;
+    if ((mode !== Constants.MODE.EDIT || tipInLabel) && !showTipAlways) return null;
     if (me.props.standalone && me.props.message && me.props.message.type === 'tip') {
       return (
         <li className={`${formPrefixCls}-tips`}>
@@ -698,6 +698,7 @@ FormField.propTypes = {
   formPrefixCls: PropTypes.string,
   tipInLabel: PropTypes.bool,
   requiredErrMsg: PropTypes.string,
+  showTipAlways: PropTypes.bool
 };
 
 FormField.defaultProps = {
@@ -732,6 +733,7 @@ FormField.defaultProps = {
   totalFlex: undefined,
   tipInLabel: false,
   requiredErrMsg: '',
+  showTipAlways: false
 };
 
 FormField.displayName = 'FormField';

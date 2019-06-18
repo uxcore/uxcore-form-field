@@ -60,8 +60,9 @@ class Demo extends React.Component {
             jsxname="custom"
             jsxlabel="标题很长标题很长标题很长标题很长标题很长"
             placeholder="111"
-            tipInLabel
             required
+            jsxmode={'view'}
+            showTipAlways
             requiredErrMsg={123123}
             jsxtips="提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提
             示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示
@@ -79,6 +80,7 @@ class Demo extends React.Component {
           standalone
           jsxname="1"
           jsxlabel="test"
+          jsxtips={'这里是额外提示'}
           message={{
             type: 'error',
             message: 'error test',

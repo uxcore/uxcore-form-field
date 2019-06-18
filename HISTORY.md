@@ -1,4 +1,6 @@
 # history
+## 0.3.17 / 2019-06-18
+`NEW` add new prop showTipAlways
 
 ## 0.3.16 / 2019-06-12
 * `FIXED` when required && requiredErrMsg is set, jsxrules will auto add not empty rule
