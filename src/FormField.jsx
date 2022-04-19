@@ -12,7 +12,7 @@ import Icon from 'uxcore-icon';
 import Validator from 'uxcore-validator';
 
 // eslint-disable-next-line consistent-return
-const deepequal = (a, b) => isEqualWith(a, b, () => {
+const deepequal = (value, other) => isEqualWith(value, other, (a, b) => {
   if (isValidElement(a) || isValidElement(b)) {
     return a === b;
   }

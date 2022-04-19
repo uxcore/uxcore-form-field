@@ -1,5 +1,8 @@
 # history
 
+## 0.3.20 / 2022-04-19
+* `FIXED` break down when there's react element in props.value
+
 ## 0.3.17 / 2019-06-18
 `NEW` add new prop showTipAlways
 
