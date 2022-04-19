@@ -1,15 +1,22 @@
-import React from 'react';
+import React, { isValidElement } from 'react';
 import PropTypes from 'prop-types';
 import Constants from 'uxcore-const';
 import classnames from 'classnames';
 import assign from 'object-assign';
-import deepequal from 'lodash/isEqual';
+import isEqualWith from 'lodash/isEqualWith';
 import cloneDeep from 'lodash/cloneDeep';
 import Promise from 'lie';
 import { polyfill } from 'react-lifecycles-compat';
 import Tooltip from 'uxcore-tooltip';
 import Icon from 'uxcore-icon';
-import Validator from 'uxcore-validator'
+import Validator from 'uxcore-validator';
+
+// eslint-disable-next-line consistent-return
+const deepequal = (a, b) => isEqualWith(a, b, () => {
+  if (isValidElement(a) || isValidElement(b)) {
+    return a === b;
+  }
+});
 
 /* eslint-disable class-methods-use-this */
 class FormField extends React.Component {
@@ -91,7 +98,7 @@ class FormField extends React.Component {
   }
   static getRules(props) {
     const { asyncValidate, jsxrules, required, requiredErrMsg } = props;
-    if (asyncValidate || !required || !requiredErrMsg ) {
+    if (asyncValidate || !required || !requiredErrMsg) {
       return jsxrules
     }
     const emptyCheck = {
